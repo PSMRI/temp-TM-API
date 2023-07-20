@@ -41,9 +41,10 @@ public class SwaggerConfig {
 	}
 
 	private ApiInfo metaData() {
-		ApiInfo apiInfo = new ApiInfo("Spring Boot REST API", "Spring Boot REST API for Piramal MMUs application",
-				"1.0", "Terms of service", new Contact("Wipro HCIT", "https://www.wipro.com", "mywipro@wipro.com"), "",
-				"");
+		 ApiInfo apiInfo = new ApiInfo("TM API", "The AMRIT Telemedicine (TM) Service improves Health and Wellness Centers (HWCs) by offering remote healthcare, making it easier for patients to access medical advice and services without visiting in person.",
+                "1.0", "Terms of service", new Contact("AMRIT", "https://psmri.github.io/PSMRI/", "amrit@piramalswasthya.org"), "",
+                "");
+		
 		return apiInfo;
 	}
 }
