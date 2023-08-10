@@ -19,24 +19,24 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
-package com.iemr.tm.data.fetosense;
+package com.iemr.tm.data.foetalmonitor;
 
 import java.sql.Timestamp;
 
-public class FetosenseData {
+public class FoetalMonitorData {
 
-	private Long partnerFetosenseId;
+	private Long partnerFoetalMonitorId;
 	private Long beneficiaryRegID;
 	private String motherLMPDate;
 	private String motherName;
 	private String testName;
 	private String deviceId;
 	
-	public Long getPartnerFetosenseID() {
-		return partnerFetosenseId;
+	public Long getPartnerFoetalMonitorID() {
+		return partnerFoetalMonitorId;
 	}
-	public void setPartnerFetosenseID(Long partnerFetosenseID) {
-		this.partnerFetosenseId = partnerFetosenseID;
+	public void setPartnerFoetalMonitorID(Long partnerFoetalMonitorID) {
+		this.partnerFoetalMonitorId = partnerFoetalMonitorID;
 	}
 	public String getMotherLMPDate() {
 		return motherLMPDate;

@@ -65,7 +65,7 @@ import com.iemr.tm.data.anc.WrapperComorbidCondDetails;
 import com.iemr.tm.data.anc.WrapperFemaleObstetricHistory;
 import com.iemr.tm.data.anc.WrapperImmunizationHistory;
 import com.iemr.tm.data.anc.WrapperMedicationHistory;
-import com.iemr.tm.data.fetosense.Fetosense;
+import com.iemr.tm.data.foetalmonitor.FoetalMonitor;
 import com.iemr.tm.data.nurse.BenAnthropometryDetail;
 import com.iemr.tm.data.nurse.BenPhysicalVitalDetail;
 import com.iemr.tm.data.nurse.BeneficiaryVisitDetail;
@@ -75,7 +75,7 @@ import com.iemr.tm.data.quickConsultation.PrescribedDrugDetail;
 import com.iemr.tm.data.quickConsultation.PrescriptionDetail;
 import com.iemr.tm.data.tele_consultation.TeleconsultationRequestOBJ;
 import com.iemr.tm.repo.benFlowStatus.BeneficiaryFlowStatusRepo;
-import com.iemr.tm.repo.fetosense.FetosenseRepo;
+import com.iemr.tm.repo.foetalmonitor.FoetalMonitorRepo;
 import com.iemr.tm.repo.nurse.BenAnthropometryRepo;
 import com.iemr.tm.repo.nurse.anc.ANCCareRepo;
 import com.iemr.tm.repo.nurse.anc.ANCDiagnosisRepo;
@@ -113,7 +113,7 @@ public class ANCServiceImpl implements ANCService {
 	@Autowired
 	private ANCDiagnosisRepo aNCDiagnosisRepo;
 	@Autowired
-	private FetosenseRepo fetosenseRepo;
+	private FoetalMonitorRepo foetalMonitorRepo;
 
 	@Autowired
 	private BenMenstrualDetailsRepo benMenstrualDetailsRepo;
@@ -291,13 +291,13 @@ public class ANCServiceImpl implements ANCService {
 		} else
 			specialistFlag = (short) 0;
 
-		ArrayList<Fetosense> fetosenseData = fetosenseRepo.getFetosenseDetailsByFlowId(benFlowID);
-		if (fetosenseData.size() > 0) {
-			// updating visitcode in fetosense table;
-			fetosenseRepo.updateVisitCode(visitCode, benFlowID);
+		ArrayList<FoetalMonitor> foetalMonitorData = foetalMonitorRepo.getFoetalMonitorDetailsByFlowId(benFlowID);
+		if (foetalMonitorData.size() > 0) {
+			// updating visitcode in foetal monitor table;
+			foetalMonitorRepo.updateVisitCode(visitCode, benFlowID);
 
 			labTechnicianFlag = 3;
-			for (Fetosense data : fetosenseData) {
+			for (FoetalMonitor data : foetalMonitorData) {
 				if (data != null && !data.getResultState()) {
 					labTechnicianFlag = 2;
 				}
@@ -1489,7 +1489,7 @@ public class ANCServiceImpl implements ANCService {
 
 		resMap.put("Refer", commonDoctorServiceImpl.getReferralDetails(benRegID, visitCode));
 
-		resMap.put("fetosenseData", commonDoctorServiceImpl.getFetosenseData(benRegID, visitCode));
+		resMap.put("fetosenseData", commonDoctorServiceImpl.getFoetalMonitorData(benRegID, visitCode));
 
 		resMap.put("LabReport",
 				new Gson().toJson(labTechnicianServiceImpl.getLabResultDataForBen(benRegID, visitCode)));

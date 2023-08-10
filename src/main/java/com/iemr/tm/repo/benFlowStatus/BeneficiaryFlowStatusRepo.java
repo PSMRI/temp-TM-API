@@ -414,7 +414,7 @@ public interface BeneficiaryFlowStatusRepo extends CrudRepository<BeneficiaryFlo
 	
 	
 	/**
-	 * updating lab technician flag to 3 from 3 , as soon as receive response from fetosense
+	 * updating lab technician flag to 3 from 3 , as soon as receive response from foetal monitor
 	 * 
 	 * @author DU20091017
 	 * @param lab_technician_flag
@@ -434,7 +434,7 @@ public interface BeneficiaryFlowStatusRepo extends CrudRepository<BeneficiaryFlo
 	public Timestamp getBenAgeVal(@Param("benRegID") Long benRegID);
 	
 //	/**
-//	 * get labtechnician flag and update for fetosense test
+//	 * get labtechnician flag and update for foetal monitor test
 //	 * @author SH20094090
 //	 * @param benFlowID
 //	 */

@@ -19,7 +19,7 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
-package com.iemr.tm.controller.fetosense;
+package com.iemr.tm.controller.foetalmonitor;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -36,8 +36,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.iemr.tm.data.fetosense.Fetosense;
-import com.iemr.tm.service.fetosense.FetosenseService;
+import com.iemr.tm.data.foetalmonitor.FoetalMonitor;
+import com.iemr.tm.service.foetalmonitor.FoetalMonitorService;
 import com.iemr.tm.utils.exception.IEMRException;
 import com.iemr.tm.utils.mapper.InputMapper;
 import com.iemr.tm.utils.response.OutputResponse;
@@ -49,9 +49,9 @@ import io.swagger.annotations.ApiParam;
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/fetosense", headers = "Authorization")
-public class FetosenseController {
+public class FoetalMonitorController {
 	@Autowired
-	private FetosenseService fetosenseService;
+	private FoetalMonitorService foetalMonitorService;
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
@@ -62,9 +62,9 @@ public class FetosenseController {
 	 */
 
 	@CrossOrigin
-	@ApiOperation(value = "Send the mother data and prescribed test details to fetosense")
+	@ApiOperation(value = "Send the mother data and prescribed test details to foetal monitor")
 	@RequestMapping(value = "/sendMotherTestDetailsToFetosense", method = RequestMethod.POST, headers = "Authorization")
-	public ResponseEntity<String> sendANCMotherTestDetailsToFetosense(
+	public ResponseEntity<String> sendANCMotherTestDetailsToFoetalMonitor(
 			@ApiParam("{\"beneficiaryRegID\":\"Long\",\"benFlowID\":\"Long\",\"testTime\":\"Timestamp\",\"motherLMPDate\":\"Timestamp\",\"motherName\":\"String\",\"fetosenseTestId\":\"Long\",\"testName\":\"String\",\"ProviderServiceMapID\":\"Integer\",\"createdBy\":\"String\"}") @RequestBody String requestObj,
 			@RequestHeader(value = "Authorization") String authorization) {
 
@@ -74,9 +74,9 @@ public class FetosenseController {
 
 			if (requestObj != null) {
 
-				Fetosense fetosenseRequest = InputMapper.gson().fromJson(requestObj, Fetosense.class);
+				FoetalMonitor foetalMonitorRequest = InputMapper.gson().fromJson(requestObj, FoetalMonitor.class);
 
-				String response = fetosenseService.sendFetosenseTestDetails(fetosenseRequest, authorization);
+				String response = foetalMonitorService.sendFoetalMonitorTestDetails(foetalMonitorRequest, authorization);
 
 				output.setResponse(response);
 			} else {
@@ -97,7 +97,7 @@ public class FetosenseController {
 	 * @return
 	 */
 	@CrossOrigin
-	@ApiOperation(value = "Fetosense device status check")
+	@ApiOperation(value = "Foetal monitor device status check")
 	@RequestMapping(value = "/registerMother", method = RequestMethod.POST, headers = "Authorization")
 	public String saveMother(@RequestBody String requestObj,
 			@RequestHeader(value = "Authorization") String authorization) {
@@ -115,20 +115,20 @@ public class FetosenseController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Get the fetosense details")
+	@ApiOperation(value = "Get the foetal monitor details")
 	@RequestMapping(value = "/fetch/fetosenseDetails/{benFlowID}", method = RequestMethod.GET, headers = "Authorization")
-	public String getFetosenseDetails(@ApiParam("{\"benFlowID\":\"Long\"}") @PathVariable("benFlowID") Long benFlowID) {
+	public String getFoetalMonitorDetails(@ApiParam("{\"benFlowID\":\"Long\"}") @PathVariable("benFlowID") Long benFlowID) {
 
-		logger.info("Request Object for getting fetosense data - " + benFlowID);
+		logger.info("Request Object for getting foetal monitor data - " + benFlowID);
 		OutputResponse output = new OutputResponse();
 		try {
-			String response = fetosenseService.getFetosenseDetails(benFlowID);
+			String response = foetalMonitorService.getFoetalMonitorDetails(benFlowID);
 			if (response != null)
 				output.setResponse(response);
 			else
 				output.setError(5000, "Error in fetching the details");
 		} catch (IEMRException e) {
-			logger.error("getFetosenseDetails failed with error " + e.getMessage(), e);
+			logger.error("Get foetal monitor details failed with error " + e.getMessage(), e);
 			output.setError(5000, e.getMessage());
 		}
 
@@ -136,27 +136,27 @@ public class FetosenseController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Fetch fetosense pdf report (Base64 format)")
+	@ApiOperation(value = "Fetch foetal monitor pdf report (Base64 format)")
 	@RequestMapping(value = "/fetch/reportGraphBase64", method = RequestMethod.POST, headers = "Authorization")
-	public ResponseEntity<String> getFetosenseDetails(
-			@ApiParam("{\"reportFilePath\":\"String\"}") @RequestBody Fetosense fetosenseOBJ) {
+	public ResponseEntity<String> getFoetalMonitorDetails(
+			@ApiParam("{\"reportFilePath\":\"String\"}") @RequestBody FoetalMonitor foetalMonitorOBJ) {
 
-		logger.info("Request Object for getting fetosense test report file - " + fetosenseOBJ.toString());
+		logger.info("Request Object for getting foetal monitor test report file - " + foetalMonitorOBJ.toString());
 		OutputResponse output = new OutputResponse();
 		try {
-			String response = fetosenseService.readPDFANDGetBase64(fetosenseOBJ.getaMRITFilePath());
+			String response = foetalMonitorService.readPDFANDGetBase64(foetalMonitorOBJ.getaMRITFilePath());
 			if (response != null)
 				output.setResponse(response);
 			else
 				output.setError(5000, "Error in fetching the details");
 		} catch (FileNotFoundException fnf) {
-			logger.error("getFetosenseDetails failed with error " + fnf.getMessage());
+			logger.error("Get foetal monitor details failed with error " + fnf.getMessage());
 			output.setError(5000, "File not found : " + fnf.getMessage());
 		} catch (IOException io) {
-			logger.error("getFetosenseDetails failed with error " + io.getMessage());
+			logger.error("Get foetal monitor details failed with error " + io.getMessage());
 			output.setError(5000, "File not found : " + io.getMessage());
 		} catch (IEMRException e) {
-			logger.error("getFetosenseDetails failed with error " + e.getMessage(), e);
+			logger.error("Get foetal monitor details failed with error " + e.getMessage(), e);
 			output.setError(5000, e.getMessage());
 		}
 
@@ -164,9 +164,9 @@ public class FetosenseController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Update fetosense data", consumes = "application/json", produces = "application/json")
+	@ApiOperation(value = "Update foetal monitor data", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = "/update/fetosenseData", method = { RequestMethod.POST })
-	public ResponseEntity<String> updateFetosenseData(
+	public ResponseEntity<String> updateFoetalMonitorData(
 			@ApiParam("\r\n" + "{\r\n" + "\"testId\":\"String\", \r\n" + "\"deviceId\":\"String\", \r\n"
 					+ "\"testDoneAt\":\"String\", \r\n" + "\"lengthOfTest\": \"Integer\", \r\n"
 					+ "\"basalHeartRate\": \"Integer\", \r\n" + "\"accelerationsList\":\"List of object\", \r\n"
@@ -179,21 +179,22 @@ public class FetosenseController {
 					+ "\"motherName\":\"String\", \r\n" + "}\r\n" + "}") @RequestBody String requestObj,
 			@RequestHeader(value = "Authorization") String Authorization) {
 		OutputResponse response = new OutputResponse();
-		logger.info("Fetosense API test result data  :" + requestObj);
+		logger.info("Foetal monitor API test result data  :" + requestObj);
 
 		try {
 			if (requestObj != null) {
-				Fetosense fetosenseData = InputMapper.gson().fromJson(requestObj, Fetosense.class);
-				int responseValue = fetosenseService.updateFetosenseData(fetosenseData);
+				FoetalMonitor foetalMonitorData = InputMapper.gson().fromJson(requestObj, FoetalMonitor.class);
+				int responseValue = foetalMonitorService.updateFoetalMonitorData(foetalMonitorData);
 				if (responseValue == 1)
 					response.setResponse("Data updated successfully");
 			} else {
 				response.setError(404, "Invalid request");
 				logger.error("Invalid request");
 			}
+			
 		} catch (IEMRException e) {
 			response.setError(5000, e.getMessage());
-			logger.error("Error while updating fetosense data :" + e);
+			logger.error("Error while updating foetal monitor data :" + e);
 		}
 		return response.toStringWithHttpStatus();
 	}

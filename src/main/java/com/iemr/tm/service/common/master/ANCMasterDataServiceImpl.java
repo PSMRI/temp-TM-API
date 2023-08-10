@@ -33,7 +33,7 @@ import com.iemr.tm.data.doctor.ChiefComplaintMaster;
 import com.iemr.tm.data.doctor.DrugDoseMaster;
 import com.iemr.tm.data.doctor.DrugDurationUnitMaster;
 import com.iemr.tm.data.doctor.DrugFrequencyMaster;
-import com.iemr.tm.data.fetosense.FetosenseTestMaster;
+import com.iemr.tm.data.foetalmonitor.FoetalMonitorTestMaster;
 import com.iemr.tm.data.institution.Institute;
 import com.iemr.tm.data.labModule.ProcedureData;
 import com.iemr.tm.data.masterdata.anc.AllergicReactionTypes;
@@ -75,7 +75,7 @@ import com.iemr.tm.repo.doctor.ChiefComplaintMasterRepo;
 import com.iemr.tm.repo.doctor.DrugDoseMasterRepo;
 import com.iemr.tm.repo.doctor.DrugDurationUnitMasterRepo;
 import com.iemr.tm.repo.doctor.DrugFrequencyMasterRepo;
-import com.iemr.tm.repo.fetosense.FetosenseTestsRepo;
+import com.iemr.tm.repo.foetalmonitor.FoetalMonitorTestsRepo;
 import com.iemr.tm.repo.labModule.ProcedureRepo;
 import com.iemr.tm.repo.login.MasterVanRepo;
 import com.iemr.tm.repo.masterrepo.anc.AllergicReactionTypesRepo;
@@ -190,7 +190,7 @@ public class ANCMasterDataServiceImpl {
 	private MasterVanRepo masterVanRepo;
 	
 	@Autowired
-	private FetosenseTestsRepo fetosenseTestRepo;
+	private FoetalMonitorTestsRepo foetakMonitorTestRepo;
 
 	@Autowired
 	public void setV_DrugPrescriptionRepo(V_DrugPrescriptionRepo v_DrugPrescriptionRepo) {
@@ -619,10 +619,10 @@ public class ANCMasterDataServiceImpl {
 			resMap.put("covidRecommendationMaster", covidRecommnedationMasterRepo.findByDeleted(false));
 		}
 		
-		//To Fetch Fetosense Test Master Details
+		//To Fetch foetal monitor Test Master Details
 		if (visitCategoryID == 4) {
-			ArrayList<Object[]> fetoTestList = fetosenseTestRepo.getFetosenseTestsDetails(providerServiceMapID);
-			resMap.put("fetosenseTestMaster", FetosenseTestMaster.getFetosenseMasters(fetoTestList));
+			ArrayList<Object[]> fetoTestList = foetakMonitorTestRepo.getFoetalMonitorTestsDetails(providerServiceMapID);
+			resMap.put("fetosenseTestMaster", FoetalMonitorTestMaster.getFoetalMonitorMasters(fetoTestList));
 		}
 
 		return new Gson().toJson(resMap);

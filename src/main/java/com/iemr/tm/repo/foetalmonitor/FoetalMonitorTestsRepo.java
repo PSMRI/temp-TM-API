@@ -19,26 +19,29 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
-package com.iemr.tm.repo.fetosense;
+package com.iemr.tm.repo.foetalmonitor;
+
 
 import java.util.ArrayList;
 
-import javax.transaction.Transactional;
-
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.stereotype.Repository;
 
-import com.iemr.tm.data.fetosense.FetosenseDeviceID;
+import com.iemr.tm.data.foetalmonitor.FoetalMonitorTestMaster;
+
 
 @Repository
 @RestResource(exported = false)
-public interface FetosenseDeviceIDRepo extends CrudRepository<FetosenseDeviceID, Integer>  {
+public interface FoetalMonitorTestsRepo extends CrudRepository<FoetalMonitorTestMaster, Integer> {
 	
-	@Query("SELECT f FROM FetosenseDeviceID f WHERE f.vanID = :vanID AND f.deactivated = false ")
-	public FetosenseDeviceID getDeviceIDForVanID(@Param("vanID") Integer vanID);
+	@Query("SELECT f.foetalMonitorTestId, f.testName FROM FoetalMonitorTestMaster f WHERE f.providerServiceMapID = :providerServiceMapID AND f.deleted = false")
+	public ArrayList<Object[]> getFoetalMonitorTestsDetails(@Param("providerServiceMapID") Integer providerServiceMapID);
 	
+
+
+
 }
+

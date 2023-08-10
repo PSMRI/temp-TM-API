@@ -74,7 +74,7 @@ public class MasterVan {
 	
 	@Expose
 	@Column(name = "vanfetosenseIDmapped")
-	private Boolean vanfetosenseIDmapped;
+	private Boolean vanfoetalMonitorIDmapped;
 	
 	@Expose
 	@Column(name = "VanTypeID")

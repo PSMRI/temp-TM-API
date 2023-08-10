@@ -19,29 +19,21 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
-package com.iemr.tm.repo.fetosense;
+package com.iemr.tm.service.foetalmonitor;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
-import java.util.ArrayList;
+import com.iemr.tm.data.foetalmonitor.FoetalMonitor;
+import com.iemr.tm.utils.exception.IEMRException;
 
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RestResource;
-import org.springframework.stereotype.Repository;
+public interface FoetalMonitorService {
 
-import com.iemr.tm.data.fetosense.FetosenseTestMaster;
+	int updateFoetalMonitorData(FoetalMonitor foetalMonitorData) throws IEMRException;
 
+	String sendFoetalMonitorTestDetails(FoetalMonitor request, String auth) throws Exception;
 
-@Repository
-@RestResource(exported = false)
-public interface FetosenseTestsRepo extends CrudRepository<FetosenseTestMaster, Integer> {
-	
-	@Query("SELECT f.fetosenseTestId, f.testName FROM FetosenseTestMaster f WHERE f.providerServiceMapID = :providerServiceMapID AND f.deleted = false")
-	public ArrayList<Object[]> getFetosenseTestsDetails(@Param("providerServiceMapID") Integer providerServiceMapID);
-	
+	String getFoetalMonitorDetails(Long benFlowID) throws IEMRException;
 
-
-
+	public String readPDFANDGetBase64(String filePath) throws IEMRException, IOException, FileNotFoundException;
 }
-

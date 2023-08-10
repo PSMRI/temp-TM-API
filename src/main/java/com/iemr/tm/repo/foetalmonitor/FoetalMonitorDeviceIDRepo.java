@@ -19,21 +19,26 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
-package com.iemr.tm.service.fetosense;
+package com.iemr.tm.repo.foetalmonitor;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.ArrayList;
 
-import com.iemr.tm.data.fetosense.Fetosense;
-import com.iemr.tm.utils.exception.IEMRException;
+import javax.transaction.Transactional;
 
-public interface FetosenseService {
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RestResource;
+import org.springframework.stereotype.Repository;
 
-	int updateFetosenseData(Fetosense fetosenseData) throws IEMRException;
+import com.iemr.tm.data.foetalmonitor.FoetalMonitorDeviceID;
 
-	String sendFetosenseTestDetails(Fetosense request, String auth) throws Exception;
-
-	String getFetosenseDetails(Long benFlowID) throws IEMRException;
-
-	public String readPDFANDGetBase64(String filePath) throws IEMRException, IOException, FileNotFoundException;
+@Repository
+@RestResource(exported = false)
+public interface FoetalMonitorDeviceIDRepo extends CrudRepository<FoetalMonitorDeviceID, Integer>  {
+	
+	@Query("SELECT f FROM FoetalMonitorDeviceID f WHERE f.vanID = :vanID AND f.deactivated = false ")
+	public FoetalMonitorDeviceID getDeviceIDForVanID(@Param("vanID") Integer vanID);
+	
 }

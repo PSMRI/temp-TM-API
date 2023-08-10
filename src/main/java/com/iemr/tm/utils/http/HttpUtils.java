@@ -46,45 +46,23 @@ public class HttpUtils {
 	private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 	public static final String AUTHORIZATION = "Authorization";
 	private String server;
-	// @Autowired
 	private RestTemplate rest;
-	// @Autowired
 	private HttpHeaders headers;
-	// @Autowired
 	private HttpStatus status;
 
-	// @Autowired(required = true)
-	// @Qualifier("hibernateCriteriaBuilder")
 	public HttpUtils() {
 		if (rest == null) {
 			rest = new RestTemplate();
 			headers = new HttpHeaders();
-//			headers.add("Content-Type", "application/pdf");
 		}
 	}
-	// public HttpUtils() {
-	// if (rest == null) {
-	// rest = new RestTemplate();
-	// headers = new HttpHeaders();
-	// headers.add("Content-Type", "application/json");
-	// }
-	// }
-
-	// @Bean
-	// public HttpUtils httpUtils() {
-	// return new HttpUtils();
-	// }
 
 	public String get(String uri) {
 		String body;
 		HttpEntity<String> requestEntity = new HttpEntity<String>(headers);
 		ResponseEntity<String> responseEntity = rest.exchange(uri, HttpMethod.GET, requestEntity, String.class);
 		setStatus(responseEntity.getStatusCode());
-		// if (status == HttpStatus.OK){
 		body = responseEntity.getBody();
-		// }else{
-		// responseEntity
-		// }
 		return body;
 	}
 
@@ -121,7 +99,6 @@ public class HttpUtils {
 		if (header.containsKey(headers.AUTHORIZATION)) {
 			headers.add(headers.AUTHORIZATION, header.get(headers.AUTHORIZATION).toString());
 		}
-		// headers.add("Content-Type", MediaType.APPLICATION_JSON);
 		ResponseEntity<String> responseEntity = new ResponseEntity(HttpStatus.BAD_REQUEST);
 		HttpEntity<String> requestEntity;
 		requestEntity = new HttpEntity<String>(data, headers);
@@ -137,18 +114,17 @@ public class HttpUtils {
 		if (header.containsKey(headers.AUTHORIZATION)) {
 			headers.add(headers.AUTHORIZATION, header.get(headers.AUTHORIZATION).toString());
 		}
-		// for fetosense api
 		if (header.containsKey("apiKey")) {
 			headers.add("apiKey", header.get("apiKey").toString());
 		}
-		 headers.add("Content-Type", MediaType.APPLICATION_JSON);
+		headers.add("Content-Type", MediaType.APPLICATION_JSON);
 		ResponseEntity<String> responseEntity = new ResponseEntity(HttpStatus.BAD_REQUEST);
 		HttpEntity<String> requestEntity;
 		requestEntity = new HttpEntity<String>(data, headers);
 		responseEntity = rest.exchange(uri, HttpMethod.POST, requestEntity, String.class);
 		return responseEntity;
 	}
-	
+
 	public String uploadFile(String uri, String data, HashMap<String, Object> header) throws IOException {
 		String body;
 		HttpHeaders headers = new HttpHeaders();
