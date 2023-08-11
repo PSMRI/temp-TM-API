@@ -48,7 +48,7 @@ import io.swagger.annotations.ApiParam;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/fetosense", headers = "Authorization")
+@RequestMapping(value = "/foetalMonitor", headers = "Authorization")
 public class FoetalMonitorController {
 	@Autowired
 	private FoetalMonitorService foetalMonitorService;
@@ -56,14 +56,14 @@ public class FoetalMonitorController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
 	/**
-	 * @Objective Transfer Mother Data and NST/CTG Test Details to Fetosense.
+	 * @Objective Transfer Mother Data and NST/CTG Test Details to foetalMonitor.
 	 * @param JSON requestObj
 	 * @return success or failure response
 	 */
 
 	@CrossOrigin
 	@ApiOperation(value = "Send the mother data and prescribed test details to foetal monitor")
-	@RequestMapping(value = "/sendMotherTestDetailsToFetosense", method = RequestMethod.POST, headers = "Authorization")
+	@RequestMapping(value = "/sendMotherTestDetailsToFoetalMonitor", method = RequestMethod.POST, headers = "Authorization")
 	public ResponseEntity<String> sendANCMotherTestDetailsToFoetalMonitor(
 			@ApiParam("{\"beneficiaryRegID\":\"Long\",\"benFlowID\":\"Long\",\"testTime\":\"Timestamp\",\"motherLMPDate\":\"Timestamp\",\"motherName\":\"String\",\"fetosenseTestId\":\"Long\",\"testName\":\"String\",\"ProviderServiceMapID\":\"Integer\",\"createdBy\":\"String\"}") @RequestBody String requestObj,
 			@RequestHeader(value = "Authorization") String authorization) {
@@ -80,11 +80,11 @@ public class FoetalMonitorController {
 
 				output.setResponse(response);
 			} else {
-				logger.error("send ANC Mother TestDetails To Fetosense : Invalid request");
+				logger.error("send ANC Mother TestDetails To foetalMonitor : Invalid request");
 				output.setError(404, "Invalid request");
 			}
 		} catch (Exception e) {
-			logger.error("send ANC Mother TestDetails To Fetosense failed with error " + e.getMessage());
+			logger.error("send ANC Mother TestDetails To foetalMonitor failed with error " + e.getMessage());
 			output.setError(5000, e.getMessage());
 		}
 		return output.toStringWithHttpStatus();
@@ -116,7 +116,7 @@ public class FoetalMonitorController {
 
 	@CrossOrigin
 	@ApiOperation(value = "Get the foetal monitor details")
-	@RequestMapping(value = "/fetch/fetosenseDetails/{benFlowID}", method = RequestMethod.GET, headers = "Authorization")
+	@RequestMapping(value = "/fetch/foetalMonitorDetails/{benFlowID}", method = RequestMethod.GET, headers = "Authorization")
 	public String getFoetalMonitorDetails(@ApiParam("{\"benFlowID\":\"Long\"}") @PathVariable("benFlowID") Long benFlowID) {
 
 		logger.info("Request Object for getting foetal monitor data - " + benFlowID);
@@ -165,7 +165,7 @@ public class FoetalMonitorController {
 
 	@CrossOrigin
 	@ApiOperation(value = "Update foetal monitor data", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = "/update/fetosenseData", method = { RequestMethod.POST })
+	@RequestMapping(value = "/update/foetalMonitorData", method = { RequestMethod.POST })
 	public ResponseEntity<String> updateFoetalMonitorData(
 			@ApiParam("\r\n" + "{\r\n" + "\"testId\":\"String\", \r\n" + "\"deviceId\":\"String\", \r\n"
 					+ "\"testDoneAt\":\"String\", \r\n" + "\"lengthOfTest\": \"Integer\", \r\n"
