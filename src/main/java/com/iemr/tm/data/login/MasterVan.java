@@ -34,15 +34,6 @@ import com.google.gson.annotations.Expose;
 public class MasterVan {
 	@Id
 	@GeneratedValue
-//	private Integer id;
-//	public Integer getId() {
-//		return id;
-//	}
-//
-//	public void setId(Integer id) {
-//		this.id = id;
-//	}
-
 	@Expose
 	@Column(name = "VanID")
 	private Integer vanID;
@@ -80,26 +71,9 @@ public class MasterVan {
 	@Column(name = "VanTypeID")
 	private Integer VanTypeID;
 
-//	@ManyToOne
-//	@JoinColumn(name = "ParkingPlaceID", insertable = false, updatable = false)
-//	private UserParkingplaceMapping userParkingplaceMapping;
-
-//	@OneToOne(mappedBy = "masterVan")
-//	private BeneficiaryFlowStatus beneficiaryFlowStatus;
-
 	public MasterVan() {
 	}
 
-//	public MasterVan(Integer vanID, String vehicalNo, Integer providerServiceMapID, Integer parkingPlaceID,
-//			Boolean deleted, UserParkingplaceMapping userParkingplaceMapping) {
-//		super();
-//		this.vanID = vanID;
-//		this.vehicalNo = vehicalNo;
-//		this.providerServiceMapID = providerServiceMapID;
-//		this.parkingPlaceID = parkingPlaceID;
-//		this.deleted = deleted;
-//		this.userParkingplaceMapping = userParkingplaceMapping;
-//	}
 	public MasterVan(Integer vanID, String vehicalNo) {
 		this.vanID = vanID;
 		this.vehicalNo = vehicalNo;

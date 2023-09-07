@@ -61,7 +61,6 @@ public class StartSyncActivity {
 			@RequestHeader(value = "ServerAuthorization") String ServerAuthorization) {
 		OutputResponse response = new OutputResponse();
 		try {
-			// System.out.println(LocalDateTime.now());
 			JSONObject obj = new JSONObject(requestOBJ);
 			if (obj != null && obj.has("groupID") && obj.get("groupID") != null && obj.has("user")
 					&& obj.get("user") != null) {
@@ -78,7 +77,6 @@ public class StartSyncActivity {
 			logger.error("Error in data sync : " + e);
 			response.setError(e);
 		}
-		// System.out.println(LocalDateTime.now());
 		return response.toStringWithSerialization();
 	}
 

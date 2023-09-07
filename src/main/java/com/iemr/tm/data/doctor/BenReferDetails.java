@@ -32,7 +32,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-//import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.gson.annotations.Expose;
 import com.iemr.tm.data.masterdata.anc.ServiceMaster;
 
@@ -330,7 +329,6 @@ public class BenReferDetails {
 
 	public BenReferDetails() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

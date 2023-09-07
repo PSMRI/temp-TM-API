@@ -21,14 +21,12 @@
 */
 package com.iemr.tm.data.login;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -65,31 +63,8 @@ public class UserParkingplaceMapping {
 	@Expose
 	@Column(name = "Deleted")
 	private Integer deleted;
-
-//	@OneToMany(mappedBy = "userParkingplaceMapping", cascade = CascadeType.ALL)
-//	private Set<MasterVan> masterVanSet;
-
-	// 23-01-2019, report download issue, since mapping is not available in mastervan.
-//	@ManyToOne(cascade = CascadeType.ALL)
-//	@JoinColumn(name = "parkingPlaceID", insertable = false, updatable = false)
-//	private MasterVan masterVanSet;
-
 	public UserParkingplaceMapping() {
 	}
-
-//	public UserParkingplaceMapping(Integer userParkingPlaceMapID, Integer userID, Integer parkingPlaceID,
-//			Integer stateID, Integer districtID, Integer providerServiceMapId, Integer deleted,
-//			Set<MasterVan> masterVanSet) {
-//		super();
-//		this.userParkingPlaceMapID = userParkingPlaceMapID;
-//		this.userID = userID;
-//		this.parkingPlaceID = parkingPlaceID;
-//		this.stateID = stateID;
-//		this.districtID = districtID;
-//		this.providerServiceMapId = providerServiceMapId;
-//		this.deleted = deleted;
-//		this.masterVanSet = masterVanSet;
-//	}
 
 	public Integer getUserParkingPlaceMapID() {
 		return userParkingPlaceMapID;
@@ -146,13 +121,5 @@ public class UserParkingplaceMapping {
 	public void setDeleted(Integer deleted) {
 		this.deleted = deleted;
 	}
-
-//	public Set<MasterVan> getMasterVanSet() {
-//		return masterVanSet;
-//	}
-//
-//	public void setMasterVanSet(Set<MasterVan> masterVanSet) {
-//		this.masterVanSet = masterVanSet;
-//	}
 
 }

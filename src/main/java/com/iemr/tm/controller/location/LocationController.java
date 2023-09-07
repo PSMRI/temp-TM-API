@@ -62,7 +62,6 @@ public class LocationController {
 			response.setResponse(s);
 		else
 			response.setError(5000, "Error while getting country");
-		// logger.info("country list" + response.toString());
 		return response.toString();
 	}
 
@@ -76,7 +75,6 @@ public class LocationController {
 			response.setResponse(s);
 		else
 			response.setError(5000, "Error while getting country city");
-		// logger.info("country list" + response.toString());
 		return response.toString();
 	}
 

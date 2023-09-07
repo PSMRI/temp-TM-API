@@ -28,9 +28,10 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -83,9 +84,7 @@ import com.iemr.tm.utils.mapper.InputMapper;
 import com.iemr.tm.utils.mapper.OutputMapper;
 
 /***
- * 
  * @author NE298657
- *
  */
 @Service
 @PropertySource("classpath:application.properties")
@@ -903,12 +902,6 @@ public class CommonDoctorServiceImpl {
 					}
 				}
 			}
-//			commonUtilityClass.getVisitCategoryID()
-
-//			if(foetalMonitorData != null && foetalMonitorData.get(1).getResultState()) 
-//				labTechnicianFlag = 3;
-//			else if(foetalMonitorData != null && foetalMonitorData.get(1).getResultState())
-//				labTechnicianFlag = 2;
 		}
 
 		if (commonUtilityClass.getIsSpecialist() != null && commonUtilityClass.getIsSpecialist() == true) {

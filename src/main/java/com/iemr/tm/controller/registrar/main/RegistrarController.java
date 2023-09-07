@@ -93,8 +93,6 @@ public class RegistrarController {
 
 			JSONObject obj = new JSONObject(comingRequest);
 
-			// wrapperRegWorklistArray =
-			// this.registrarServiceImpl.getRegWorkList(obj.getInt("spID"));
 			response.setResponse(this.registrarServiceImpl.getRegWorkList(obj.getInt("spID")));
 			logger.info("getRegistrarWorkList response:" + response);
 		} catch (Exception e) {

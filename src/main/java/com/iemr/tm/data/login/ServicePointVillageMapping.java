@@ -64,12 +64,6 @@ public class ServicePointVillageMapping {
 	@Expose
 	@Column(name = "ProviderServiceMapID")
 	private Integer providerServiceMapID;
-	// @Expose
-	// @OneToOne(fetch = FetchType.LAZY)
-	// @JoinColumn(updatable = false, insertable = false, name =
-	// "ProviderServiceMapID")
-	// private M_ProviderServiceMapping m_providerServiceMapping;
-
 	@Expose
 	@Column(name = "Deleted", insertable = false, updatable = true)
 	private Boolean deleted;

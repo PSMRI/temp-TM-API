@@ -29,10 +29,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.google.gson.annotations.Expose;
-import com.iemr.tm.utils.mapper.OutputMapper;
 
 @Entity
 @Table(name="m_pharmacologicalcategory")
@@ -76,126 +74,41 @@ public class M_Pharmacologicalcategory {
 	
 	
 	public M_Pharmacologicalcategory() {
-		// TODO Auto-generated constructor stub
 	}
-
-
-	
-
-
-
-
-
-
 
 
 	public String getPharmCategoryName() {
 		return pharmCategoryName;
 	}
 
-
-
-
-
 	public Integer getPharmacologyCategoryID() {
 		return pharmacologyCategoryID;
 	}
 
-
-
-
-
-
-
-
-
-
-
-	public void setPharmacologyCategoryID(Integer pharmacologyCategoryID) {
+	void setPharmacologyCategoryID(Integer pharmacologyCategoryID) {
 		this.pharmacologyCategoryID = pharmacologyCategoryID;
 	}
-
-
-
-
-
-
-
-
-
-
-
-//	public OutputMapper getOutputMapper() {
-//		return outputMapper;
-//	}
-
-
-
-
-
-
-
-
-
-
-
-//	public void setOutputMapper(OutputMapper outputMapper) {
-//		this.outputMapper = outputMapper;
-//	}
-
-
-
-
-
-
-
-
-
-
 
 	public void setPharmCategoryName(String pharmCategoryName) {
 		this.pharmCategoryName = pharmCategoryName;
 	}
 
-
-
-
-
 	public String getPharmCategoryDesc() {
 		return pharmCategoryDesc;
 	}
-
-
-
-
 
 	public void setPharmCategoryDesc(String pharmCategoryDesc) {
 		this.pharmCategoryDesc = pharmCategoryDesc;
 	}
 
-
-
-
-
 	public String getPharmCategoryCode() {
 		return pharmCategoryCode;
 	}
-
-
-
-
 
 	public void setPharmCategoryCode(String pharmCategoryCode) {
 		this.pharmCategoryCode = pharmCategoryCode;
 	}
 
-
-
-
-
-	/**
-	 * @return the status
-	 */
 	public String getStatus() {
 		return status;
 	}
@@ -304,14 +217,7 @@ public class M_Pharmacologicalcategory {
 		this.lastModDate = lastModDate;
 	}
 	
-	
-//	@Transient
-//	private OutputMapper outputMapper = new OutputMapper();
-//
-//	@Override
-//	public String toString() {
-//		return outputMapper.gson().toJson(this);
-//	}
+
 	
 	public Integer getPharmCategoryID(){
 		return pharmacologyCategoryID;

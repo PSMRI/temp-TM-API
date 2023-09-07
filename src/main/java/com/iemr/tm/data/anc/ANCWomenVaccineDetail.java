@@ -32,7 +32,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.google.gson.annotations.Expose;
-import com.iemr.tm.annotation.sqlInjectionSafe.SQLInjectionSafe;
 
 @Entity
 @Table(name = "t_ancwomenvaccinedetail")
@@ -129,7 +128,6 @@ public class ANCWomenVaccineDetail {
 
 	public ANCWomenVaccineDetail() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public ANCWomenVaccineDetail(Long iD, Long beneficiaryRegID, Long benVisitID, Integer providerServiceMapID,

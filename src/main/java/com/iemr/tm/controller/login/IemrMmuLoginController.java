@@ -89,7 +89,6 @@ public class IemrMmuLoginController {
 			String responseData = iemrMmuLoginServiceImpl.getServicepointVillages(obj.getInt("servicePointID"));
 			response.setResponse(responseData);
 		} catch (Exception e) {
-			// e.printStackTrace();
 			response.setError(5000, "Error while getting service points and villages");
 			logger.error("get villages with servicepoint failed with " + e.getMessage(), e);
 
@@ -115,7 +114,6 @@ public class IemrMmuLoginController {
 				response.setError(5000, "Invalid request");
 			}
 		} catch (Exception e) {
-			// e.printStackTrace();
 			response.setError(5000, "Error while getting van and service points data");
 			logger.error("getUserVanSpDetails failed with " + e.getMessage(), e);
 

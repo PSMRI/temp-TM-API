@@ -22,7 +22,6 @@
 package com.iemr.tm.data.masterdata.doctor;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,7 +35,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.google.gson.annotations.Expose;
-import com.iemr.tm.utils.mapper.OutputMapper;
 
 @Entity
 @Table(name = "m_item")
@@ -85,7 +83,6 @@ public class ItemMaster {
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(updatable = false, insertable = false, name = "ItemFormID")
 	private M_ItemForm itemForm;
-//	
 	@Expose
 	@Column(name="PharmacologyCategoryID")
 	private Integer pharmacologyCategoryID;
@@ -103,7 +100,6 @@ public class ItemMaster {
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(updatable = false, insertable = false, name = "ManufacturerID")
 	private M_Manufacturer manufacturer;
-//	
 	@Expose
 	@Column(name="Strength")
 	private String strength;
@@ -137,12 +133,7 @@ public class ItemMaster {
 	@Expose
 	@Column(name="ProviderServiceMapID")
 	private Integer providerServiceMapID;
-	
-//	@Expose
-//	@OneToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(updatable = false, insertable = false, name = "ProviderServiceMapID")
-//	private ProviderServiceMappingTO providerServiceMap;
-	
+		
 	@Expose
 	@Column(name="Status")
 	private String status;
@@ -195,13 +186,6 @@ public class ItemMaster {
 	@Column(name = "isEaushadi")
 	private Boolean isEaushadi;
 	
-//	@Transient
-//	private OutputMapper outputMapper = new OutputMapper();
-//
-//	@Override
-//	public String toString() {
-//		return outputMapper.gson().toJson(this);
-//	}
 	
 	public String getSctCode() {
 		return sctCode;
@@ -479,7 +463,6 @@ public class ItemMaster {
 	}
 
 	public ItemMaster(Integer itemID, String ItemName) {
-		// TODO Auto-generated constructor stub
 		this.itemID=itemID;
 		this.itemName=ItemName;
 	}

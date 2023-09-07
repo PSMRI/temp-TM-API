@@ -44,9 +44,6 @@ public class DistrictBranchMapping {
 	@Column(name = "DistrictBranchID")
 	@Expose
 	private Integer districtBranchID;
-	// @OneToMany(fetch = FetchType.LAZY, mappedBy = "m_districtbranchmapping")
-	// @Transient
-	// private Set<I_BenDemographics> I_bendemographics;
 	@Column(name = "BlockID")
 	@Expose
 	private Integer blockID;

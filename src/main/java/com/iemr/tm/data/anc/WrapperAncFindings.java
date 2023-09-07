@@ -37,7 +37,7 @@ public class WrapperAncFindings {
 	private String modifiedBy;
 	private String clinicalObservation;
 	private String otherSymptoms;
-	// newly added field on 07-08-2018
+
 	@Expose
 	@Column(name = "OtherSymptoms_SCTCode")
 	private String otherSymptomsSCTCode;
@@ -48,7 +48,6 @@ public class WrapperAncFindings {
 
 	private String significantFindings;
 	private ArrayList<BenChiefComplaint> complaints;
-	// private ArrayList<BenChiefComplaint> chiefComplaints;
 	private Boolean isForHistory;
 
 	private Integer vanID;

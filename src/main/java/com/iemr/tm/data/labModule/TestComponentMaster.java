@@ -30,8 +30,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -108,21 +106,6 @@ public class TestComponentMaster {
 	@Expose
 	@OneToMany(mappedBy = "testComponentMaster", cascade = CascadeType.ALL)
 	private Set<LabResultEntry> labResultEntry;
-//	@Expose
-//	@ManyToOne
-//	@JoinColumn(name = "lionicNum", insertable = false)
-//	private Loinc loinc;
-//	public Integer getTestComponentID() {
-//		return testComponentID;
-//	}
-//
-//	public Loinc getLoinc() {
-//		return loinc;
-//	}
-//
-//	public void setLoinc(Loinc loinc) {
-//		this.loinc = loinc;
-//	}
 
 	public void setTestComponentID(Integer testComponentID) {
 		this.testComponentID = testComponentID;

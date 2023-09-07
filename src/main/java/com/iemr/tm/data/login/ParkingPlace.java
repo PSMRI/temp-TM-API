@@ -62,12 +62,6 @@ public class ParkingPlace {
 	@Expose
 	@Column(name = "ProviderServiceMapID")
 	private Integer providerServiceMapID;
-	// @Expose
-	// @OneToOne(fetch = FetchType.LAZY)
-	// @JoinColumn(updatable = false, insertable = false, name =
-	// "ProviderServiceMapID")
-	// private M_ProviderServiceMapping m_providerServiceMapping;
-
 	@Expose
 	@Column(name = "CountryID")
 	private Integer countryID;
@@ -148,7 +142,6 @@ public class ParkingPlace {
 
 	public ParkingPlace() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public ParkingPlace(Integer parkingPlaceID, String parkingPlaceName) {

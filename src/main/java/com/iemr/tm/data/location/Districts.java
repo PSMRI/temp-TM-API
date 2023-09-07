@@ -54,9 +54,6 @@ public class Districts {
 	@Column(name = "DistrictName")
 	@Expose
 	private String districtName;
-	// @Column(name = "Zone")
-	// @Expose
-	// private String zone;
 	@Column(name = "Deleted", insertable = false, updatable = true)
 	@Expose
 	private Boolean deleted;
@@ -152,14 +149,6 @@ public class Districts {
 	public void setDistrictName(String districtName) {
 		this.districtName = districtName;
 	}
-
-	// public String getZone() {
-	// return this.zone;
-	// }
-	//
-	// public void setZone(String zone) {
-	// this.zone = zone;
-	// }
 
 	public boolean isDeleted() {
 		return this.deleted.booleanValue();

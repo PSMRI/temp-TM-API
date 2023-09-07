@@ -36,9 +36,7 @@ import com.iemr.tm.data.syncActivity_syncLayer.SyncUtilityClass;
 import com.iemr.tm.repo.syncActivity_syncLayer.SyncUtilityClassRepo;
 
 /***
- * 
  * @author NE298657
- *
  */
 
 @Service
@@ -82,24 +80,6 @@ public class DataSyncRepository {
 		return syncUtilityClassList;
 	}
 
-	/*
-	 * public int updateProcessedFlagInVan(String schemaName, String tableName,
-	 * StringBuilder vanSerialNos,
-	 * String autoIncreamentColumn, String user) throws Exception {
-	 * jdbcTemplate = getJdbcTemplate();
-	 * String query = " UPDATE " + schemaName + "." + tableName
-	 * + " SET processed = 'P' , SyncedDate = now(), Syncedby = '" + user +
-	 * "' WHERE " + autoIncreamentColumn
-	 * + " IN (" + vanSerialNos + ")";
-	 * System.out.println("hello");
-	 * 
-	 * int i = jdbcTemplate.update(query);
-	 * 
-	 * return i;
-	 * 
-	 * }
-	 */
-	// optimization of above code here
 
 	public int updateProcessedFlagInVan(String schemaName, String tableName, StringBuilder vanSerialNos,
 			String autoIncreamentColumn, String user) throws Exception {
@@ -119,10 +99,6 @@ public class DataSyncRepository {
 	}
 
 	// ---------------------------------- End of Upload repository
-
-	//
-	//
-
 	// ---------------------------------- Download Repository
 	public int[] updateLatestMasterInLocal(String query, List<Object[]> syncDataList) {
 		int[] i = null;

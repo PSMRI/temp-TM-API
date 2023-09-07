@@ -30,7 +30,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.google.gson.annotations.Expose;
-import com.iemr.tm.annotation.sqlInjectionSafe.SQLInjectionSafe;
 
 @Entity
 @Table(name = "t_Sys_GenitourinarySystem")

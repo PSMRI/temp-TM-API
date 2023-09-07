@@ -104,12 +104,6 @@ public class CancerAbdominalExamination {
 	@Column(name = "Observation")
 	private String observation;
 
-	/*
-	 * @JsonIgnore
-	 * 
-	 * @Column(name = "Image") private Blob image;
-	 */
-
 	@Expose
 	@Column(name = "Deleted", insertable = false, updatable = true)
 	private Boolean deleted;
@@ -190,7 +184,6 @@ public class CancerAbdominalExamination {
 		this.lymphNode_ParaAortic_Left = lymphNode_ParaAortic_Left;
 		this.lymphNode_ParaAortic_Right = lymphNode_ParaAortic_Right;
 		this.observation = observation;
-		// this.image = image;
 		this.deleted = deleted;
 		this.processed = processed;
 		this.createdBy = createdBy;
@@ -334,12 +327,6 @@ public class CancerAbdominalExamination {
 	public void setObservation(String observation) {
 		this.observation = observation;
 	}
-
-	/*
-	 * public Blob getImage() { return image; }
-	 * 
-	 * public void setImage(Blob image) { this.image = image; }
-	 */
 
 	public Boolean getDeleted() {
 		return deleted;
