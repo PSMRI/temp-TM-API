@@ -48,28 +48,16 @@ public class ConsultationReport {
 	
 	@Expose
 	private String specializationID;
-	
-//	@Expose
-//	private Timestamp scheduledTime;
-	
+		
 	@Expose
 	private Timestamp requestedDate;
 		
 	@Expose
 	private String consulted;
-	
-//	@Expose
-//	private Timestamp arrivalTime;
-	
+		
 	@Expose
 	private Timestamp beneficiaryArrivalTime;
-	
-//	@Expose
-//	private Timestamp consultedTime;
-//	
-//	@Expose
-//	private String waitingTime;
-	
+		
 	@Expose
 	private Timestamp consultationFirstStart;
 	
@@ -142,14 +130,6 @@ public class ConsultationReport {
 		this.specialistName = specialistName;
 	}
 
-//	public Timestamp getScheduledTime() {
-//		return scheduledTime;
-//	}
-//
-//	public void setScheduledTime(Timestamp scheduledTime) {
-//		this.scheduledTime = scheduledTime;
-//	}
-
 	public String getConsulted() {
 		return consulted;
 	}
@@ -158,33 +138,6 @@ public class ConsultationReport {
 		this.consulted = consulted;
 	}
 
-//	public Timestamp getArrivalTime() {
-//		return arrivalTime;
-//	}
-//
-//	public void setArrivalTime(Timestamp arrivalTime) {
-//		this.arrivalTime = arrivalTime;
-//	}
-
-//	public Timestamp getConsultedTime() {
-//		return consultedTime;
-//	}
-//
-//	public void setConsultedTime(Timestamp consultedTime) {
-//		this.consultedTime = consultedTime;
-//	}
-//
-//	public String getWaitingTime() {
-//		return waitingTime;
-//	}
-//
-//	public void setWaitingTime(String waitingTime) {
-//		this.waitingTime = waitingTime;
-//	}
-
-
-
-	
 
 
 
@@ -317,9 +270,6 @@ public class ConsultationReport {
 	public void setVisitCode(String visitCode) {
 		this.visitCode = visitCode;
 	}
-
-
-	
 	
 	
 }

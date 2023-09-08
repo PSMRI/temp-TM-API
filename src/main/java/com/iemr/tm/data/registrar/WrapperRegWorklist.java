@@ -79,7 +79,6 @@ public class WrapperRegWorklist {
 				wrapperRegWorklist.beneficiaryRegID = (Long) obj[0];
 				wrapperRegWorklist.beneficiaryID = (String) obj[1];
 				wrapperRegWorklist.benName = (String) obj[2];
-				// wrapperRegWorklist.dob = (Date) obj[3];
 				if (obj[3] != null) {
 					Date date = (Date) obj[3];
 					Calendar cal = Calendar.getInstance();
@@ -108,8 +107,6 @@ public class WrapperRegWorklist {
 							wrapperRegWorklist.age = d + " days";
 						}
 					}
-
-					//System.out.println("helloo");
 				}
 				wrapperRegWorklist.genderID = (Short) obj[4];
 				wrapperRegWorklist.genderName = (String) obj[5];
@@ -147,9 +144,6 @@ public class WrapperRegWorklist {
 	}
 
 	public static String getRegistrarWorkList(List<Object[]> resList) {
-		// GsonBuilder gsonBuilder = new GsonBuilder();
-		// gsonBuilder.serializeNulls();
-		// Gson gson = gsonBuilder.create();
 
 		ArrayList<WrapperRegWorklist> resArray = new ArrayList<>();
 		if (resList.size() > 0) {

@@ -21,9 +21,6 @@
 */
 package com.iemr.tm.repo.doctor;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -32,7 +29,6 @@ import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.iemr.tm.data.doctor.CancerOralExamination;
 import com.iemr.tm.data.doctor.CancerSignAndSymptoms;
 @Repository
 @RestResource(exported = false)

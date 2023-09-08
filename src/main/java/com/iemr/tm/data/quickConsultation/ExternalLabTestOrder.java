@@ -351,13 +351,7 @@ public class ExternalLabTestOrder {
 			
 			if (emrgCasesheet.has("externalInvestigation") && !emrgCasesheet.get("externalInvestigation").isJsonNull())
 				externalLabTestOrder.setTestName(emrgCasesheet.get("externalInvestigation").getAsString());
-			
-/*			if (obj.has("testResult") && !obj.get("testResult").isJsonNull())
-				externalLabTestOrder.setTestResult(obj.get("testResult").getAsString());
-			
-			if (obj.has("testReport") && !obj.get("testReport").isJsonNull())
-				externalLabTestOrder.setTestReport(obj.get("testReport").getAsString());*/
-			
+						
 			if (emrgCasesheet.has("createdBy") && !emrgCasesheet.get("createdBy").isJsonNull())
 				externalLabTestOrder.setCreatedBy(emrgCasesheet.get("createdBy").getAsString());
 			

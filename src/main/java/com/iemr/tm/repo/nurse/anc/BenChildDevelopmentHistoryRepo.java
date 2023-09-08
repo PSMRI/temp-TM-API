@@ -21,10 +21,7 @@
 */
 package com.iemr.tm.repo.nurse.anc;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

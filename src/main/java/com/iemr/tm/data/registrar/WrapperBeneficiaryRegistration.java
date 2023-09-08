@@ -21,8 +21,6 @@
 */
 package com.iemr.tm.data.registrar;
 
-import java.util.Map;
-
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 

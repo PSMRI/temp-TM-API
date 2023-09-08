@@ -230,7 +230,6 @@ public class BeneficiaryData {
 		this.beneficiaryID = beneficiaryID;
 		this.beneficiaryName = beneficiaryName;
 		this.genderID = genderID;
-		// this.dob = dob;
 		if (dob != null) {
 			Date date = (Date) dob;
 			Calendar cal = Calendar.getInstance();
@@ -248,7 +247,6 @@ public class BeneficiaryData {
 			int d = p.getDays();
 			int m = p.getMonths();
 			int y = p.getYears();
-			//System.out.println("helloo...");
 
 			if (y > 0) {
 				this.age = y + " years - " + m + " months";

@@ -21,8 +21,6 @@
 */
 package com.iemr.tm.data.quickConsultation;
 
-import java.util.List;
-
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 
