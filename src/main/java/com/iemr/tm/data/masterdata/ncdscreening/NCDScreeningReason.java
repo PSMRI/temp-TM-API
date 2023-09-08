@@ -23,7 +23,6 @@ package com.iemr.tm.data.masterdata.ncdscreening;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

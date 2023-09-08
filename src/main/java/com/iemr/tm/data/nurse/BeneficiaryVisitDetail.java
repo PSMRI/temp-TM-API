@@ -53,10 +53,6 @@ public class BeneficiaryVisitDetail {
 	@Expose
 	@Column(name = "VisitCode")
 	private Long visitCode;
-	// @Expose
-	// @OneToOne(fetch = FetchType.LAZY)
-	// @JoinColumn(updatable = false, insertable = false, name = "BeneficiaryRegID")
-	// private BeneficiaryData beneficiaryData;
 
 	@Expose
 	@Column(name = "ProviderServiceMapID")
@@ -183,7 +179,6 @@ public class BeneficiaryVisitDetail {
 		super();
 		this.benVisitID = benVisitID;
 		this.beneficiaryRegID = beneficiaryRegID;
-		// this.beneficiaryData = beneficiaryData;
 		this.providerServiceMapID = providerServiceMapID;
 		this.visitDateTime = visitDateTime;
 		this.visitNo = visitNo;
@@ -287,14 +282,6 @@ public class BeneficiaryVisitDetail {
 	public void setBeneficiaryRegID(Long beneficiaryRegID) {
 		this.beneficiaryRegID = beneficiaryRegID;
 	}
-
-	// public BeneficiaryData getBeneficiaryData() {
-	// return beneficiaryData;
-	// }
-	//
-	// public void setBeneficiaryData(BeneficiaryData beneficiaryData) {
-	// this.beneficiaryData = beneficiaryData;
-	// }
 
 	public Integer getProviderServiceMapID() {
 		return providerServiceMapID;

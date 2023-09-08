@@ -130,7 +130,9 @@ public class FoetalMonitorServiceImpl implements FoetalMonitorService {
 
 			// saving the feto sense response to DB
 			foetalMonitorDataOutside = foetalMonitorRepo.save(foetalMonitorDataOutside);
-
+			//need to write the code for changing the report path data to base 64 and save
+			//it in DB
+			
 			int flagUpdate = 0;
 
 			// updating lab technician flag to 3 from 2 as we got the response from feto

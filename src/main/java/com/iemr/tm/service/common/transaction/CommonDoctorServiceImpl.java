@@ -83,9 +83,6 @@ import com.iemr.tm.utils.exception.IEMRException;
 import com.iemr.tm.utils.mapper.InputMapper;
 import com.iemr.tm.utils.mapper.OutputMapper;
 
-/***
- * @author NE298657
- */
 @Service
 @PropertySource("classpath:application.properties")
 public class CommonDoctorServiceImpl {

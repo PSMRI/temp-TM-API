@@ -73,9 +73,6 @@ import com.iemr.tm.service.labtechnician.LabTechnicianServiceImpl;
 import com.iemr.tm.service.tele_consultation.SMSGatewayServiceImpl;
 import com.iemr.tm.utils.mapper.InputMapper;
 
-/***
- * @author NE298657
- */
 @Service
 public class GeneralOPDServiceImpl implements GeneralOPDService {
 	@Autowired

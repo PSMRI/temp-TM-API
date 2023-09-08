@@ -84,10 +84,6 @@ public class IDRSData {
 	@Transient
 	private String[] confirmArray;
 
-//    @OneToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name = "visitCode",insertable = false, updatable = false)
-//	@Expose
-//	private BeneficiaryFlowStatus beneficiaryFlowStatus;
 	@Expose
 	@Column(name = "DiseaseQuestionType")
 	private String diseaseQuestionType;
@@ -365,7 +361,6 @@ public class IDRSData {
 
 	public IDRSData() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public IDRSData(Long beneficiaryRegID, Long benVisitID, Integer providerServiceMapID, Integer idrsScore,
@@ -434,16 +429,6 @@ public class IDRSData {
 
 				idrsDetails.add(idrsData);
 			}
-
-//			for (Object[] obj : idrsHistory) {
-//				IDRSData idDetails = new IDRSData((String) obj[8]);
-//				if (idDetails.getSuspectedDisease() != null) {
-//					String[] susDisease = idDetails.getSuspectedDisease().split(",");
-//					if (susDisease != null)
-//						idDetails.setSuspectArray(susDisease);
-//				}
-//				
-//			}
 
 			benIdrsHistory.setIdrsDetails(idrsDetails);
 		}
