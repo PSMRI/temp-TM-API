@@ -121,10 +121,8 @@ import com.iemr.tm.repo.masterrepo.pnc.NewbornHealthStatusRepo;
 public class ANCMasterDataServiceImpl {
 
 	private AllergicReactionTypesRepo allergicReactionTypesRepo;
-	// private BirthComplicationRepo birthComplicationRepo;
 	private BloodGroupsRepo bloodGroupsRepo;
 	private ChildVaccinationsRepo childVaccinationsRepo;
-	// private DeliveryComplicationTypesRepo deliveryComplicationTypesRepo;
 	private DeliveryPlaceRepo deliveryPlaceRepo;
 	private DeliveryTypeRepo deliveryTypeRepo;
 	private DevelopmentProblemsRepo developmentProblemsRepo;
@@ -135,8 +133,6 @@ public class ANCMasterDataServiceImpl {
 	private MenstrualCycleStatusRepo menstrualCycleStatusRepo;
 	private MenstrualProblemRepo menstrualProblemRepo;
 	private MusculoskeletalRepo musculoskeletalRepo;
-	// private PostpartumComplicationTypesRepo postpartumComplicationTypesRepo;
-	// private PregComplicationTypesRepo pregComplicationTypesRepo;
 	private PregDurationRepo pregDurationRepo;
 	private SurgeryTypesRepo surgeryTypesRepo;
 	private ComorbidConditionRepo comorbidConditionRepo;
@@ -147,30 +143,18 @@ public class ANCMasterDataServiceImpl {
 	private CounsellingTypeRepo counsellingTypeRepo;
 	private InstituteRepo instituteRepo;
 	private PersonalHabitTypeRepo personalHabitTypeRepo;
-	// private PostNatalComplicationRepo postNatalComplicationRepo;
 	private PregOutcomeRepo pregOutcomeRepo;
 	private DiseaseTypeRepo diseaseTypeRepo;
-	// private NewBornComplicationRepo newBornComplicationRepo;
 	private ComplicationTypesRepo complicationTypesRepo;
-
 	private ChiefComplaintMasterRepo chiefComplaintMasterRepo;
 	private FamilyMemberMasterRepo familyMemberMasterRepo;
-	// private LabTestMasterRepo labTestMasterRepo;
-
 	private DrugDoseMasterRepo drugDoseMasterRepo;
 	private DrugDurationUnitMasterRepo drugDurationUnitMasterRepo;
-	// private DrugFormMasterRepo drugFormMasterRepo;
 	private DrugFrequencyMasterRepo drugFrequencyMasterRepo;
-
 	private NewbornHealthStatusRepo newbornHealthStatusRepo;
-
 	private NCDScreeningMasterServiceImpl ncdScreeningMasterServiceImpl;
 	private NCDCareTypeRepo ncdCareTypeRepo;
-
 	private ProcedureRepo procedureRepo;
-
-	// private TempMasterDrugRepo tempMasterDrugRepo;
-
 	private OptionalVaccinationsRepo optionalVaccinationsRepo;
 	@Autowired
 	private ItemMasterRepo itemMasterRepo;
@@ -207,20 +191,10 @@ public class ANCMasterDataServiceImpl {
 		this.itemFormMasterRepo = itemFormMasterRepo;
 	}
 
-	// @Autowired
-	// public void setItemMasterRepo(ItemMasterRepo itemMasterRepo) {
-	// this.itemMasterRepo = itemMasterRepo;
-	// }
-
 	@Autowired
 	public void setOptionalVaccinationsRepo(OptionalVaccinationsRepo optionalVaccinationsRepo) {
 		this.optionalVaccinationsRepo = optionalVaccinationsRepo;
 	}
-
-	// @Autowired
-	// public void setTempMasterDrugRepo(TempMasterDrugRepo tempMasterDrugRepo) {
-	// this.tempMasterDrugRepo = tempMasterDrugRepo;
-	// }
 
 	@Autowired
 	public void setProcedureRepo(ProcedureRepo procedureRepo) {
@@ -247,12 +221,6 @@ public class ANCMasterDataServiceImpl {
 		this.allergicReactionTypesRepo = allergicReactionTypesRepo;
 	}
 
-	// @Autowired
-	// public void setBirthComplicationRepo(BirthComplicationRepo
-	// birthComplicationRepo) {
-	// this.birthComplicationRepo = birthComplicationRepo;
-	// }
-
 	@Autowired
 	public void setBloodGroupsRepo(BloodGroupsRepo bloodGroupsRepo) {
 		this.bloodGroupsRepo = bloodGroupsRepo;
@@ -262,12 +230,6 @@ public class ANCMasterDataServiceImpl {
 	public void setChildVaccinationsRepo(ChildVaccinationsRepo childVaccinationsRepo) {
 		this.childVaccinationsRepo = childVaccinationsRepo;
 	}
-
-	// @Autowired
-	// public void setDeliveryComplicationTypesRepo(DeliveryComplicationTypesRepo
-	// deliveryComplicationTypesRepo) {
-	// this.deliveryComplicationTypesRepo = deliveryComplicationTypesRepo;
-	// }
 
 	@Autowired
 	public void setDeliveryPlaceRepo(DeliveryPlaceRepo deliveryPlaceRepo) {
@@ -319,19 +281,6 @@ public class ANCMasterDataServiceImpl {
 		this.musculoskeletalRepo = musculoskeletalRepo;
 	}
 
-	// @Autowired
-	// public void
-	// setPostpartumComplicationTypesRepo(PostpartumComplicationTypesRepo
-	// postpartumComplicationTypesRepo) {
-	// this.postpartumComplicationTypesRepo = postpartumComplicationTypesRepo;
-	// }
-	//
-	// @Autowired
-	// public void setPregComplicationTypesRepo(PregComplicationTypesRepo
-	// pregComplicationTypesRepo) {
-	// this.pregComplicationTypesRepo = pregComplicationTypesRepo;
-	// }
-
 	@Autowired
 	public void setPregDurationRepo(PregDurationRepo pregDurationRepo) {
 		this.pregDurationRepo = pregDurationRepo;
@@ -352,11 +301,6 @@ public class ANCMasterDataServiceImpl {
 		this.familyMemberMasterRepo = familyMemberMasterRepo;
 	}
 
-	// @Autowired
-	// public void setLabTestMasterRepo(LabTestMasterRepo labTestMasterRepo) {
-	// this.labTestMasterRepo = labTestMasterRepo;
-	// }
-
 	@Autowired
 	public void setDrugDoseMasterRepo(DrugDoseMasterRepo drugDoseMasterRepo) {
 		this.drugDoseMasterRepo = drugDoseMasterRepo;
@@ -366,11 +310,6 @@ public class ANCMasterDataServiceImpl {
 	public void setDrugDurationUnitMasterRepo(DrugDurationUnitMasterRepo drugDurationUnitMasterRepo) {
 		this.drugDurationUnitMasterRepo = drugDurationUnitMasterRepo;
 	}
-
-	// @Autowired
-	// public void setDrugFormMasterRepo(DrugFormMasterRepo drugFormMasterRepo) {
-	// this.drugFormMasterRepo = drugFormMasterRepo;
-	// }
 
 	@Autowired
 	public void setDrugFrequencyMasterRepo(DrugFrequencyMasterRepo drugFrequencyMasterRepo) {
@@ -417,11 +356,6 @@ public class ANCMasterDataServiceImpl {
 		this.personalHabitTypeRepo = personalHabitTypeRepo;
 	}
 
-	// @Autowired
-	// public void setPostNatalComplicationRepo(PostNatalComplicationRepo
-	// postNatalComplicationRepo) {
-	// this.postNatalComplicationRepo = postNatalComplicationRepo;
-	// }
 
 	@Autowired
 	public void setPregOutcomeRepo(PregOutcomeRepo pregOutcomeRepo) {
@@ -432,12 +366,6 @@ public class ANCMasterDataServiceImpl {
 	public void setDiseaseTypeRepo(DiseaseTypeRepo diseaseTypeRepo) {
 		this.diseaseTypeRepo = diseaseTypeRepo;
 	}
-
-	// @Autowired
-	// public void setNewBornComplicationRepo(NewBornComplicationRepo
-	// newBornComplicationRepo) {
-	// this.newBornComplicationRepo = newBornComplicationRepo;
-	// }
 
 	@Autowired
 	public void setComplicationTypesRepo(ComplicationTypesRepo complicationTypesRepo) {
@@ -452,12 +380,8 @@ public class ANCMasterDataServiceImpl {
 		Map<String, Object> resMap = new HashMap<String, Object>();
 
 		ArrayList<Object[]> allergicReactionTypes = allergicReactionTypesRepo.getAllergicReactionTypes();
-		// ArrayList<Object[]> birthComplications =
-		// birthComplicationRepo.getBirthComplicationTypes();
 		ArrayList<Object[]> bloodGroups = bloodGroupsRepo.getBloodGroups();
 		ArrayList<Object[]> childVaccinations = childVaccinationsRepo.getChildVaccinations();
-		// ArrayList<Object[]> deliveryComplicationTypes =
-		// deliveryComplicationTypesRepo.getDeliveryComplicationTypes();
 		ArrayList<Object[]> deliveryPlace = deliveryPlaceRepo.getDeliveryPlaces();
 		ArrayList<Object[]> deliveryType = deliveryTypeRepo.getDeliveryTypes();
 		ArrayList<Object[]> developmentProblems = developmentProblemsRepo.getDevelopmentProblems();
@@ -473,10 +397,6 @@ public class ANCMasterDataServiceImpl {
 		ArrayList<Object[]> musculoskeletalLateralityTypes = musculoskeletalRepo.getMusculoskeletalvalues("Laterality");
 		ArrayList<Object[]> musculoskeletalAbnormalityTypes = musculoskeletalRepo
 				.getMusculoskeletalvalues("Abnormality");
-		// ArrayList<Object[]> postpartumComplicationTypes =
-		// postpartumComplicationTypesRepo.getPostpartumComplicationTypes();
-		// ArrayList<Object[]> pregComplicationTypes =
-		// pregComplicationTypesRepo.getPregComplicationTypes();
 		ArrayList<Object[]> pregDuration = pregDurationRepo.getPregDurationTypes();
 		// # surgery history
 		ArrayList<Object[]> surgeryTypes = surgeryTypesRepo.getSurgeryTypes(visitCategoryID, gender);
@@ -487,13 +407,7 @@ public class ANCMasterDataServiceImpl {
 		ArrayList<Object[]> feedTypes = compFeedsRepo.getCompFeeds("Feed Type");
 		ArrayList<Object[]> compFeedAges = compFeedsRepo.getCompFeeds("Comp Feed Age");
 		ArrayList<Object[]> compFeedServings = compFeedsRepo.getCompFeeds("Comp Feed Serving ");
-		// ArrayList<Object[]> postNatalComplications =
-		// postNatalComplicationRepo.getPostNatalComplications();
 		ArrayList<Object[]> pregOutcomes = pregOutcomeRepo.getPregOutcomes();
-		// ArrayList<Object[]> newBornComplications =
-		// newBornComplicationRepo.getNewBornComplications();
-
-		// complications - moved to m_complication table
 		ArrayList<Object[]> birthComplications = complicationTypesRepo.getComplicationTypes("Birth Complication");
 		ArrayList<Object[]> deliveryComplicationTypes = complicationTypesRepo
 				.getComplicationTypes("Delivery Complication");
@@ -516,26 +430,11 @@ public class ANCMasterDataServiceImpl {
 		resMap.put("serviceFacilities", serviceFacility);
 
 		// newborn and birth complications are same
-		// ArrayList<Object[]> newBornComplications =
-		// complicationTypesRepo.getComplicationTypes("Birth Complication");
 
 		// existing
 		ArrayList<Object[]> ccList = chiefComplaintMasterRepo.getChiefComplaintMaster();
 
 		ArrayList<Object[]> DiseaseTypes = diseaseTypeRepo.getDiseaseTypes();
-		// ArrayList<Object[]> tobaccoUseStatus = cancerPersonalHabitMasterRepo
-		// .getCancerPersonalHabitTypeMaster("Tobacco Use Status");
-		// ArrayList<Object[]> typeOfTobaccoProducts = cancerPersonalHabitMasterRepo
-		// .getCancerPersonalHabitTypeMaster("Type of Tobacco Product");
-		// ArrayList<Object[]> alcoholUseStatus = cancerPersonalHabitMasterRepo
-		// .getCancerPersonalHabitTypeMaster("Alcohol Usage");
-		// ArrayList<Object[]> typeOfAlcoholProducts = cancerPersonalHabitMasterRepo
-		// .getCancerPersonalHabitTypeMaster("Type of Alcohol");
-		//
-		// ArrayList<Object[]> frequencyOfAlcoholIntake = cancerPersonalHabitMasterRepo
-		// .getCancerPersonalHabitTypeMaster("Frequency of Alcohol Intake");
-		// ArrayList<Object[]> quantityOfAlcoholIntake = cancerPersonalHabitMasterRepo
-		// .getCancerPersonalHabitTypeMaster("Average Quantity of Alcohol consumption");
 
 		ArrayList<Object[]> tobaccoUseStatus = personalHabitTypeRepo.getPersonalHabitTypeMaster("Tobacco Use Status");
 		ArrayList<Object[]> typeOfTobaccoProducts = personalHabitTypeRepo
@@ -671,8 +570,6 @@ public class ANCMasterDataServiceImpl {
 		}
 
 		itemList = v_DrugPrescriptionRepo.getItemListForFacility(facilityID);
-		// ArrayList<ItemMaster> edlList=new ArrayList<>();
-		// edlList=itemMasterRepo.findByEdl();
 		resMap.put("drugFormMaster", ItemFormMaster.getItemFormList(ifmList));
 		resMap.put("drugDoseMaster", DrugDoseMaster.getDrugDoseMasters(ddmList));
 		resMap.put("drugDurationUnitMaster", DrugDurationUnitMaster.getDrugDurationUnitMaster(ddumList));

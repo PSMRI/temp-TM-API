@@ -697,7 +697,6 @@ public class GeneralOPDServiceImpl implements GeneralOPDService {
 	/**
 	 * @param JsonObject
 	 * @return saveSuccessFlag
-	 * 
 	 */
 	/// --------------- start of saving doctor data ------------------------
 	@Override
@@ -949,7 +948,6 @@ public class GeneralOPDServiceImpl implements GeneralOPDService {
 	}
 
 	/**
-	 * 
 	 * @param requestOBJ
 	 * @return success or failure flag for General OPD History updating by Doctor
 	 */
@@ -1132,7 +1130,6 @@ public class GeneralOPDServiceImpl implements GeneralOPDService {
 	}
 
 	/**
-	 * 
 	 * @param requestOBJ
 	 * @return success or failure flag for vitals data updating
 	 */
@@ -1162,7 +1159,6 @@ public class GeneralOPDServiceImpl implements GeneralOPDService {
 	}
 
 	/**
-	 * 
 	 * @param requestOBJ
 	 * @return success or failure flag for Examinationm data updating
 	 */
@@ -1320,7 +1316,6 @@ public class GeneralOPDServiceImpl implements GeneralOPDService {
 		Integer diagnosisSuccessFlag = null;
 		Integer prescriptionSuccessFlag = null;
 		Long referSaveSuccessFlag = null;
-		// Integer tcRequestStatusFlag = null;
 
 		if (requestOBJ != null) {
 			TeleconsultationRequestOBJ tcRequestOBJ = null;

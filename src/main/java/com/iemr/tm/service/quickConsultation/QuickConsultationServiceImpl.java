@@ -27,7 +27,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -142,35 +141,6 @@ public class QuickConsultationServiceImpl implements QuickConsultationService {
 		return r;
 	}
 
-	// now not required
-	// @Deprecated
-	// @Override
-	// public Long saveBeneficiaryPrescribedDrugDetail(JsonObject caseSheet, Long
-	// prescriptionID,
-	// CommonUtilityClass commonUtilityClass) {
-	// Long prescribedDrugSuccessFlag = null;
-	// ArrayList<PrescribedDrugDetail> prescriptionDetails = PrescribedDrugDetail
-	// .getBenPrescribedDrugDetailList(caseSheet, prescriptionID,
-	// commonUtilityClass);
-	//
-	// /*
-	// * List<PrescribedDrugDetail> prescribedDrugs = (List<PrescribedDrugDetail>)
-	// * prescribedDrugDetailRepo .save(prescriptionDetails);
-	// *
-	// * if (null != prescribedDrugs && prescribedDrugs.size() > 0) { for
-	// * (PrescribedDrugDetail prescribedDrug : prescribedDrugs) { return
-	// * prescribedDrug.getPrescribedDrugID(); } }
-	// */
-	//
-	// Integer r =
-	// commonNurseServiceImpl.saveBenPrescribedDrugsList(prescriptionDetails);
-	// if (r > 0 && r != null) {
-	// prescribedDrugSuccessFlag = new Long(r);
-	// }
-	//
-	// return prescribedDrugSuccessFlag;
-	// }
-
 	@Override
 	public Long saveBeneficiaryExternalLabTestOrderDetails(JsonObject caseSheet) {
 
@@ -204,9 +174,6 @@ public class QuickConsultationServiceImpl implements QuickConsultationService {
 
 			// Getting benflowID for ben status update
 			Long benFlowID = null;
-			// if (jsnOBJ.has("benFlowID")) {
-			// benFlowID = jsnOBJ.get("benFlowID").getAsLong();
-			// }
 
 			// Above if block code replaced by below line
 			benFlowID = nurseUtilityClass.getBenFlowID();
@@ -323,7 +290,6 @@ public class QuickConsultationServiceImpl implements QuickConsultationService {
 		// Integer tcRequestStatusFlag = null;
 
 		TeleconsultationRequestOBJ tcRequestOBJ = null;
-		// TcSpecialistSlotBookingRequestOBJ tcSpecialistSlotBookingRequestOBJ = null;
 		CommonUtilityClass commonUtilityClass = InputMapper.gson().fromJson(quickConsultDoctorOBJ,
 				CommonUtilityClass.class);
 
@@ -480,14 +446,6 @@ public class QuickConsultationServiceImpl implements QuickConsultationService {
 				new Gson().toJson(labTechnicianServiceImpl.getLabResultDataForBen(benRegID, visitCode)));
 		resMap.put("ArchivedVisitcodeForLabResult",
 				labTechnicianServiceImpl.getLast_3_ArchivedTestVisitList(benRegID, visitCode));
-
-		// resList.add(commonDoctorServiceImpl.getFindingsDetails(benRegID, visitCode));
-		// resList.add(commonDoctorServiceImpl.getInvestigationDetails(benRegID,
-		// visitCode));
-		// resList.add(commonDoctorServiceImpl.getPrescribedDrugs(benRegID, visitCode));
-		// resList.add(new
-		// Gson().toJson(labTechnicianServiceImpl.getLabResultDataForBen(benRegID,
-		// visitCode)));
 
 		return resMap.toString();
 	}

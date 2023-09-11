@@ -22,7 +22,6 @@
 package com.iemr.tm.service.ncdscreening;
 
 import com.google.gson.JsonObject;
-import com.iemr.tm.data.ncdScreening.NCDScreening;
 
 public interface NCDScreeningService {
 	

@@ -27,8 +27,6 @@ public interface ANCService {
 
 	public String saveANCNurseData(JsonObject requestOBJ, String Authorization) throws Exception;
 
-	// int UpdateANCVisitDetails(JsonObject jsnOBJ) throws Exception;
-
 	String getBenVisitDetailsFrmNurseANC(Long benRegID, Long visitCode);
 
 	String getBenANCHistoryDetails(Long benRegID, Long visitCode);

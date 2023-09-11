@@ -162,12 +162,9 @@ public class RegistrarServiceMasterDataImpl implements RegistrarServiceMasterDat
 			resMap.put("qualificationMaster", QualificationMaster.getQualificationMasterData(qm));
 			resMap.put("religionMaster", ReligionMaster.getReligionMasterData(rm));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			logger.error(e.getMessage());
 		}
 
-		// System.out.println("helloo");
-		// System.out.println(new Gson().toJson(resMap));
 		return new Gson().toJson(resMap);
 
 	}
@@ -181,11 +178,8 @@ public class RegistrarServiceMasterDataImpl implements RegistrarServiceMasterDat
 
 	@Override
 	public String getBenDetailsByRegID(Long beneficiaryRegID) {
-		// List<Object[]> benDetailsList =
-		// registrarRepoBenData.getBenDetailsByRegID(beneficiaryRegID);
 		List<Object[]> benDetailsList = reistrarRepoBenSearch.getBenDetails(beneficiaryRegID);
 		BeneficiaryData benDetails = BeneficiaryData.getBeneficiaryData(benDetailsList).get(0);
-		// String benImage = beneficiaryImageRepo.getBenImage(beneficiaryRegID);
 		benDetails.setImage(beneficiaryImageRepo.getBenImage(beneficiaryRegID));
 		if (benDetails != null) {
 			if (benDetails.getGenderID() != null) {
@@ -230,7 +224,6 @@ public class RegistrarServiceMasterDataImpl implements RegistrarServiceMasterDat
 		HttpEntity<Object> request = new HttpEntity<Object>(comingRequest, headers);
 		ResponseEntity<String> response = restTemplate.exchange(getBenImageFromIdentity, HttpMethod.POST, request,
 				String.class);
-		// if()
 		returnOBJ = response.getBody();
 		return returnOBJ;
 	}

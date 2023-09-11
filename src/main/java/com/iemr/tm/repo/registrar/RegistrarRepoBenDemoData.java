@@ -21,7 +21,6 @@
 */
 package com.iemr.tm.repo.registrar;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,7 +33,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.stereotype.Repository;
 
-import com.iemr.tm.data.nurse.BeneficiaryVisitDetail;
 import com.iemr.tm.data.registrar.BeneficiaryDemographicData;
 @Repository
 @RestResource(exported = false)

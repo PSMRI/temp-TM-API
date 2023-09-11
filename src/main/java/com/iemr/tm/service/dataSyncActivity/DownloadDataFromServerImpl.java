@@ -68,13 +68,9 @@ public class DownloadDataFromServerImpl implements DownloadDataFromServer {
 	private static int progressCounter = 0;
 	private static int totalCounter = 0;
 	private static StringBuilder failedMasters;
-
-	// private static int successCounter;
 	private static int failedCounter;
-	// private static int downloadProgress;
 
 	/**
-	 * 
 	 * @return
 	 * @throws Exception Masters download in van from central server
 	 */
@@ -131,32 +127,6 @@ public class DownloadDataFromServerImpl implements DownloadDataFromServer {
 
 		});
 
-		// if (downloadMasterList != null && downloadMasterList.size() > 0) {
-		// for (SyncDownloadMaster table : downloadMasterList) {
-		// try {
-		// table.setVanID(vanID);
-		// table.setProviderServiceMapID(psmID);
-		//
-		// int i = downloadDataFromServer(table, ServerAuthorization);
-		// if (i > 0) {
-		// successCounter++;
-		// } else {
-		// failedCounter++;
-		// failedMasters.append(table.getTableName() + " | ");
-		// logger.error("Download failed for " + table.getSchemaName() + "." +
-		// table.getTableName());
-		// }
-		// } catch (Exception e) {
-		// failedCounter++;
-		// failedMasters.append(table.getTableName() + " | ");
-		// logger.error("Download failed for " + table.getSchemaName() + "." +
-		// table.getTableName()
-		// + ". Exception : " + e);
-		// }
-		//
-		// progressCounter++;
-		// }
-		// }
 		return successFlag;
 	}
 
@@ -181,7 +151,6 @@ public class DownloadDataFromServerImpl implements DownloadDataFromServer {
 		if (response != null && response.hasBody()) {
 			JSONObject obj = new JSONObject(response.getBody());
 			if (obj != null && obj.has("data") && obj.has("statusCode") && obj.getInt("statusCode") == 200) {
-				// JSONArray dataList = obj.getJSONArray("data");
 				// Consume the response from API in master data digester
 				MasterDownloadDataDigester masterDownloadDataDigester = InputMapper.gson().fromJson(response.getBody(),
 						MasterDownloadDataDigester.class);
@@ -229,9 +198,6 @@ public class DownloadDataFromServerImpl implements DownloadDataFromServer {
 
 		StringBuilder preparedStatementSetter = new StringBuilder();
 		StringBuilder updateStatement = new StringBuilder();
-
-		// temp code pointing to diff target schema
-		// syncDownloadMaster.setSchemaName("db_iemr_sync");
 
 		if (columnsArr != null && columnsArr.length > 0) {
 			int index = 0;

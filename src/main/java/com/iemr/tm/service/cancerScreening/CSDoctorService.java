@@ -34,22 +34,6 @@ import com.iemr.tm.data.doctor.WrapperCancerExamImgAnotasn;
 
 public interface CSDoctorService {
 
-	//public Long saveCancerSignAndSymptomsData(CancerSignAndSymptoms cancerSignAndSymptoms);
-
-	//public Long saveLymphNodeDetails(List<CancerLymphNodeDetails> cancerLymphNodeDetails);
-
-	//public Long saveCancerOralExaminationData(CancerOralExamination cancerOralExamination);
-
-	//public Long saveCancerBreastExaminationData(CancerBreastExamination cancerBreastExamination);
-
-	//public Long saveCancerAbdominalExaminationData(CancerAbdominalExamination cancerAbdominalExamination);
-
-	//public Long saveCancerGynecologicalExaminationData(CancerGynecologicalExamination cancerGynecologicalExamination);
-
-	//public Long saveDocExaminationImageAnnotation(List<WrapperCancerExamImgAnotasn> wrapperCancerExamImgAnotasnList);
-
 	public Long saveCancerDiagnosisData(CancerDiagnosis cancerDiagnosis);
-
-	//public Long saveCancerSignAndSymptomsData(CancerSignAndSymptoms cancerSignAndSymptoms, Long benVisitID);
 
 }

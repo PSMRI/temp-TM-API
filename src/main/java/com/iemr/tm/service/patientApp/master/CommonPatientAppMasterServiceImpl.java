@@ -299,43 +299,6 @@ public class CommonPatientAppMasterServiceImpl implements CommonPatientAppMaster
 	private Integer creataAndUpdateBeneficairyFlowStatus(TeleconsultationRequestOBJ tcRequestOBJ,
 			BeneficiaryVisitDetail obj, CommonUtilityClass nurseUtilityClass) throws Exception {
 		BeneficiaryFlowStatus benFlowOBJ = new BeneficiaryFlowStatus();
-//
-//		Quickblox qb;
-//		if (tcRequestOBJ.getUserID() != null)
-//		qb = quickBloxRepo.getQuickbloxIds(tcRequestOBJ.getUserID());
-//		else
-//			throw new RuntimeException("Quickblox user mapping not avaialble");
-
-//		//for quickblox start
-
-//		Map<String, Long> quickBlox = new HashMap<String, Long>();
-//		quickBlox.put("specialistUserID", Long.valueOf(tcRequestOBJ.getUserID()));
-//		RestTemplate restTemplate = new RestTemplate();
-//		MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
-//		headers.add("Content-Type", "application/json");
-//		headers.add("AUTHORIZATION", Authorization);
-//		HttpEntity<Object> request = new HttpEntity<Object>(quickBlox.toString(), headers);
-//		ResponseEntity<String> response = restTemplate.exchange(getQuickbloxIds, HttpMethod.POST, request,
-//				String.class);
-//
-//		String specialistBenQuickbloxID = "";
-//		if (response.getStatusCodeValue() == 200 && response.hasBody()) {
-//			JsonObject jsnOBJ = new JsonObject();
-//			JsonObject check = new JsonObject();
-//			JsonParser jsnParser = new JsonParser();
-//			JsonElement jsnElmnt = jsnParser.parse(response.getBody());
-//			jsnOBJ = jsnElmnt.getAsJsonObject();
-//			if (jsnOBJ.has("statusCode") && jsnOBJ.get("statusCode").getAsInt() == 200)
-//				check = jsnOBJ.getAsJsonObject("data");
-//			specialistBenQuickbloxID = check.getAsJsonObject("quickbloxIds").get("specialistBenQuickbloxID")
-//					.getAsString();
-//		}
-		// benFlowOBJ.setBenQuickbloxID(Long.parseLong(specialistBenQuickbloxID));
-
-		// for quickblox end
-
-//		if (qb != null && qb.getSpecialistBenQuickbloxID() != null)
-//			benFlowOBJ.setBenQuickbloxID(qb.getSpecialistBenQuickbloxID());
 
 		benFlowOBJ.setBeneficiaryRegID(obj.getBeneficiaryRegID());
 		benFlowOBJ.setBenVisitID(obj.getBenVisitID());

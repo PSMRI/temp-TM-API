@@ -290,10 +290,6 @@ public class ANCNurseServiceImpl implements ANCNurseService {
 				benAdherence.getToReferral(), benAdherence.getReferralReason(), benAdherence.getProgress(),
 				benAdherence.getModifiedBy(), processed, benAdherence.getBeneficiaryRegID(),
 				benAdherence.getBenVisitID(), benAdherence.getID());
-		/*
-		 * BenAdherence adherence= benAdherenceRepo.save(benAdherence); if(null
-		 * !=adherence){ r=1; }
-		 */
 		return r;
 	}
 

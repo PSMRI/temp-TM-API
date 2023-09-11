@@ -22,7 +22,6 @@
 package com.iemr.tm.service.pnc;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,7 +30,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
-import com.iemr.tm.data.anc.ANCCareDetails;
 import com.iemr.tm.data.pnc.PNCCare;
 import com.iemr.tm.repo.nurse.pnc.PNCCareRepo;
 

@@ -74,11 +74,6 @@ public interface TCRequestModelRepo extends CrudRepository<TCRequestModel, Long>
 			+ " WHERE SMSTypeID = :smsTypeID AND deleted<>true ", nativeQuery = true)
 	public ArrayList<Integer> getSMSTemplateID(@Param("smsTypeID") Integer smsTypeID);
 
-	// @Query(value = " SELECT Specialization FROM db_iemr.m_specialization "
-	// + " WHERE SpecializationID = :specializationID ", nativeQuery = true)
-	// public String getSpecializationDetail(@Param("specializationID") Integer
-	// specializationID);
-
 	@Query(" SELECT t FROM TCRequestModel t WHERE t.beneficiaryRegID = :benRegID AND t.visitCode = :visitCode "
 			+ " AND t.deleted is false AND t.userID = :userID AND t.status IN ('N', 'A', 'O') ")
 	public TCRequestModel getSpecializationID(@Param("benRegID") Long benRegID, @Param("visitCode") Long visitCode,

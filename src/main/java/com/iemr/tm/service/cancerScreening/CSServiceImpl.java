@@ -1273,7 +1273,6 @@ public class CSServiceImpl implements CSService {
 	}
 
 	private int createCareStreamOrder(long benRegID, long benVisitID, String Authorization, Long benFlowID) {
-//		ArrayList<Object[]> benDataForCareStream = registrarRepoBenData.getBenDataForCareStream(benRegID);
 		ArrayList<Object[]> benDataForCareStream = beneficiaryFlowStatusRepo.getBenDataForCareStream(benFlowID);
 
 		int r = cSCarestreamServiceImpl.createMamographyRequest(benDataForCareStream, benRegID, benVisitID,

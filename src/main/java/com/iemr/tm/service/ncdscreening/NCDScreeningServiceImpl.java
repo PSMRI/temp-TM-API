@@ -22,12 +22,10 @@
 package com.iemr.tm.service.ncdscreening;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +35,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.iemr.tm.data.anc.BenAdherence;
 import com.iemr.tm.data.anc.BenAllergyHistory;
 import com.iemr.tm.data.anc.BenChildDevelopmentHistory;
 import com.iemr.tm.data.anc.BenFamilyHistory;
@@ -53,11 +50,9 @@ import com.iemr.tm.data.anc.WrapperComorbidCondDetails;
 import com.iemr.tm.data.anc.WrapperFemaleObstetricHistory;
 import com.iemr.tm.data.anc.WrapperImmunizationHistory;
 import com.iemr.tm.data.anc.WrapperMedicationHistory;
-import com.iemr.tm.data.masterdata.ncdscreening.PhysicalActivity;
 import com.iemr.tm.data.ncdScreening.IDRSData;
 import com.iemr.tm.data.ncdScreening.NCDScreening;
 import com.iemr.tm.data.ncdScreening.PhysicalActivityType;
-import com.iemr.tm.data.ncdcare.NCDCareDiagnosis;
 import com.iemr.tm.data.nurse.BenAnthropometryDetail;
 import com.iemr.tm.data.nurse.BenPhysicalVitalDetail;
 import com.iemr.tm.data.nurse.BeneficiaryVisitDetail;
@@ -65,23 +60,16 @@ import com.iemr.tm.data.nurse.CommonUtilityClass;
 import com.iemr.tm.data.quickConsultation.BenChiefComplaint;
 import com.iemr.tm.data.quickConsultation.PrescribedDrugDetail;
 import com.iemr.tm.data.quickConsultation.PrescriptionDetail;
-import com.iemr.tm.data.snomedct.SCTDescription;
-import com.iemr.tm.data.tele_consultation.TCRequestModel;
-import com.iemr.tm.data.tele_consultation.TcSpecialistSlotBookingRequestOBJ;
 import com.iemr.tm.data.tele_consultation.TeleconsultationRequestOBJ;
 import com.iemr.tm.repo.benFlowStatus.BeneficiaryFlowStatusRepo;
 import com.iemr.tm.repo.nurse.BenVisitDetailRepo;
 import com.iemr.tm.repo.nurse.ncdscreening.IDRSDataRepo;
 import com.iemr.tm.repo.quickConsultation.PrescriptionDetailRepo;
-import com.iemr.tm.service.anc.Utility;
 import com.iemr.tm.service.benFlowStatus.CommonBenStatusFlowServiceImpl;
 import com.iemr.tm.service.common.transaction.CommonDoctorServiceImpl;
 import com.iemr.tm.service.common.transaction.CommonNurseServiceImpl;
 import com.iemr.tm.service.common.transaction.CommonServiceImpl;
-import com.iemr.tm.service.generalOPD.GeneralOPDDoctorServiceImpl;
-import com.iemr.tm.service.generalOPD.GeneralOPDServiceImpl;
 import com.iemr.tm.service.labtechnician.LabTechnicianServiceImpl;
-import com.iemr.tm.service.ncdCare.NCDCareDoctorServiceImpl;
 import com.iemr.tm.service.tele_consultation.SMSGatewayServiceImpl;
 import com.iemr.tm.service.tele_consultation.TeleConsultationServiceImpl;
 import com.iemr.tm.utils.mapper.InputMapper;
@@ -146,65 +134,10 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 		this.commonDoctorServiceImpl = commonDoctorServiceImpl;
 	}
 
-
-
-
-
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public String saveNCDScreeningNurseData(JsonObject requestOBJ, String Authorization) throws Exception {
 
-//		Integer result = null;
-//
-//		if (jsonObject != null && jsonObject.has("visitDetails") && jsonObject.has("ncdScreeningDetails")) {
-//			// JsonElement visitDetails = jsonObject.get("visitDetails");
-//			// JsonElement ncdScreeningDetails =
-//			// jsonObject.get("ncdScreeningDetails");
-//			CommonUtilityClass nurseUtilityClass = InputMapper.gson().fromJson(jsonObject, CommonUtilityClass.class);
-//			Long benFlowID = nurseUtilityClass.getBenFlowID();
-//
-//			BeneficiaryVisitDetail beneficiaryVisitDetail = InputMapper.gson().fromJson(jsonObject.get("visitDetails"),
-//					BeneficiaryVisitDetail.class);
-//
-//			NCDScreening ncdScreening = InputMapper.gson().fromJson(jsonObject.get("ncdScreeningDetails"),
-//					NCDScreening.class);
-//
-//			if (ncdScreening.getNextScreeningDate() != null)
-//				ncdScreening.setNextScreeningDateDB(Timestamp
-//						.valueOf(ncdScreening.getNextScreeningDate().replaceAll("T", " ").replaceAll("Z", " ")));
-//
-//			Long visitID = commonNurseServiceImpl.saveBeneficiaryVisitDetails(beneficiaryVisitDetail);
-//
-//			// 11-06-2018 visit code
-//			Long benVisitCode = commonNurseServiceImpl.generateVisitCode(visitID, nurseUtilityClass.getVanID(),
-//					nurseUtilityClass.getSessionID());
-//
-//			if (null != visitID) {
-//
-//				Long vitalSuccessFlag = saveNCDScreeningVitalDetails(jsonObject, visitID, benVisitCode);
-//				Long saveNCDScreeningDetails = null;
-//				ncdScreening.setBenVisitID(visitID);
-//				ncdScreening.setVisitCode(benVisitCode);
-//				saveNCDScreeningDetails = ncdScreeningNurseServiceImpl.saveNCDScreeningDetails(ncdScreening);
-//
-//				if (null != vitalSuccessFlag && null != saveNCDScreeningDetails) {
-//
-//					int i = updateBenFlowNurseAfterNurseActivityANC(beneficiaryVisitDetail.getBeneficiaryRegID(),
-//							visitID, benFlowID, beneficiaryVisitDetail.getVisitReason(),
-//							beneficiaryVisitDetail.getVisitCategory(), ncdScreening.getIsScreeningComplete(),
-//							benVisitCode, nurseUtilityClass.getVanID());
-//
-//					result = 1;
-//				} else {
-//					throw new RuntimeException("Error occurred while saving data");
-//				}
-//			} else
-//				throw new RuntimeException("Error occurred while creating beneficiary visit");
-//		} else {
-//			throw new Exception("Invalid input");
-//		}
-//		return result;
-		//Shubham Shekhar,8-12-2020,WDF
 		Long saveSuccessFlag = null;
 		TeleconsultationRequestOBJ tcRequestOBJ = null;
 		Long benVisitCode = null;
@@ -336,7 +269,6 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 
 		}
 	/**
-	 * 
 	 * @param requestOBJ
 	 * @return success or failure flag for visitDetails data saving
 	 */
@@ -438,7 +370,6 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 		return vitalSuccessFlag;
 	}
 	/**
-	 * 
 	 * @param requestOBJ
 	 * @return success or failure flag for visitDetails data saving
 	 */
@@ -773,9 +704,6 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 				}
 			}
 
-//			if (idrsFlag != null && idrsFlag > 0 ) {
-//				vitalSuccessFlag = anthropometrySuccessFlag;
-//			}
 		}
 
 		return idrsFlag;
@@ -796,15 +724,11 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 						.savePhysicalActivity(physicalActivityDetail);
 			}
 
-//			if (idrsFlag != null && idrsFlag > 0 ) {
-//				vitalSuccessFlag = anthropometrySuccessFlag;
-//			}
 		}
 
 		return physicalActivityFlag;
 	}
 	/**
-	 * 
 	 * @param requestOBJ
 	 * @return success or failure flag for visitDetails data saving
 	 */
@@ -1064,15 +988,10 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 								idrsFlag = new Long(1);
 							}
 						}
-//					idrsFlag = commonNurseServiceImpl
-//							.saveIDRS(idrsDetail1);
 				}
 				
 			}
 
-//			if (idrsFlag != null && idrsFlag > 0 ) {
-//				vitalSuccessFlag = anthropometrySuccessFlag;
-//			}
 		}
 
 		return idrsFlag;
@@ -1141,36 +1060,12 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 			} else {
 			}
 
-//			String instruction = null;
-//			if (requestOBJ.has("diagnosis") && !requestOBJ.get("diagnosis").isJsonNull()
-//					&& requestOBJ.get("diagnosis").getAsJsonObject().has("specialistDiagnosis")
-//					&& !requestOBJ.get("diagnosis").getAsJsonObject().get("specialistDiagnosis").isJsonNull()) {
-//				instruction = requestOBJ.get("diagnosis").getAsJsonObject().get("specialistDiagnosis").getAsString();
-//			}
-//			
-//			String doctorDiagnosis = null;
-//			if (requestOBJ.has("diagnosis") && !requestOBJ.get("diagnosis").isJsonNull()
-//					&& requestOBJ.get("diagnosis").getAsJsonObject().has("doctorDiagnosis")
-//					&& !requestOBJ.get("diagnosis").getAsJsonObject().get("doctorDiagnosis").isJsonNull()) {
-//				doctorDiagnosis = requestOBJ.get("diagnosis").getAsJsonObject().get("doctorDiagnosis").getAsString();
-//			}
 
 			// generate prescription
 			WrapperBenInvestigationANC wrapperBenInvestigationANC = InputMapper.gson()
 					.fromJson(requestOBJ.get("investigation"), WrapperBenInvestigationANC.class);
-//			prescriptionID = commonNurseServiceImpl.savePrescriptionCovid(
-//					wrapperBenInvestigationANC.getBeneficiaryRegID(), wrapperBenInvestigationANC.getBenVisitID(),
-//					wrapperBenInvestigationANC.getProviderServiceMapID(), wrapperBenInvestigationANC.getCreatedBy(),
-//					wrapperBenInvestigationANC.getExternalInvestigations(), wrapperBenInvestigationANC.getVisitCode(),
-//					wrapperBenInvestigationANC.getVanID(), wrapperBenInvestigationANC.getParkingPlaceID());
-			// Save Prescription
 						prescriptionDetail.setExternalInvestigation(wrapperBenInvestigationANC.getExternalInvestigations());
-						prescriptionID = commonNurseServiceImpl.saveBenPrescription(prescriptionDetail);
-			
-			
-
-			
-
+						prescriptionID = commonNurseServiceImpl.saveBenPrescription(prescriptionDetail);			
 			
 			// save prescribed lab test
 			if (isTestPrescribed) {
@@ -1201,8 +1096,6 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 			} else {
 				prescriptionSuccessFlag = 1;
 			}
-
-			
 			
 			// save referral details
 			if (requestOBJ.has("refer") && !requestOBJ.get("refer").isJsonNull()) {
@@ -1257,8 +1150,6 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 		Map<String, Object> resMap = new HashMap<>();
 		
 		resMap.put("findings", commonDoctorServiceImpl.getFindingsDetails(benRegID, visitCode));
-
-//		resMap.put("diagnosis", ncdCareDoctorServiceImpl.getNCDCareDiagnosisDetails(benRegID, visitCode));
 		
 		resMap.put("diagnosis", ncdSCreeningDoctorServiceImpl.getNCDDiagnosisData(benRegID, visitCode));
 
@@ -1279,8 +1170,6 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 		return resMap.toString();
 	}
 	
-	
-
 	/// --------------- Start of Fetching NCD Screening Nurse Data ----------------
 		public String getBenVisitDetailsFrmNurseNCDScreening(Long benRegID, Long visitCode) {
 			Map<String, Object> resMap = new HashMap<>();

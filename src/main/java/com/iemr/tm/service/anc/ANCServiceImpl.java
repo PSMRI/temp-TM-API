@@ -96,7 +96,6 @@ import com.iemr.tm.utils.mapper.InputMapper;
 public class ANCServiceImpl implements ANCService {
 
 	private ANCNurseServiceImpl ancNurseServiceImpl;
-	// private NurseServiceImpl nurseServiceImpl;
 	private ANCDoctorServiceImpl ancDoctorServiceImpl;
 	private CommonNurseServiceImpl commonNurseServiceImpl;
 	private CommonDoctorServiceImpl commonDoctorServiceImpl;
@@ -155,7 +154,6 @@ public class ANCServiceImpl implements ANCService {
 	@Transactional(rollbackFor = Exception.class)
 	public String saveANCNurseData(JsonObject requestOBJ, String Authorization) throws Exception {
 		// String vr = "";
-		// String vc = "";
 		Long saveSuccessFlag = null;
 		TeleconsultationRequestOBJ tcRequestOBJ = null;
 		Long benVisitCode = null;
@@ -490,7 +488,6 @@ public class ANCServiceImpl implements ANCService {
 					BeneficiaryVisitDetail.class);
 
 			// benVisitDetailsOBJ.setVanID(commonUtilityClass.getVanID());
-			// benVisitDetailsOBJ.setParkingPlaceID(commonUtilityClass.getParkingPlaceID());
 			int i=commonNurseServiceImpl.getMaxCurrentdate(benVisitDetailsOBJ.getBeneficiaryRegID(),benVisitDetailsOBJ.getVisitReason(),benVisitDetailsOBJ.getVisitCategory());
 			if(i<1) {
 			benVisitID = commonNurseServiceImpl.saveBeneficiaryVisitDetails(benVisitDetailsOBJ);
@@ -842,7 +839,6 @@ public class ANCServiceImpl implements ANCService {
 
 		Long genExmnSuccessFlag = null;
 		Long headToToeExmnSuccessFlag = null;
-		// Long gastroIntsExmnSuccessFlag = null;
 		Long cardiExmnSuccessFlag = null;
 		Long respiratoryExmnSuccessFlag = null;
 		Long centralNrvsExmnSuccessFlag = null;
@@ -1089,68 +1085,6 @@ public class ANCServiceImpl implements ANCService {
 
 	// ---------- ENd of Fetch ANC (Nurse)--------------------------------------
 
-	/*
-	 * // ------- Fetch beneficiary all past history data ------------------ public
-	 * String getANCPastHistoryData(Long beneficiaryRegID) { return
-	 * commonNurseServiceImpl.fetchBenPastMedicalHistory(beneficiaryRegID); } ///
-	 * ------- End of Fetch beneficiary all past history data ----------
-	 * 
-	 * // ------- Fetch beneficiary all Comorbid conditions history data //
-	 * ------------------ public String getANCComorbidHistoryData(Long
-	 * beneficiaryRegID) { return
-	 * commonNurseServiceImpl.fetchBenComorbidityHistory(beneficiaryRegID); } ///
-	 * ------- End of Fetch beneficiary all Comorbid conditions history data ///
-	 * --------
-	 * 
-	 * // ------- Fetch beneficiary all Medication history data ----------- public
-	 * String getANCMedicationHistoryData(Long beneficiaryRegID) { return
-	 * commonNurseServiceImpl.fetchBenPersonalMedicationHistory(beneficiaryRegID); }
-	 * /// ------- End of Fetch beneficiary all Medication history data --
-	 * 
-	 * // ------- Fetch beneficiary all Personal Tobacco history data //
-	 * --------------- public String getANCPersonalTobaccoHistoryData(Long
-	 * beneficiaryRegID) { return
-	 * commonNurseServiceImpl.fetchBenPersonalTobaccoHistory(beneficiaryRegID); }
-	 * /// ------- End of Fetch beneficiary all Personal Tobacco history data------
-	 * 
-	 * // ------- Fetch beneficiary all Personal Alcohol history data //
-	 * --------------- public String getANCPersonalAlcoholHistoryData(Long
-	 * beneficiaryRegID) { return
-	 * commonNurseServiceImpl.fetchBenPersonalAlcoholHistory(beneficiaryRegID); }
-	 * /// ------- End of Fetch beneficiary all Personal Alcohol history data ///
-	 * ------
-	 * 
-	 * // ------- Fetch beneficiary all Personal Allergy history data //
-	 * --------------- public String getANCPersonalAllergyHistoryData(Long
-	 * beneficiaryRegID) { return
-	 * commonNurseServiceImpl.fetchBenPersonalAllergyHistory(beneficiaryRegID); }
-	 * /// ------- End of Fetch beneficiary all Personal Allergy history data------
-	 * 
-	 * // ------- Fetch beneficiary all Family history data --------------- public
-	 * String getANCFamilyHistoryData(Long beneficiaryRegID) { return
-	 * commonNurseServiceImpl.fetchBenPersonalFamilyHistory(beneficiaryRegID); } ///
-	 * ------- End of Fetch beneficiary all Family history data ------
-	 * 
-	 * // ------- Fetch beneficiary all Menstrual history data ----------- public
-	 * String getANCMenstrualHistoryData(Long beneficiaryRegID) { return
-	 * commonNurseServiceImpl.fetchBenMenstrualHistory(beneficiaryRegID); } ///
-	 * ------- End of Fetch beneficiary all Menstrual history data --
-	 * 
-	 * // ------- Fetch beneficiary all past obstetric history data ---------------
-	 * public String getANCObstetricHistoryData(Long beneficiaryRegID) { return
-	 * commonNurseServiceImpl.fetchBenPastObstetricHistory(beneficiaryRegID); } ///
-	 * ------- End of Fetch beneficiary all past obstetric history data ------
-	 * 
-	 * // ------- Fetch beneficiary all Immunization history data ---------------
-	 * public String getANCImmunizationHistoryData(Long beneficiaryRegID) { return
-	 * commonNurseServiceImpl.fetchBenImmunizationHistory(beneficiaryRegID); } ///
-	 * ------- End of Fetch beneficiary all Immunization history data ------
-	 * 
-	 * // ------- Fetch beneficiary all Child Vaccine history data ---------------
-	 * public String getANCChildVaccineHistoryData(Long beneficiaryRegID) { return
-	 * commonNurseServiceImpl.fetchBenOptionalVaccineHistory(beneficiaryRegID); }
-	 * /// ------- End of Fetch beneficiary all Child Vaccine history data ------
-	 */
 	// -------Update (Nurse data from Doctor screen)----------------------
 
 	/***

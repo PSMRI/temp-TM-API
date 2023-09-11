@@ -24,7 +24,6 @@ package com.iemr.tm.utils.response;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.hibernate.loader.custom.Return;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -193,29 +192,16 @@ public class OutputResponse {
 
 	@Override
 	public String toString() {
-		// return new Gson().toJson(this);
-		// Gson gson = OutputMapper.gson();
 		GsonBuilder builder = new GsonBuilder();
 		builder.excludeFieldsWithoutExposeAnnotation();
-		// builder.serializeNulls();
-		// builder.disableInnerClassSerialization();
 		return builder.create().toJson(this);
-		// JSONObject response = new JSONObject();
-		// response.put("data", data);
-		// response.put("statusCode", statusCode);
-		// response.put("status", status);
-		// response.put("errorMessage", errorMessage);
-		// return response.toString();
 	}
 
 	public ResponseEntity<String> toStringWithHttpStatus()
 	{
-		// return new Gson().toJson(this);
-		// Gson gson = OutputMapper.gson();
 		GsonBuilder builder = new GsonBuilder();
 		builder.excludeFieldsWithoutExposeAnnotation();
 		builder.setLongSerializationPolicy(LongSerializationPolicy.STRING);
-		// builder.disableInnerClassSerialization();
 		String output = builder.create().toJson(this);
 		
 		switch(this.statusCode) {
@@ -233,18 +219,6 @@ public class OutputResponse {
 		            .body(output);
 		}
 			
-//		if(!isSuccess())
-//			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//		            .body(output);
-//		else
-//		 return ResponseEntity.status(HttpStatus.OK)
-//	            .body(output);
-		// JSONObject response = new JSONObject();
-		// response.put("data", data);
-		// response.put("statusCode", statusCode);
-		// response.put("status", status);
-		// response.put("errorMessage", errorMessage);
-		// return response.toString();
 	}
 
 	public String toStringWithSerialization() {
@@ -254,9 +228,4 @@ public class OutputResponse {
 		return builder.create().toJson(this);
 	}
 
-	// public static void main(String[] args) {
-	// OutputResponse resp = new OutputResponse();
-	// resp.setResponse("{testing: [test]}");
-	// System.out.println(resp.toString());
-	// }
 }
