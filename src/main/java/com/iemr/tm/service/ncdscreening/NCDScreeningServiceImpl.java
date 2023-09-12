@@ -285,7 +285,7 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 			if (i < 1) {
 				benVisitID = commonNurseServiceImpl.saveBeneficiaryVisitDetails(benVisitDetailsOBJ);
 
-				// 11-06-2018 visit code
+				// visit code
 				Long benVisitCode = commonNurseServiceImpl.generateVisitCode(benVisitID, nurseUtilityClass.getVanID(),
 						nurseUtilityClass.getSessionID());
 
