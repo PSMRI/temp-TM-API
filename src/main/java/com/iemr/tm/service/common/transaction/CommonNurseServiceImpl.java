@@ -479,7 +479,7 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 	}
 
 	/**
-	 * Neeraj have created this for getting visit count of patient
+	 * created this for getting visit count of patient
 	 * @return
 	 */
 	public Short getBenVisitCount(Long benRegID) {

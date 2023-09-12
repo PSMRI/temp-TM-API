@@ -97,7 +97,6 @@ public class VideoConsultationServiceImpl implements VideoConsultationService {
 
 	@Override
 	public String callUserjitsi(Long fromuserid, Long touserid) throws VideoConsultationException {
-		// TODO Auto-generated method stub
 		UserJitsi user = userJitsiRepo.findOneJitsiMap(fromuserid);
 		UserJitsi touser = userJitsiRepo.findOneJitsiMap(touserid);
 

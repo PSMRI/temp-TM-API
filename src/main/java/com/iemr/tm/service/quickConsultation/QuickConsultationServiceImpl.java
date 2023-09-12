@@ -287,7 +287,6 @@ public class QuickConsultationServiceImpl implements QuickConsultationService {
 		Integer prescriptionSuccessFlag = null;
 		Integer investigationSuccessFlag = null;
 		Integer vitalsRBSTestFlag=null;
-		// Integer tcRequestStatusFlag = null;
 
 		TeleconsultationRequestOBJ tcRequestOBJ = null;
 		CommonUtilityClass commonUtilityClass = InputMapper.gson().fromJson(quickConsultDoctorOBJ,

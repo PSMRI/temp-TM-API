@@ -272,9 +272,10 @@ public class CommonDoctorServiceImpl {
 	}
 
 	private BenClinicalObservations getBenClinicalObservations(WrapperAncFindings wrapperAncFindings) {
+		// snomedCT integration started
 		String symptoms = wrapperAncFindings.getOtherSymptoms();
 		String[] responseString = getSnomedCTcode(symptoms);
-
+		// end of snomedCT integration
 		BenClinicalObservations benClinicalObservations = new BenClinicalObservations();
 		benClinicalObservations.setBeneficiaryRegID(wrapperAncFindings.getBeneficiaryRegID());
 		benClinicalObservations.setBenVisitID(wrapperAncFindings.getBenVisitID());

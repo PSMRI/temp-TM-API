@@ -44,6 +44,9 @@ public class InputMapper {
 		}
 	}
 
+	/**
+	 * @return
+	 */
 	public static InputMapper gson() {
 		return new InputMapper();
 	}
@@ -64,10 +67,9 @@ public class InputMapper {
 
 	/**
 	 * @param json
-	 * @throws IEMRException
-	 *             This function will check for the following things and throws
-	 *             login exception if any one fails 1. Get the session details
-	 *             from the redis 2. IP address in request and the logged in IP
-	 *             address should be same.
+	 * @throws IEMRException This function will check for the following things and
+	 *                       throws login exception if any one fails 1. Get the
+	 *                       session details from the redis 2. IP address in request
+	 *                       and the logged in IP address should be same.
 	 */
 }

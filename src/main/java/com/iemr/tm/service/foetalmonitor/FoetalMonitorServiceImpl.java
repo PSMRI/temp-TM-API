@@ -103,13 +103,14 @@ public class FoetalMonitorServiceImpl implements FoetalMonitorService {
 			foetalMonitorDataOutside.setPartnerName(foetalMonitorDataOutside.getMother().get("partnerName"));
 
 			// fetching data from the db
-			FoetalMonitor foetalMonitorFetchDataDB = foetalMonitorRepo.getFoetalMonitorDetails(foetalMonitorDataOutside.getFoetalMonitorID());
+			FoetalMonitor foetalMonitorFetchDataDB = foetalMonitorRepo
+					.getFoetalMonitorDetails(foetalMonitorDataOutside.getFoetalMonitorID());
 			if (foetalMonitorFetchDataDB == null || foetalMonitorFetchDataDB.getFoetalMonitorID() == null)
 				throw new IEMRException("Invalid partnerfoetalMonitorID");
 
 			foetalMonitorDataOutside.setBeneficiaryID(foetalMonitorFetchDataDB.getBeneficiaryID());
 			foetalMonitorDataOutside.setBeneficiaryRegID(foetalMonitorFetchDataDB.getBeneficiaryRegID());
-
+			// setting the values from the DB response
 			if (foetalMonitorFetchDataDB.getVisitCode() != null)
 				foetalMonitorDataOutside.setVisitCode(foetalMonitorFetchDataDB.getVisitCode());
 			foetalMonitorDataOutside.setTestTime(foetalMonitorFetchDataDB.getTestTime());
@@ -124,15 +125,17 @@ public class FoetalMonitorServiceImpl implements FoetalMonitorService {
 
 			foetalMonitorDataOutside.setResultState(true);
 			foetalMonitorDataOutside.setDeleted(foetalMonitorFetchDataDB.getDeleted());
+			// need to write the code for changing the report path data to base 64 and save
+			// it in DB
 
 			String filePath = generatePDF(foetalMonitorDataOutside.getReportPath());
 			foetalMonitorDataOutside.setaMRITFilePath(filePath);
 
 			// saving the feto sense response to DB
 			foetalMonitorDataOutside = foetalMonitorRepo.save(foetalMonitorDataOutside);
-			//need to write the code for changing the report path data to base 64 and save
-			//it in DB
-			
+			// need to write the code for changing the report path data to base 64 and save
+			// it in DB
+
 			int flagUpdate = 0;
 
 			// updating lab technician flag to 3 from 2 as we got the response from feto
@@ -231,7 +234,8 @@ public class FoetalMonitorServiceImpl implements FoetalMonitorService {
 				foetalMonitorTestDetails.setTestName(request.getTestName());
 
 				// checking whether device ID is mapped or not
-				FoetalMonitorDeviceID deviceIDForVanID = foetalMonitorDeviceIDRepo.getDeviceIDForVanID(request.getVanID());
+				FoetalMonitorDeviceID deviceIDForVanID = foetalMonitorDeviceIDRepo
+						.getDeviceIDForVanID(request.getVanID());
 
 				if (deviceIDForVanID != null && deviceIDForVanID.getDeviceID() != null) {
 					foetalMonitorTestDetails.setDeviceID(deviceIDForVanID.getDeviceID());
@@ -247,7 +251,8 @@ public class FoetalMonitorServiceImpl implements FoetalMonitorService {
 				String requestObj = new Gson().toJson(foetalMonitorTestDetails).toString();
 
 				logger.info("calling foetalMonitor API with request OBJ : " + requestObj);
-				// Invoking foetalMonitor API - Sending mother data and test details to fetosense
+				// Invoking foetalMonitor API - Sending mother data and test details to
+				// fetosense
 				result = httpUtils.postWithResponseEntity(
 						ConfigProperties.getPropertyByName("foetalMonitor-api-url-ANCTestDetails"), requestObj, header);
 				logger.info("Foetal monitor register mother API response : " + result.toString());
@@ -271,34 +276,35 @@ public class FoetalMonitorServiceImpl implements FoetalMonitorService {
 			} else
 				throw new RuntimeException("Unable to generate foetal monitor id in TM");
 
-		} 
+		}
 		/**
 		 * @purpose To get response body in case of exception
 		 */
-		catch(HttpClientErrorException e)
-		{
+		catch (HttpClientErrorException e) {
 			JsonObject jsnOBJ = new JsonObject();
 			JsonParser jsnParser = new JsonParser();
 			JsonElement jsnElmnt = jsnParser.parse(e.getResponseBodyAsString());
 			jsnOBJ = jsnElmnt.getAsJsonObject();
-			if (request != null && request.getPartnerFoetalMonitorId() != null && request.getPartnerFoetalMonitorId() > 0) {
-				 //String response = e.getres;
+			if (request != null && request.getPartnerFoetalMonitorId() != null
+					&& request.getPartnerFoetalMonitorId() > 0) {
+				// String response = e.getres;
 				logger.info("Foetal monitor test request transaction roll-backed");
 				request.setDeleted(true);
 				foetalMonitorRepo.save(request);
 			}
-			if(jsnOBJ.get("status") !=null && jsnOBJ.get("message") !=null)
+			if (jsnOBJ.get("status") != null && jsnOBJ.get("message") != null)
 //			throw new Exception("Unable to raise test request, error is : " + ("status code "+(jsnOBJ.get("status").getAsString())
 //					+","+(jsnOBJ.get("message").getAsString())));
-				throw new Exception("Unable to raise test request, error is : " + (jsnOBJ.get("message").getAsString()));
+				throw new Exception(
+						"Unable to raise test request, error is : " + (jsnOBJ.get("message").getAsString()));
 			else
 				throw new Exception("Unable to raise test request, error is :  " + e.getMessage());
-			
-		}
-		catch (Exception e) {
+
+		} catch (Exception e) {
 			// if record is created, and not raised in FoetalMonitor device, soft delete it
-			if (request != null && request.getPartnerFoetalMonitorId() != null && request.getPartnerFoetalMonitorId() > 0) {
-				 //String response = e.getres;
+			if (request != null && request.getPartnerFoetalMonitorId() != null
+					&& request.getPartnerFoetalMonitorId() > 0) {
+				// String response = e.getres;
 				logger.info("Foetal monitor test request transaction roll-backed");
 				request.setDeleted(true);
 				foetalMonitorRepo.save(request);

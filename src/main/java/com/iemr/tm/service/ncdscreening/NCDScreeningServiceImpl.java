@@ -82,7 +82,7 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 	private CommonBenStatusFlowServiceImpl commonBenStatusFlowServiceImpl;
 	private BeneficiaryFlowStatusRepo beneficiaryFlowStatusRepo;
 	private LabTechnicianServiceImpl labTechnicianServiceImpl;
-	
+
 	private CommonDoctorServiceImpl commonDoctorServiceImpl;
 	@Autowired
 	private CommonServiceImpl commonServiceImpl;
@@ -91,24 +91,23 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 
 	@Autowired
 	private BenVisitDetailRepo benVisitDetailRepo;
-	
+
 	@Autowired
 	private SMSGatewayServiceImpl sMSGatewayServiceImpl;
-	
+
 	@Autowired
 	private PrescriptionDetailRepo prescriptionDetailRepo;
-	
+
 	@Autowired
 
 	private NCDSCreeningDoctorServiceImpl ncdSCreeningDoctorServiceImpl;
 	@Autowired
 	private IDRSDataRepo iDrsDataRepo;
-	
+
 	@Autowired
 	public void setLabTechnicianServiceImpl(LabTechnicianServiceImpl labTechnicianServiceImpl) {
 		this.labTechnicianServiceImpl = labTechnicianServiceImpl;
 	}
-
 
 	@Autowired
 	public void setBeneficiaryFlowStatusRepo(BeneficiaryFlowStatusRepo beneficiaryFlowStatusRepo) {
@@ -129,6 +128,7 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 	public void setNcdScreeningNurseServiceImpl(NCDScreeningNurseServiceImpl ncdScreeningNurseServiceImpl) {
 		this.ncdScreeningNurseServiceImpl = ncdScreeningNurseServiceImpl;
 	}
+
 	@Autowired
 	public void setCommonDoctorServiceImpl(CommonDoctorServiceImpl commonDoctorServiceImpl) {
 		this.commonDoctorServiceImpl = commonDoctorServiceImpl;
@@ -158,7 +158,7 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 
 				nurseUtilityClass.setVisitCode(benVisitCode);
 				nurseUtilityClass.setBenVisitID(benVisitID);
-			}else {
+			} else {
 				Map<String, String> responseMap = new HashMap<String, String>();
 				responseMap.put("response", "Data already saved");
 				return new Gson().toJson(responseMap);
@@ -177,21 +177,21 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 
 			// Above if block code replaced by below line
 			benFlowID = nurseUtilityClass.getBenFlowID();
-      
+
 			if (benVisitID != null && benVisitID > 0) {
 				tcRequestOBJ = commonServiceImpl.createTcRequest(requestOBJ, nurseUtilityClass, Authorization);
 				// call method to save History data
 				if (requestOBJ.has("historyDetails") && !requestOBJ.get("historyDetails").isJsonNull())
-					historySaveSuccessFlag = saveBenNCDCareHistoryDetails(
-							requestOBJ.getAsJsonObject("historyDetails"), benVisitID, benVisitCode);
+					historySaveSuccessFlag = saveBenNCDCareHistoryDetails(requestOBJ.getAsJsonObject("historyDetails"),
+							benVisitID, benVisitCode);
 				// call method to save Vital data
 				vitalSaveSuccessFlag = saveBenNCDCareVitalDetails(requestOBJ.getAsJsonObject("vitalDetails"),
 						benVisitID, benVisitCode);
-                //call method to save IDRS data
-				idrsFlag=saveidrsDetails(requestOBJ.getAsJsonObject("idrsDetails"),
-						benVisitID, benVisitCode);
-				//call method to save physical activity
-				physicalActivityFlag=savePhysicalActivityDetails(requestOBJ.getAsJsonObject("historyDetails").getAsJsonObject("physicalActivityHistory"),
+				// call method to save IDRS data
+				idrsFlag = saveidrsDetails(requestOBJ.getAsJsonObject("idrsDetails"), benVisitID, benVisitCode);
+				// call method to save physical activity
+				physicalActivityFlag = savePhysicalActivityDetails(
+						requestOBJ.getAsJsonObject("historyDetails").getAsJsonObject("physicalActivityHistory"),
 						benVisitID, benVisitCode);
 				// i = commonNurseServiceImpl.updateBeneficiaryStatus('N',
 				// tmpOBJ.get("beneficiaryRegID").getAsLong());
@@ -204,9 +204,8 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 				/**
 				 * We have to write new code to update ben status flow new logic
 				 */
-				int J = updateBenFlowNurseAfterNurseActivityANC(
-						 tmpOBJ, benVisitID,
-						benFlowID, benVisitCode, nurseUtilityClass.getVanID(), tcRequestOBJ);
+				int J = updateBenFlowNurseAfterNurseActivityANC(tmpOBJ, benVisitID, benFlowID, benVisitCode,
+						nurseUtilityClass.getVanID(), tcRequestOBJ);
 
 				if (J > 0)
 					saveSuccessFlag = historySaveSuccessFlag;
@@ -229,45 +228,45 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 			throw new Exception("Invalid input");
 		}
 		Map<String, String> responseMap = new HashMap<String, String>();
-		if(benVisitCode!=null)
-		{
-			responseMap.put("visitCode",benVisitCode.toString());
+		if (benVisitCode != null) {
+			responseMap.put("visitCode", benVisitCode.toString());
 		}
 		if (null != saveSuccessFlag && saveSuccessFlag > 0) {
 			responseMap.put("response", "Data saved successfully");
 		} else {
 			responseMap.put("response", "Unable to save data");
 		}
-		return new  Gson().toJson(responseMap);		
+		return new Gson().toJson(responseMap);
 
 	}
+
 	// method for updating ben flow status flag for nurse
-		private int updateBenFlowNurseAfterNurseActivityANC( JsonObject tmpOBJ,
-				Long benVisitID, Long benFlowID, Long benVisitCode, Integer vanID,
-				TeleconsultationRequestOBJ tcRequestOBJ) {
-			short nurseFlag = (short) 9;
-			short docFlag = (short) 1;
-			short labIteration = (short) 0;
+	private int updateBenFlowNurseAfterNurseActivityANC(JsonObject tmpOBJ, Long benVisitID, Long benFlowID,
+			Long benVisitCode, Integer vanID, TeleconsultationRequestOBJ tcRequestOBJ) {
+		short nurseFlag = (short) 9;
+		short docFlag = (short) 1;
+		short labIteration = (short) 0;
 
-			short specialistFlag = (short) 0;
-			Timestamp tcDate = null;
-			Integer tcSpecialistUserID = null;
+		short specialistFlag = (short) 0;
+		Timestamp tcDate = null;
+		Integer tcSpecialistUserID = null;
 
-			if (tcRequestOBJ != null && tcRequestOBJ.getUserID() != null && tcRequestOBJ.getAllocationDate() != null) {
-				specialistFlag = (short) 1;
-				tcDate = tcRequestOBJ.getAllocationDate();
-				tcSpecialistUserID = tcRequestOBJ.getUserID();
-			} else
-				specialistFlag = (short) 0;
+		if (tcRequestOBJ != null && tcRequestOBJ.getUserID() != null && tcRequestOBJ.getAllocationDate() != null) {
+			specialistFlag = (short) 1;
+			tcDate = tcRequestOBJ.getAllocationDate();
+			tcSpecialistUserID = tcRequestOBJ.getUserID();
+		} else
+			specialistFlag = (short) 0;
 
-			int i = commonBenStatusFlowServiceImpl.updateBenFlowNurseAfterNurseActivity(benFlowID,
-					tmpOBJ.get("beneficiaryRegID").getAsLong(), benVisitID, tmpOBJ.get("visitReason").getAsString(),
-					tmpOBJ.get("visitCategory").getAsString(), nurseFlag, docFlag, labIteration, (short) 0, (short) 0,
-					benVisitCode, vanID, specialistFlag, tcDate, tcSpecialistUserID);
+		int i = commonBenStatusFlowServiceImpl.updateBenFlowNurseAfterNurseActivity(benFlowID,
+				tmpOBJ.get("beneficiaryRegID").getAsLong(), benVisitID, tmpOBJ.get("visitReason").getAsString(),
+				tmpOBJ.get("visitCategory").getAsString(), nurseFlag, docFlag, labIteration, (short) 0, (short) 0,
+				benVisitCode, vanID, specialistFlag, tcDate, tcSpecialistUserID);
 
-			return i;
+		return i;
 
-		}
+	}
+
 	/**
 	 * @param requestOBJ
 	 * @return success or failure flag for visitDetails data saving
@@ -283,36 +282,39 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 
 			BeneficiaryVisitDetail benVisitDetailsOBJ = InputMapper.gson().fromJson(visitDetailsOBJ.get("visitDetails"),
 					BeneficiaryVisitDetail.class);
-			int i=commonNurseServiceImpl.getMaxCurrentdate(benVisitDetailsOBJ.getBeneficiaryRegID(),benVisitDetailsOBJ.getVisitReason(),benVisitDetailsOBJ.getVisitCategory());
-			if(i<1) {
-			benVisitID = commonNurseServiceImpl.saveBeneficiaryVisitDetails(benVisitDetailsOBJ);
+			int i = commonNurseServiceImpl.getMaxCurrentdate(benVisitDetailsOBJ.getBeneficiaryRegID(),
+					benVisitDetailsOBJ.getVisitReason(), benVisitDetailsOBJ.getVisitCategory());
+			if (i < 1) {
+				benVisitID = commonNurseServiceImpl.saveBeneficiaryVisitDetails(benVisitDetailsOBJ);
 
-			// 11-06-2018 visit code
-			Long benVisitCode = commonNurseServiceImpl.generateVisitCode(benVisitID, nurseUtilityClass.getVanID(),
-					nurseUtilityClass.getSessionID());
+				// 11-06-2018 visit code
+				Long benVisitCode = commonNurseServiceImpl.generateVisitCode(benVisitID, nurseUtilityClass.getVanID(),
+						nurseUtilityClass.getSessionID());
 
-			if (benVisitID != null && benVisitID > 0 && benVisitCode != null && benVisitCode > 0) {
-				if (visitDetailsOBJ.has("chiefComplaints") && !visitDetailsOBJ.get("chiefComplaints").isJsonNull()) {
-					BenChiefComplaint[] benChiefComplaintArray = InputMapper.gson()
-							.fromJson(visitDetailsOBJ.get("chiefComplaints"), BenChiefComplaint[].class);
+				if (benVisitID != null && benVisitID > 0 && benVisitCode != null && benVisitCode > 0) {
+					if (visitDetailsOBJ.has("chiefComplaints")
+							&& !visitDetailsOBJ.get("chiefComplaints").isJsonNull()) {
+						BenChiefComplaint[] benChiefComplaintArray = InputMapper.gson()
+								.fromJson(visitDetailsOBJ.get("chiefComplaints"), BenChiefComplaint[].class);
 
-					List<BenChiefComplaint> benChiefComplaintList = Arrays.asList(benChiefComplaintArray);
-					if (null != benChiefComplaintList && benChiefComplaintList.size() > 0) {
-						for (BenChiefComplaint benChiefComplaint : benChiefComplaintList) {
-							benChiefComplaint.setBenVisitID(benVisitID);
-							benChiefComplaint.setVisitCode(benVisitCode);
+						List<BenChiefComplaint> benChiefComplaintList = Arrays.asList(benChiefComplaintArray);
+						if (null != benChiefComplaintList && benChiefComplaintList.size() > 0) {
+							for (BenChiefComplaint benChiefComplaint : benChiefComplaintList) {
+								benChiefComplaint.setBenVisitID(benVisitID);
+								benChiefComplaint.setVisitCode(benVisitCode);
+							}
 						}
+						// Save Beneficiary Chief Complaints
+						commonNurseServiceImpl.saveBenChiefComplaints(benChiefComplaintList);
 					}
-					// Save Beneficiary Chief Complaints
-					commonNurseServiceImpl.saveBenChiefComplaints(benChiefComplaintList);
 				}
+				visitIdAndCodeMap.put("visitID", benVisitID);
+				visitIdAndCodeMap.put("visitCode", benVisitCode);
 			}
-			visitIdAndCodeMap.put("visitID", benVisitID);
-			visitIdAndCodeMap.put("visitCode", benVisitCode);
-		}
 		}
 		return visitIdAndCodeMap;
 	}
+
 	private int updateBenFlowNurseAfterNurseActivityANC(Long benRegID, Long benVisitID, Long benFlowID,
 			String visitReason, String visitCategory, Boolean isScreeningDone, Long benVisitCode, Integer vanID) {
 		short nurseFlag;
@@ -369,6 +371,7 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 
 		return vitalSuccessFlag;
 	}
+
 	/**
 	 * @param requestOBJ
 	 * @return success or failure flag for visitDetails data saving
@@ -615,62 +618,53 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 		}
 		return historySaveSucccessFlag;
 	}
-	public Long saveidrsDetails(JsonObject idrsDetailsOBJ, Long benVisitID, Long benVisitCode)
-			throws Exception {
+
+	public Long saveidrsDetails(JsonObject idrsDetailsOBJ, Long benVisitID, Long benVisitCode) throws Exception {
 		Long idrsFlag = null;
 		// Save Physical Anthropometry && Physical Vital Details
 		if (idrsDetailsOBJ != null) {
-			IDRSData idrsDetail = InputMapper.gson().fromJson(idrsDetailsOBJ,
-					IDRSData.class);
-            String temp="", temp1=""; 
+			IDRSData idrsDetail = InputMapper.gson().fromJson(idrsDetailsOBJ, IDRSData.class);
+			String temp = "", temp1 = "";
 			if (null != idrsDetail) {
-				if(idrsDetail.getQuestionArray()!=null && idrsDetail.getQuestionArray().length>0)
-				{
-					IDRSData[] ar=idrsDetail.getQuestionArray();
-					for(int i=0;i<ar.length;i++)
-					{
-						 idrsDetail = InputMapper.gson().fromJson(idrsDetailsOBJ,
-								IDRSData.class);temp="";temp1="";
+				if (idrsDetail.getQuestionArray() != null && idrsDetail.getQuestionArray().length > 0) {
+					IDRSData[] ar = idrsDetail.getQuestionArray();
+					for (int i = 0; i < ar.length; i++) {
+						idrsDetail = InputMapper.gson().fromJson(idrsDetailsOBJ, IDRSData.class);
+						temp = "";
+						temp1 = "";
 						idrsDetail.setIdrsQuestionID(ar[i].getIdrsQuestionID());
 						idrsDetail.setAnswer(ar[i].getAnswer());
 						idrsDetail.setQuestion(ar[i].getQuestion());
 						idrsDetail.setDiseaseQuestionType(ar[i].getDiseaseQuestionType());
 						idrsDetail.setBenVisitID(benVisitID);
 						idrsDetail.setVisitCode(benVisitCode);
-						if(idrsDetail.getSuspectArray()!=null && idrsDetail.getSuspectArray().length >0)
-						{
-							for(int a=0;a<idrsDetail.getSuspectArray().length;a++)
-					    	{
-					    		if(a==idrsDetail.getSuspectArray().length-1)
-					    		temp+=idrsDetail.getSuspectArray()[a];
-					    		else
-					    		temp=temp+idrsDetail.getSuspectArray()[a]+",";
-					    	}
-							if(temp.equalsIgnoreCase(""))
-								temp=null;
+						if (idrsDetail.getSuspectArray() != null && idrsDetail.getSuspectArray().length > 0) {
+							for (int a = 0; a < idrsDetail.getSuspectArray().length; a++) {
+								if (a == idrsDetail.getSuspectArray().length - 1)
+									temp += idrsDetail.getSuspectArray()[a];
+								else
+									temp = temp + idrsDetail.getSuspectArray()[a] + ",";
+							}
+							if (temp.equalsIgnoreCase(""))
+								temp = null;
 							idrsDetail.setSuspectedDisease(temp);
 						}
-						
-						if(idrsDetail.getConfirmArray()!=null && idrsDetail.getConfirmArray().length >0)
-						{
-							for(int a=0;a<idrsDetail.getConfirmArray().length;a++)
-					    	{
-					    		if(a==idrsDetail.getConfirmArray().length-1)
-					    		temp1+=idrsDetail.getConfirmArray()[a];
-					    		else
-					    		temp1=temp1+idrsDetail.getConfirmArray()[a]+",";
-					    	}
-							if(temp1.equalsIgnoreCase(""))
-								temp1=null;
+
+						if (idrsDetail.getConfirmArray() != null && idrsDetail.getConfirmArray().length > 0) {
+							for (int a = 0; a < idrsDetail.getConfirmArray().length; a++) {
+								if (a == idrsDetail.getConfirmArray().length - 1)
+									temp1 += idrsDetail.getConfirmArray()[a];
+								else
+									temp1 = temp1 + idrsDetail.getConfirmArray()[a] + ",";
+							}
+							if (temp1.equalsIgnoreCase(""))
+								temp1 = null;
 							idrsDetail.setConfirmedDisease(temp1);
 						}
-						
-						idrsFlag = commonNurseServiceImpl
-								.saveIDRS(idrsDetail);
+
+						idrsFlag = commonNurseServiceImpl.saveIDRS(idrsDetail);
 					}
-				}
-				else
-				{
+				} else {
 					idrsDetail.setBenVisitID(benVisitID);
 					idrsDetail.setVisitCode(benVisitCode);
 					if (idrsDetail.getSuspectArray() != null && idrsDetail.getSuspectArray().length > 0) {
@@ -684,23 +678,20 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 							temp1 = null;
 						idrsDetail.setSuspectedDisease(temp1);
 					}
-					temp1="";
-					if(idrsDetail.getConfirmArray()!=null && idrsDetail.getConfirmArray().length >0)
-					{
-						for(int a=0;a<idrsDetail.getConfirmArray().length;a++)
-				    	{
-				    		if(a==idrsDetail.getConfirmArray().length-1)
-				    		temp1+=idrsDetail.getConfirmArray()[a];
-				    		else
-				    		temp1=temp1+idrsDetail.getConfirmArray()[a]+",";
-				    	}
-						if(temp1.equalsIgnoreCase(""))
-							temp1=null;
+					temp1 = "";
+					if (idrsDetail.getConfirmArray() != null && idrsDetail.getConfirmArray().length > 0) {
+						for (int a = 0; a < idrsDetail.getConfirmArray().length; a++) {
+							if (a == idrsDetail.getConfirmArray().length - 1)
+								temp1 += idrsDetail.getConfirmArray()[a];
+							else
+								temp1 = temp1 + idrsDetail.getConfirmArray()[a] + ",";
+						}
+						if (temp1.equalsIgnoreCase(""))
+							temp1 = null;
 						idrsDetail.setConfirmedDisease(temp1);
 					}
-					
-					idrsFlag = commonNurseServiceImpl
-							.saveIDRS(idrsDetail);
+
+					idrsFlag = commonNurseServiceImpl.saveIDRS(idrsDetail);
 				}
 			}
 
@@ -708,7 +699,7 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 
 		return idrsFlag;
 	}
-	
+
 	public Long savePhysicalActivityDetails(JsonObject physicalActivityDetailsOBJ, Long benVisitID, Long benVisitCode)
 			throws Exception {
 		Long physicalActivityFlag = null;
@@ -720,14 +711,14 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 			if (null != physicalActivityDetail) {
 				physicalActivityDetail.setBenVisitID(benVisitID);
 				physicalActivityDetail.setVisitCode(benVisitCode);
-				physicalActivityFlag = commonNurseServiceImpl
-						.savePhysicalActivity(physicalActivityDetail);
+				physicalActivityFlag = commonNurseServiceImpl.savePhysicalActivity(physicalActivityDetail);
 			}
 
 		}
 
 		return physicalActivityFlag;
 	}
+
 	/**
 	 * @param requestOBJ
 	 * @return success or failure flag for visitDetails data saving
@@ -821,7 +812,7 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 		return result;
 
 	}
-	
+
 	@Transactional(rollbackFor = Exception.class)
 	public int updateBenVitalDetails(JsonObject vitalDetailsOBJ) throws Exception {
 		int vitalSuccessFlag = 0;
@@ -872,22 +863,20 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 		returnMap.put("ncdScreeningVisitCount", visitCount + 1);
 		return new Gson().toJson(returnMap);
 	}
-	
+
 	@Override
 	public Long UpdateIDRSScreen(JsonObject idrsOBJ) throws Exception {
-		Long idrsFlag=null;
+		Long idrsFlag = null;
 		if (idrsOBJ != null && idrsOBJ.has("idrsDetails") && !idrsOBJ.get("idrsDetails").isJsonNull()) {
-			IDRSData idrsDetail1 = InputMapper.gson().fromJson(idrsOBJ.get("idrsDetails"),
-					IDRSData.class);
-			String temp="",temp1=""; 
+			IDRSData idrsDetail1 = InputMapper.gson().fromJson(idrsOBJ.get("idrsDetails"), IDRSData.class);
+			String temp = "", temp1 = "";
 			if (null != idrsDetail1) {
-				if(idrsDetail1.getQuestionArray()!=null && idrsDetail1.getQuestionArray().length>0)
-				{
-					IDRSData[] ar=idrsDetail1.getQuestionArray();
-					for(int i=0;i<ar.length;i++)
-					{
-						IDRSData idrsDetail = InputMapper.gson().fromJson(idrsOBJ.get("idrsDetails"),
-								IDRSData.class);temp="";temp1="";
+				if (idrsDetail1.getQuestionArray() != null && idrsDetail1.getQuestionArray().length > 0) {
+					IDRSData[] ar = idrsDetail1.getQuestionArray();
+					for (int i = 0; i < ar.length; i++) {
+						IDRSData idrsDetail = InputMapper.gson().fromJson(idrsOBJ.get("idrsDetails"), IDRSData.class);
+						temp = "";
+						temp1 = "";
 						idrsDetail.setIdrsQuestionID(ar[i].getIdrsQuestionID());
 						idrsDetail.setId(ar[i].getId());
 						idrsDetail.setAnswer(ar[i].getAnswer());
@@ -895,111 +884,101 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 						idrsDetail.setDiseaseQuestionType(ar[i].getDiseaseQuestionType());
 //						idrsDetail.setBenVisitID(idrsDetail1.getBenVisitID());
 //						idrsDetail.setVisitCode(idrsDetail1.getVisitCode());
-						
-						if(idrsDetail.getSuspectArray()!=null && idrsDetail.getSuspectArray().length >0)
-						{
-							for(int a=0;a<idrsDetail.getSuspectArray().length;a++)
-					    	{
-					    		if(a==idrsDetail.getSuspectArray().length-1)
-					    		temp+=idrsDetail.getSuspectArray()[a];
-					    		else
-					    		temp=temp+idrsDetail.getSuspectArray()[a]+",";
-					    	}
-							if(temp.equalsIgnoreCase(""))
-								temp=null;
+
+						if (idrsDetail.getSuspectArray() != null && idrsDetail.getSuspectArray().length > 0) {
+							for (int a = 0; a < idrsDetail.getSuspectArray().length; a++) {
+								if (a == idrsDetail.getSuspectArray().length - 1)
+									temp += idrsDetail.getSuspectArray()[a];
+								else
+									temp = temp + idrsDetail.getSuspectArray()[a] + ",";
+							}
+							if (temp.equalsIgnoreCase(""))
+								temp = null;
 							idrsDetail.setSuspectedDisease(temp);
 						}
-						if(idrsDetail.getConfirmArray()!=null && idrsDetail.getConfirmArray().length >0)
-						{
-							for(int a=0;a<idrsDetail.getConfirmArray().length;a++)
-					    	{
-					    		if(a==idrsDetail.getConfirmArray().length-1)
-					    		temp1+=idrsDetail.getConfirmArray()[a];
-					    		else
-					    		temp1=temp1+idrsDetail.getConfirmArray()[a]+",";
-					    	}
-							if(temp1.equalsIgnoreCase(""))
-								temp1=null;
+						if (idrsDetail.getConfirmArray() != null && idrsDetail.getConfirmArray().length > 0) {
+							for (int a = 0; a < idrsDetail.getConfirmArray().length; a++) {
+								if (a == idrsDetail.getConfirmArray().length - 1)
+									temp1 += idrsDetail.getConfirmArray()[a];
+								else
+									temp1 = temp1 + idrsDetail.getConfirmArray()[a] + ",";
+							}
+							if (temp1.equalsIgnoreCase(""))
+								temp1 = null;
 							idrsDetail.setConfirmedDisease(temp1);
 						}
-						int updateSuspected=0;
-						if(temp !=null)
-						 updateSuspected=iDrsDataRepo.updateSuspectedDiseases(idrsDetail1.getBeneficiaryRegID(), idrsDetail1.getVisitCode(), temp);
-						idrsFlag = commonNurseServiceImpl
-								.saveIDRS(idrsDetail);
+						int updateSuspected = 0;
+						if (temp != null)
+							updateSuspected = iDrsDataRepo.updateSuspectedDiseases(idrsDetail1.getBeneficiaryRegID(),
+									idrsDetail1.getVisitCode(), temp);
+						idrsFlag = commonNurseServiceImpl.saveIDRS(idrsDetail);
 					}
-				}
-				else
-				{
-					//idrsDetail1.setBenVisitID(benVisitID);
-					//idrsDetail1.setVisitCode(benVisitCode);
-					int success=0;
-					if(idrsDetail1.getConfirmArray()!=null && idrsDetail1.getConfirmArray().length >0)
-					{
-						for(int a=0;a<idrsDetail1.getConfirmArray().length;a++)
-				    	{
-				    		if(a==idrsDetail1.getConfirmArray().length-1)
-				    		temp1+=idrsDetail1.getConfirmArray()[a];
-				    		else
-				    		temp1=temp1+idrsDetail1.getConfirmArray()[a]+",";
-				    	}
-						if(temp1.equalsIgnoreCase(""))
-							temp1=null;
-						if(temp1!=null)
-						{
-							success=iDrsDataRepo.updateConfirmedDiseases(idrsDetail1.getBeneficiaryRegID(), idrsDetail1.getVisitCode(), temp1);
+				} else {
+					// idrsDetail1.setBenVisitID(benVisitID);
+					// idrsDetail1.setVisitCode(benVisitCode);
+					int success = 0;
+					if (idrsDetail1.getConfirmArray() != null && idrsDetail1.getConfirmArray().length > 0) {
+						for (int a = 0; a < idrsDetail1.getConfirmArray().length; a++) {
+							if (a == idrsDetail1.getConfirmArray().length - 1)
+								temp1 += idrsDetail1.getConfirmArray()[a];
+							else
+								temp1 = temp1 + idrsDetail1.getConfirmArray()[a] + ",";
 						}
-							
-						if(success > 0) {
+						if (temp1.equalsIgnoreCase(""))
+							temp1 = null;
+						if (temp1 != null) {
+							success = iDrsDataRepo.updateConfirmedDiseases(idrsDetail1.getBeneficiaryRegID(),
+									idrsDetail1.getVisitCode(), temp1);
+						}
+
+						if (success > 0) {
 							idrsFlag = new Long(1);
 						}
 					}
-					 if(idrsDetail1.getIdrsScore() != null) {
-						 success = iDrsDataRepo.updateIdrsScore(idrsDetail1.getBeneficiaryRegID(), idrsDetail1.getVisitCode(), idrsDetail1.getIdrsScore());
-						
-						if(success > 0) {
+					if (idrsDetail1.getIdrsScore() != null) {
+						success = iDrsDataRepo.updateIdrsScore(idrsDetail1.getBeneficiaryRegID(),
+								idrsDetail1.getVisitCode(), idrsDetail1.getIdrsScore());
+
+						if (success > 0) {
 							idrsFlag = new Long(1);
 						}
 					}
-					 if(idrsDetail1.getSuspectArray()!=null && idrsDetail1.getSuspectArray().length >0)
-						{
-							for(int a=0;a<idrsDetail1.getSuspectArray().length;a++)
-					    	{
-					    		if(a==idrsDetail1.getSuspectArray().length-1)
-					    		temp1+=idrsDetail1.getSuspectArray()[a];
-					    		else
-					    		temp1=temp1+idrsDetail1.getSuspectArray()[a]+",";
-					    	}
-							if(temp1.equalsIgnoreCase(""))
-								temp1=null;
-							if(temp1!=null)
-							{
-								success=iDrsDataRepo.updateSuspectedDiseases(idrsDetail1.getBeneficiaryRegID(), idrsDetail1.getVisitCode(), temp1);
-							}
-								
-							if(success > 0) {
-								idrsFlag = new Long(1);
-							}
+					if (idrsDetail1.getSuspectArray() != null && idrsDetail1.getSuspectArray().length > 0) {
+						for (int a = 0; a < idrsDetail1.getSuspectArray().length; a++) {
+							if (a == idrsDetail1.getSuspectArray().length - 1)
+								temp1 += idrsDetail1.getSuspectArray()[a];
+							else
+								temp1 = temp1 + idrsDetail1.getSuspectArray()[a] + ",";
 						}
-						 if(idrsDetail1.getIdrsScore() != null) {
-							 success = iDrsDataRepo.updateIdrsScore(idrsDetail1.getBeneficiaryRegID(), idrsDetail1.getVisitCode(), idrsDetail1.getIdrsScore());
-							
-							if(success > 0) {
-								idrsFlag = new Long(1);
-							}
+						if (temp1.equalsIgnoreCase(""))
+							temp1 = null;
+						if (temp1 != null) {
+							success = iDrsDataRepo.updateSuspectedDiseases(idrsDetail1.getBeneficiaryRegID(),
+									idrsDetail1.getVisitCode(), temp1);
 						}
+
+						if (success > 0) {
+							idrsFlag = new Long(1);
+						}
+					}
+					if (idrsDetail1.getIdrsScore() != null) {
+						success = iDrsDataRepo.updateIdrsScore(idrsDetail1.getBeneficiaryRegID(),
+								idrsDetail1.getVisitCode(), idrsDetail1.getIdrsScore());
+
+						if (success > 0) {
+							idrsFlag = new Long(1);
+						}
+					}
 				}
-				
+
 			}
 
 		}
 
 		return idrsFlag;
 
-        
 	}
-	
-	
+
 	@Transactional(rollbackFor = Exception.class)
 	public Long saveDoctorData(JsonObject requestOBJ, String Authorization) throws Exception {
 		Long saveSuccessFlag = null;
@@ -1042,13 +1021,13 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 
 			// save findings
 			if (requestOBJ.has("findings") && !requestOBJ.get("findings").isJsonNull()) {
-				WrapperAncFindings wrapperAncFindings = InputMapper.gson().fromJson(requestOBJ.get("findings"),WrapperAncFindings.class);
+				WrapperAncFindings wrapperAncFindings = InputMapper.gson().fromJson(requestOBJ.get("findings"),
+						WrapperAncFindings.class);
 				findingSuccessFlag = commonDoctorServiceImpl.saveDocFindings(wrapperAncFindings);
 
 			} else {
 				findingSuccessFlag = 1;
 			}
-			
 
 			// creating prescription object
 			PrescriptionDetail prescriptionDetail = new PrescriptionDetail();
@@ -1060,13 +1039,13 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 			} else {
 			}
 
-
 			// generate prescription
 			WrapperBenInvestigationANC wrapperBenInvestigationANC = InputMapper.gson()
 					.fromJson(requestOBJ.get("investigation"), WrapperBenInvestigationANC.class);
-						prescriptionDetail.setExternalInvestigation(wrapperBenInvestigationANC.getExternalInvestigations());
-						prescriptionID = commonNurseServiceImpl.saveBenPrescription(prescriptionDetail);			
-			
+			// Save Prescription
+			prescriptionDetail.setExternalInvestigation(wrapperBenInvestigationANC.getExternalInvestigations());
+			prescriptionID = commonNurseServiceImpl.saveBenPrescription(prescriptionDetail);
+
 			// save prescribed lab test
 			if (isTestPrescribed) {
 				wrapperBenInvestigationANC.setPrescriptionID(prescriptionID);
@@ -1096,7 +1075,7 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 			} else {
 				prescriptionSuccessFlag = 1;
 			}
-			
+
 			// save referral details
 			if (requestOBJ.has("refer") && !requestOBJ.get("refer").isJsonNull()) {
 				referSaveSuccessFlag = commonDoctorServiceImpl
@@ -1112,12 +1091,11 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 					&& (referSaveSuccessFlag != null && referSaveSuccessFlag > 0)) {
 
 				// call method to update beneficiary flow table
-				if(prescriptionID!=null)
-				{
+				if (prescriptionID != null) {
 					commonUtilityClass.setPrescriptionID(prescriptionID);
 					commonUtilityClass.setVisitCategoryID(2);
 					commonUtilityClass.setAuthorization(Authorization);
-					
+
 				}
 				int i = commonDoctorServiceImpl.updateBenFlowtableAfterDocDataSave(commonUtilityClass, isTestPrescribed,
 						isMedicinePrescribed, tcRequestOBJ);
@@ -1145,12 +1123,12 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 		return saveSuccessFlag;
 	}
 	/// --------------- END of saving doctor data ------------------------
-	
+
 	public String getBenCaseRecordFromDoctorNCDScreening(Long benRegID, Long visitCode) {
 		Map<String, Object> resMap = new HashMap<>();
-		
+
 		resMap.put("findings", commonDoctorServiceImpl.getFindingsDetails(benRegID, visitCode));
-		
+
 		resMap.put("diagnosis", ncdSCreeningDoctorServiceImpl.getNCDDiagnosisData(benRegID, visitCode));
 
 		resMap.put("investigation", commonDoctorServiceImpl.getInvestigationDetails(benRegID, visitCode));
@@ -1169,114 +1147,111 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 
 		return resMap.toString();
 	}
-	
+
 	/// --------------- Start of Fetching NCD Screening Nurse Data ----------------
-		public String getBenVisitDetailsFrmNurseNCDScreening(Long benRegID, Long visitCode) {
-			Map<String, Object> resMap = new HashMap<>();
+	public String getBenVisitDetailsFrmNurseNCDScreening(Long benRegID, Long visitCode) {
+		Map<String, Object> resMap = new HashMap<>();
 
-			BeneficiaryVisitDetail visitDetail = commonNurseServiceImpl.getCSVisitDetails(benRegID, visitCode);
+		BeneficiaryVisitDetail visitDetail = commonNurseServiceImpl.getCSVisitDetails(benRegID, visitCode);
 
-			resMap.put("NCDScreeningNurseVisitDetail", new Gson().toJson(visitDetail));
+		resMap.put("NCDScreeningNurseVisitDetail", new Gson().toJson(visitDetail));
 
-			resMap.put("BenChiefComplaints", commonNurseServiceImpl.getBenChiefComplaints(benRegID, visitCode));
+		resMap.put("BenChiefComplaints", commonNurseServiceImpl.getBenChiefComplaints(benRegID, visitCode));
 
-			return resMap.toString();
-		}
-		
-		public String getBenHistoryDetails(Long benRegID, Long visitCode) {
-			
-			Map<String, Object> HistoryDetailsMap = new HashMap<String, Object>();
+		return resMap.toString();
+	}
 
-			
-			HistoryDetailsMap.put("FamilyHistory", commonNurseServiceImpl.getFamilyHistoryDetail(benRegID, visitCode));
-			HistoryDetailsMap.put("PhysicalActivityHistory", commonNurseServiceImpl.getPhysicalActivityType(benRegID, visitCode));
-			HistoryDetailsMap.put("PersonalHistory", commonNurseServiceImpl.getPersonalHistory(benRegID, visitCode));
+	public String getBenHistoryDetails(Long benRegID, Long visitCode) {
 
+		Map<String, Object> HistoryDetailsMap = new HashMap<String, Object>();
 
-			return new Gson().toJson(HistoryDetailsMap);
-		}
-		
-		public String getBenIdrsDetailsFrmNurse(Long beneficiaryRegID, Long benVisitID) {
-			Map<String, Object> resMap = new HashMap<>();
+		HistoryDetailsMap.put("FamilyHistory", commonNurseServiceImpl.getFamilyHistoryDetail(benRegID, visitCode));
+		HistoryDetailsMap.put("PhysicalActivityHistory",
+				commonNurseServiceImpl.getPhysicalActivityType(benRegID, visitCode));
+		HistoryDetailsMap.put("PersonalHistory", commonNurseServiceImpl.getPersonalHistory(benRegID, visitCode));
 
-			resMap.put("IDRSDetail",
-					commonNurseServiceImpl.getBeneficiaryIdrsDetails(beneficiaryRegID, benVisitID));
-			
+		return new Gson().toJson(HistoryDetailsMap);
+	}
 
-			return new Gson().toJson(resMap);
-		}
-		
-		public String getBeneficiaryVitalDetails(Long beneficiaryRegID, Long benVisitID) {
-			Map<String, Object> resMap = new HashMap<>();
+	public String getBenIdrsDetailsFrmNurse(Long beneficiaryRegID, Long benVisitID) {
+		Map<String, Object> resMap = new HashMap<>();
 
-			resMap.put("benAnthropometryDetail",
-					commonNurseServiceImpl.getBeneficiaryPhysicalAnthropometryDetails(beneficiaryRegID, benVisitID));
-			resMap.put("benPhysicalVitalDetail",
-					commonNurseServiceImpl.getBeneficiaryPhysicalVitalDetails(beneficiaryRegID, benVisitID));
+		resMap.put("IDRSDetail", commonNurseServiceImpl.getBeneficiaryIdrsDetails(beneficiaryRegID, benVisitID));
 
-			return resMap.toString();
-		}
-		
-		@Override
-		public Integer UpdateNCDScreeningHistory(JsonObject historyOBJ) throws Exception {
+		return new Gson().toJson(resMap);
+	}
 
-			int familyHistorySuccessFlag = 0;
-			int historyUpdatedSuccessfully = 0;
-			int physicalActivitySuccessFlag = 0;
+	public String getBeneficiaryVitalDetails(Long beneficiaryRegID, Long benVisitID) {
+		Map<String, Object> resMap = new HashMap<>();
 
-			// Update Family History
-			if (historyOBJ != null && historyOBJ.has("familyHistory") && !historyOBJ.get("familyHistory").isJsonNull()) {
-				BenFamilyHistory benFamilyHistory = InputMapper.gson().fromJson(historyOBJ.get("familyHistory"),
-						BenFamilyHistory.class);
+		resMap.put("benAnthropometryDetail",
+				commonNurseServiceImpl.getBeneficiaryPhysicalAnthropometryDetails(beneficiaryRegID, benVisitID));
+		resMap.put("benPhysicalVitalDetail",
+				commonNurseServiceImpl.getBeneficiaryPhysicalVitalDetails(beneficiaryRegID, benVisitID));
 
-				familyHistorySuccessFlag = commonNurseServiceImpl.updateBenFamilyHistoryNCDScreening(benFamilyHistory);
-			} else {
-				familyHistorySuccessFlag = 0;
-			}
-			
-			//Update Physical Activity
-			if (historyOBJ != null && historyOBJ.has("physicalActivityHistory") && !historyOBJ.get("physicalActivityHistory").isJsonNull()) {
-				PhysicalActivityType physicalActivityType = InputMapper.gson().fromJson(historyOBJ.get("physicalActivityHistory"),
-						PhysicalActivityType.class);
-				
-				physicalActivitySuccessFlag = commonNurseServiceImpl.updateBenPhysicalActivityHistoryNCDScreening(physicalActivityType);
-			}else {
-				physicalActivitySuccessFlag = 0;
-			}
-			
+		return resMap.toString();
+	}
 
-			if(familyHistorySuccessFlag > 0 && physicalActivitySuccessFlag > 0) {
-				historyUpdatedSuccessfully = 1;
-			}
-			// Update Personal History
-			if (historyOBJ != null && historyOBJ.has("personalHistory")
-					&& !historyOBJ.get("personalHistory").isJsonNull()) {
-				// Update Ben Personal Habits..
-				BenPersonalHabit personalHabit = InputMapper.gson().fromJson(historyOBJ.get("personalHistory"),
-						BenPersonalHabit.class);
+	@Override
+	public Integer UpdateNCDScreeningHistory(JsonObject historyOBJ) throws Exception {
 
-				commonNurseServiceImpl.updateBenPersonalHistory(personalHabit);
+		int familyHistorySuccessFlag = 0;
+		int historyUpdatedSuccessfully = 0;
+		int physicalActivitySuccessFlag = 0;
 
-				// Update Ben Allergy History..
-				BenAllergyHistory benAllergyHistory = InputMapper.gson().fromJson(historyOBJ.get("personalHistory"),
-						BenAllergyHistory.class);
-				commonNurseServiceImpl.updateBenAllergicHistory(benAllergyHistory);
+		// Update Family History
+		if (historyOBJ != null && historyOBJ.has("familyHistory") && !historyOBJ.get("familyHistory").isJsonNull()) {
+			BenFamilyHistory benFamilyHistory = InputMapper.gson().fromJson(historyOBJ.get("familyHistory"),
+					BenFamilyHistory.class);
 
-			}
-			return historyUpdatedSuccessfully;
+			familyHistorySuccessFlag = commonNurseServiceImpl.updateBenFamilyHistoryNCDScreening(benFamilyHistory);
+		} else {
+			familyHistorySuccessFlag = 0;
 		}
 
-		public String getBenNCDScreeningNurseData(Long benRegID, Long visitCode) {
-			Map<String, Object> resMap = new HashMap<>();
+		// Update Physical Activity
+		if (historyOBJ != null && historyOBJ.has("physicalActivityHistory")
+				&& !historyOBJ.get("physicalActivityHistory").isJsonNull()) {
+			PhysicalActivityType physicalActivityType = InputMapper.gson()
+					.fromJson(historyOBJ.get("physicalActivityHistory"), PhysicalActivityType.class);
 
-			resMap.put("vitals", getBeneficiaryVitalDetails(benRegID, visitCode));
-
-			resMap.put("history", getBenHistoryDetails(benRegID, visitCode));
-			
-			resMap.put("idrs", getBenIdrsDetailsFrmNurse(benRegID, visitCode));
-
-			return resMap.toString();
+			physicalActivitySuccessFlag = commonNurseServiceImpl
+					.updateBenPhysicalActivityHistoryNCDScreening(physicalActivityType);
+		} else {
+			physicalActivitySuccessFlag = 0;
 		}
 
-	
+		if (familyHistorySuccessFlag > 0 && physicalActivitySuccessFlag > 0) {
+			historyUpdatedSuccessfully = 1;
+		}
+		// Update Personal History
+		if (historyOBJ != null && historyOBJ.has("personalHistory")
+				&& !historyOBJ.get("personalHistory").isJsonNull()) {
+			// Update Ben Personal Habits..
+			BenPersonalHabit personalHabit = InputMapper.gson().fromJson(historyOBJ.get("personalHistory"),
+					BenPersonalHabit.class);
+
+			commonNurseServiceImpl.updateBenPersonalHistory(personalHabit);
+
+			// Update Ben Allergy History..
+			BenAllergyHistory benAllergyHistory = InputMapper.gson().fromJson(historyOBJ.get("personalHistory"),
+					BenAllergyHistory.class);
+			commonNurseServiceImpl.updateBenAllergicHistory(benAllergyHistory);
+
+		}
+		return historyUpdatedSuccessfully;
+	}
+
+	public String getBenNCDScreeningNurseData(Long benRegID, Long visitCode) {
+		Map<String, Object> resMap = new HashMap<>();
+
+		resMap.put("vitals", getBeneficiaryVitalDetails(benRegID, visitCode));
+
+		resMap.put("history", getBenHistoryDetails(benRegID, visitCode));
+
+		resMap.put("idrs", getBenIdrsDetailsFrmNurse(benRegID, visitCode));
+
+		return resMap.toString();
+	}
+
 }

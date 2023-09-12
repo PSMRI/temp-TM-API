@@ -33,14 +33,14 @@ import javax.persistence.Table;
 import com.google.gson.annotations.Expose;
 
 @Entity
-@Table(name="m_pharmacologicalcategory")
+@Table(name = "m_pharmacologicalcategory")
 public class M_Pharmacologicalcategory {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Expose
 	@Column(name = "PharmCategoryID")
-	private Integer pharmacologyCategoryID; 
+	private Integer pharmacologyCategoryID;
 	@Expose
 	@Column(name = "PharmCategoryName")
 	private String pharmCategoryName;
@@ -49,7 +49,7 @@ public class M_Pharmacologicalcategory {
 	private String pharmCategoryDesc;
 	@Expose
 	@Column(name = "PharmCategoryCode")
-	private String pharmCategoryCode; 
+	private String pharmCategoryCode;
 	@Expose
 	@Column(name = "Status")
 	private String status;
@@ -71,11 +71,9 @@ public class M_Pharmacologicalcategory {
 	@Expose
 	@Column(name = "LastModDate", insertable = false, updatable = false)
 	private Date lastModDate;
-	
-	
+
 	public M_Pharmacologicalcategory() {
 	}
-
 
 	public String getPharmCategoryName() {
 		return pharmCategoryName;
@@ -85,7 +83,7 @@ public class M_Pharmacologicalcategory {
 		return pharmacologyCategoryID;
 	}
 
-	void setPharmacologyCategoryID(Integer pharmacologyCategoryID) {
+	public void setPharmacologyCategoryID(Integer pharmacologyCategoryID) {
 		this.pharmacologyCategoryID = pharmacologyCategoryID;
 	}
 
@@ -109,10 +107,12 @@ public class M_Pharmacologicalcategory {
 		this.pharmCategoryCode = pharmCategoryCode;
 	}
 
+	/**
+	 * @return the status
+	 */
 	public String getStatus() {
 		return status;
 	}
-
 
 	/**
 	 * @param status the status to set
@@ -121,14 +121,12 @@ public class M_Pharmacologicalcategory {
 		this.status = status;
 	}
 
-
 	/**
 	 * @return the providerServiceMapID
 	 */
 	public Integer getProviderServiceMapID() {
 		return providerServiceMapID;
 	}
-
 
 	/**
 	 * @param providerServiceMapID the providerServiceMapID to set
@@ -137,14 +135,12 @@ public class M_Pharmacologicalcategory {
 		this.providerServiceMapID = providerServiceMapID;
 	}
 
-
 	/**
 	 * @return the deleted
 	 */
 	public Boolean getDeleted() {
 		return deleted;
 	}
-
 
 	/**
 	 * @param deleted the deleted to set
@@ -153,14 +149,12 @@ public class M_Pharmacologicalcategory {
 		this.deleted = deleted;
 	}
 
-
 	/**
 	 * @return the createdBy
 	 */
 	public String getCreatedBy() {
 		return createdBy;
 	}
-
 
 	/**
 	 * @param createdBy the createdBy to set
@@ -169,14 +163,12 @@ public class M_Pharmacologicalcategory {
 		this.createdBy = createdBy;
 	}
 
-
 	/**
 	 * @return the createdDate
 	 */
 	public Date getCreatedDate() {
 		return createdDate;
 	}
-
 
 	/**
 	 * @param createdDate the createdDate to set
@@ -185,14 +177,12 @@ public class M_Pharmacologicalcategory {
 		this.createdDate = createdDate;
 	}
 
-
 	/**
 	 * @return the modifiedBy
 	 */
 	public String getModifiedBy() {
 		return modifiedBy;
 	}
-
 
 	/**
 	 * @param modifiedBy the modifiedBy to set
@@ -201,7 +191,6 @@ public class M_Pharmacologicalcategory {
 		this.modifiedBy = modifiedBy;
 	}
 
-
 	/**
 	 * @return the lastModDate
 	 */
@@ -209,20 +198,16 @@ public class M_Pharmacologicalcategory {
 		return lastModDate;
 	}
 
-
 	/**
 	 * @param lastModDate the lastModDate to set
 	 */
 	public void setLastModDate(Date lastModDate) {
 		this.lastModDate = lastModDate;
 	}
-	
 
-	
-	public Integer getPharmCategoryID(){
+	public Integer getPharmCategoryID() {
 		return pharmacologyCategoryID;
-		
+
 	}
 
 }
-

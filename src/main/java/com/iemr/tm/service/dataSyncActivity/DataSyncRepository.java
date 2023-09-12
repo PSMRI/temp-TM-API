@@ -35,10 +35,6 @@ import org.springframework.stereotype.Service;
 import com.iemr.tm.data.syncActivity_syncLayer.SyncUtilityClass;
 import com.iemr.tm.repo.syncActivity_syncLayer.SyncUtilityClassRepo;
 
-/***
- * @author NE298657
- */
-
 @Service
 public class DataSyncRepository {
 	@Autowired
@@ -80,13 +76,12 @@ public class DataSyncRepository {
 		return syncUtilityClassList;
 	}
 
-
 	public int updateProcessedFlagInVan(String schemaName, String tableName, StringBuilder vanSerialNos,
 			String autoIncreamentColumn, String user) throws Exception {
 		jdbcTemplate = getJdbcTemplate();
 		String query = " UPDATE " + schemaName + "." + tableName
-				+ " SET processed = 'P' , SyncedDate = ?, Syncedby = ? WHERE " + autoIncreamentColumn
-				+ " IN (" + vanSerialNos + ")";
+				+ " SET processed = 'P' , SyncedDate = ?, Syncedby = ? WHERE " + autoIncreamentColumn + " IN ("
+				+ vanSerialNos + ")";
 		// System.out.println("hello");
 
 		// int i = jdbcTemplate.update(query);

@@ -131,7 +131,6 @@ public class IemrMmuLoginServiceImpl implements IemrMmuLoginService {
 			responseMap.put("userSpDetails", servicePointListResponse);
 			responseMap.put("parkingPlaceLocationList", parkingPlaceLocationList);
 
-
 		}
 		return new Gson().toJson(responseMap);
 	}
@@ -166,6 +165,7 @@ public class IemrMmuLoginServiceImpl implements IemrMmuLoginService {
 			}
 		}
 		resMap.put("UserVanSpDetails", userVanSpDetails_ViewList);
+		// continue button
 		List<Object[]> parkingPlaceList = userParkingplaceMappingRepo.getUserParkingPlce(userID);
 		Map<String, Object> parkingPlaceLocationMap = new HashMap<>();
 		if (parkingPlaceList.size() > 0) {
@@ -182,10 +182,9 @@ public class IemrMmuLoginServiceImpl implements IemrMmuLoginService {
 		// 1.1
 		return new Gson().toJson(resMap);
 	}
-	
-	
+
 	@Override
-	public String getUserSpokeDetails (Integer psmId)  {
+	public String getUserSpokeDetails(Integer psmId) {
 		MasterVan mVan;
 		ArrayList<MasterVan> vanMasterList = new ArrayList<>();
 		mVan = new MasterVan(0, "All");

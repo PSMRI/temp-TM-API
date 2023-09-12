@@ -61,7 +61,6 @@ public class CRMReportServiceImpl implements CRMReportService {
 	ObjectMapper mapper = new ObjectMapper();
 
 	public Integer getParkingplaceID(Integer userID, Integer providerServiceMapId) throws TMException {
-		// Integer ppID = 0;
 		UserParkingplaceMapping usermap = userParkingplaceMappingRepo
 				.findOneByUserIDAndProviderServiceMapIdAndDeleted(userID, providerServiceMapId, 0);
 
@@ -70,7 +69,6 @@ public class CRMReportServiceImpl implements CRMReportService {
 
 		}
 		return usermap.getParkingPlaceID();
-		// return ppID;
 	}
 
 	static ChiefComplaintReport getBenChiefComplaintReportObj(Object[] obj) {

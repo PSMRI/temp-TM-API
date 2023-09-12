@@ -89,7 +89,8 @@ public class NCDCareDoctorServiceImpl implements NCDCareDoctorService {
 
 		ArrayList<Object[]> resList = ncdCareDiagnosisRepo.getNCDCareDiagnosisDetails(beneficiaryRegID, visitCode);
 		NCDCareDiagnosis ncdCareDiagnosisDetails = NCDCareDiagnosis.getNCDCareDiagnosisDetails(resList);
-
+		// parsing the || seperated ncd_condition to array of string, if
+		// condition
 		if (ncdCareDiagnosisDetails != null && ncdCareDiagnosisDetails.getNcdScreeningCondition() != null
 				&& ncdCareDiagnosisDetails.getNcdScreeningCondition().length() > 0) {
 

@@ -71,6 +71,7 @@ public class WorklistController {
 		this.commonNurseServiceImpl = commonNurseServiceImpl;
 	}
 
+	// doc worklist new (TM future scheduled beneficiary)
 	@CrossOrigin()
 	@ApiOperation(value = "Get doctor future worklist scheduled for telemedicine", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = {
