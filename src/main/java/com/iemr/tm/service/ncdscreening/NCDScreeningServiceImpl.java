@@ -193,8 +193,6 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 				physicalActivityFlag = savePhysicalActivityDetails(
 						requestOBJ.getAsJsonObject("historyDetails").getAsJsonObject("physicalActivityHistory"),
 						benVisitID, benVisitCode);
-				// i = commonNurseServiceImpl.updateBeneficiaryStatus('N',
-				// tmpOBJ.get("beneficiaryRegID").getAsLong());
 			} else {
 				throw new RuntimeException("Error occurred while creating beneficiary visit");
 			}
@@ -882,8 +880,6 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 						idrsDetail.setAnswer(ar[i].getAnswer());
 						idrsDetail.setQuestion(ar[i].getQuestion());
 						idrsDetail.setDiseaseQuestionType(ar[i].getDiseaseQuestionType());
-//						idrsDetail.setBenVisitID(idrsDetail1.getBenVisitID());
-//						idrsDetail.setVisitCode(idrsDetail1.getVisitCode());
 
 						if (idrsDetail.getSuspectArray() != null && idrsDetail.getSuspectArray().length > 0) {
 							for (int a = 0; a < idrsDetail.getSuspectArray().length; a++) {
@@ -914,8 +910,6 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 						idrsFlag = commonNurseServiceImpl.saveIDRS(idrsDetail);
 					}
 				} else {
-					// idrsDetail1.setBenVisitID(benVisitID);
-					// idrsDetail1.setVisitCode(benVisitCode);
 					int success = 0;
 					if (idrsDetail1.getConfirmArray() != null && idrsDetail1.getConfirmArray().length > 0) {
 						for (int a = 0; a < idrsDetail1.getConfirmArray().length; a++) {

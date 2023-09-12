@@ -113,7 +113,6 @@ public class NCDCareDoctorServiceImpl implements NCDCareDoctorService {
 				String[] conceptIDArr = obj.getDiagnosisProvided_SCTCode().split(Pattern.quote("  ||  "));
 				String[] termArr = obj.getDiagnosisProvided().split(Pattern.quote("  ||  "));
 
-				// StringBuilder pd = new StringBuilder();
 				int pointer = 0;
 				for (String s : termArr) {
 					sctOBJ = new SCTDescription();
