@@ -71,6 +71,32 @@ public class WorklistController {
 		this.commonNurseServiceImpl = commonNurseServiceImpl;
 	}
 
+	// doc worklist new
+	@CrossOrigin()
+	@ApiOperation(value = "Get doctor worklist", consumes = "application/json", produces = "application/json")
+	@RequestMapping(value = { "/getDocWorklistNew/{providerServiceMapID}/{serviceID}/{vanID}" }, method = {
+			RequestMethod.GET })
+	public String getDocWorkListNew(@PathVariable("providerServiceMapID") Integer providerServiceMapID,
+			@PathVariable("serviceID") Integer serviceID, @PathVariable("vanID") Integer vanID) {
+		OutputResponse response = new OutputResponse();
+		try {
+			if (providerServiceMapID != null && serviceID != null) {
+				String s = commonDoctorServiceImpl.getDocWorkListNew(providerServiceMapID, serviceID, vanID);
+				if (s != null)
+					response.setResponse(s);
+			} else {
+				logger.error("Invalid request, either ProviderServiceMapID or ServiceID is invalid. PSMID = "
+						+ providerServiceMapID + " SID = " + serviceID);
+				response.setError(5000, "Invalid request, either ProviderServiceMapID or ServiceID is invalid");
+			}
+
+		} catch (Exception e) {
+			logger.error("Error in getDocWorkList:" + e);
+			response.setError(5000, "Error while getting doctor worklist");
+		}
+		return response.toString();
+	}
+	
 	// doc worklist new (TM future scheduled beneficiary)
 	@CrossOrigin()
 	@ApiOperation(value = "Get doctor future worklist scheduled for telemedicine", consumes = "application/json", produces = "application/json")
