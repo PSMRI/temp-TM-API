@@ -56,4 +56,4 @@ replay_pid15072.log
 /logs
 
 # Properties
-src/main/environment/admin_local.properties
+src/main/environment/common_local.properties
