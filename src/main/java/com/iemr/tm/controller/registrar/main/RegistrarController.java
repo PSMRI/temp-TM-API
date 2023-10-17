@@ -107,6 +107,36 @@ public class RegistrarController {
 	@ApiOperation(value = "Search for the beneficiary based on beneficiary id", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/quickSearch" }, method = { RequestMethod.POST })
 	public String quickSearchBeneficiary(
+    @ApiParam(value = "{\"benID\": \"String\"}") @RequestBody String comingRequest) {
+    OutputResponse response = new OutputResponse();
+    logger.info("quickSearchBeneficiary request:" + comingRequest);
+    try {
+        JSONObject obj = new JSONObject(comingRequest);
+
+        // Sanitize user input (benID) before using it in the query
+        String benID = sanitizeInput(obj.getString("benID"));
+
+        response.setResponse(registrarServiceImpl.getQuickSearchBenData(benID));
+        logger.info("quickSearchBeneficiary response:" + response);
+    } catch (Exception e) {
+        logger.error("Error in quickSearchBeneficiary :" + e);
+        response.setError(e);
+    }
+    return response.toString();
+}
+
+// Helper method to sanitize user input
+private String sanitizeInput(String input) {
+    // Perform any necessary sanitization, such as escaping special characters
+    return input.replaceAll("[<>&]", "");
+}
+
+
+	/* // Registrar Quick search .....
+	@CrossOrigin()
+	@ApiOperation(value = "Search for the beneficiary based on beneficiary id", consumes = "application/json", produces = "application/json")
+	@RequestMapping(value = { "/quickSearch" }, method = { RequestMethod.POST })
+	public String quickSearchBeneficiary(
 			@ApiParam(value = "{\"benID\": \"String\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 		logger.info("quickSearchBeneficiary request:" + comingRequest);
@@ -121,7 +151,7 @@ public class RegistrarController {
 		}
 		return response.toString();
 	}
-
+ */
 	// Registrar Advance search .....
 	@CrossOrigin()
 	@ApiOperation(value = "Search for the beneficiary based on provided data", consumes = "application/json", produces = "application/json")
