@@ -46,6 +46,8 @@ import com.iemr.tm.data.quickConsultation.PrescribedDrugDetail;
 import com.iemr.tm.data.quickConsultation.PrescriptionDetail;
 import com.iemr.tm.data.tele_consultation.TeleconsultationRequestOBJ;
 import com.iemr.tm.repo.nurse.BenPhysicalVitalRepo;
+import com.iemr.tm.repo.nurse.BenVisitDetailRepo;
+import com.iemr.tm.repo.nurse.anc.BenAdherenceRepo;
 import com.iemr.tm.repo.quickConsultation.BenChiefComplaintRepo;
 import com.iemr.tm.repo.quickConsultation.BenClinicalObservationsRepo;
 import com.iemr.tm.repo.quickConsultation.ExternalTestOrderRepo;
@@ -88,6 +90,11 @@ public class QuickConsultationServiceImpl implements QuickConsultationService {
 	private SMSGatewayServiceImpl sMSGatewayServiceImpl;
 	@Autowired
 	private BenPhysicalVitalRepo benPhysicalVitalRepo;
+	@Autowired
+	private BenVisitDetailRepo benVisitDetailRepo;
+	
+	@Autowired
+	private BenAdherenceRepo benAdherenceRepo;
 
 
 	@Override
@@ -252,6 +259,25 @@ public class QuickConsultationServiceImpl implements QuickConsultationService {
 		}
 		return new  Gson().toJson(responseMap);		
 		//return returnOBJ;
+	}
+	
+	@Override
+	public void deleteVisitDetails(JsonObject requestOBJ) throws Exception {
+		if (requestOBJ != null && requestOBJ.has("visitDetails") && !requestOBJ.get("visitDetails").isJsonNull()) {
+
+			CommonUtilityClass nurseUtilityClass = InputMapper.gson().fromJson(requestOBJ, CommonUtilityClass.class);
+
+			Long visitCode = benVisitDetailRepo.getVisitCode(nurseUtilityClass.getBeneficiaryRegID(),
+					nurseUtilityClass.getProviderServiceMapID());
+
+			if (visitCode != null) {
+				benChiefComplaintRepo.deleteVisitDetails(visitCode);
+				benAdherenceRepo.deleteVisitDetails(visitCode);
+				benVisitDetailRepo.deleteVisitDetails(visitCode);
+			}
+
+		}
+
 	}
 
 	// method for updating ben flow status flag for nurse

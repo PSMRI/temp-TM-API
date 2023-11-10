@@ -63,15 +63,15 @@ public class NCDCareController {
 
 	/**
 	 * @Objective Save NCD Care data for nurse.
-	 * @param JSON
-	 *            requestObj
+	 * @param JSON requestObj
 	 * @return success or failure response
+	 * @throws Exception 
 	 */
 	@CrossOrigin
 	@ApiOperation(value = "Save NCD care data collected by nurse", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/save/nurseData" }, method = { RequestMethod.POST })
 	public String saveBenNCDCareNurseData(@RequestBody String requestObj,
-			@RequestHeader(value = "Authorization") String Authorization) {
+			@RequestHeader(value = "Authorization") String Authorization) throws Exception {
 		OutputResponse response = new OutputResponse();
 		try {
 			logger.info("Request object for NCD Care nurse data saving :" + requestObj);
@@ -90,15 +90,23 @@ public class NCDCareController {
 
 		} catch (Exception e) {
 			logger.error("Error while saving NCD Care nurse data :" + e);
-			response.setError(5000, "Unable to save data");
+			if (e.getMessage().equalsIgnoreCase("Error while booking slot.")) {
+				JsonObject jsnOBJ = new JsonObject();
+				JsonParser jsnParser = new JsonParser();
+				JsonElement jsnElmnt = jsnParser.parse(requestObj);
+				jsnOBJ = jsnElmnt.getAsJsonObject();
+				ncdCareServiceImpl.deleteVisitDetails(jsnOBJ);
+				response.setError(5000, "Already booked slot, Please choose another slot");
+			} else {
+				response.setError(5000, "Unable to save data");
+			}
 		}
 		return response.toString();
 	}
 
 	/**
 	 * @Objective Save NCD Care data for doctor.
-	 * @param JSON
-	 *            requestObj
+	 * @param JSON requestObj
 	 * @return success or failure response
 	 */
 	@CrossOrigin
@@ -128,11 +136,14 @@ public class NCDCareController {
 			}
 		} catch (Exception e) {
 			logger.error("Error while saving NCD Care doctor data :" + e);
-			response.setError(5000, "Unable to save data. " + e.getMessage());
+			if (e.getMessage().equalsIgnoreCase("Error while booking slot."))
+				response.setError(5000, "Already booked slot, Please choose another slot");
+			else
+				response.setError(5000, "Unable to save data. " + e.getMessage());
 		}
 		return response.toString();
 	}
-	
+
 	@CrossOrigin()
 	@ApiOperation(value = "Get NCD care beneficiary visit details", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/getBenVisitDetailsFrmNurseNCDCare" }, method = { RequestMethod.POST })
@@ -161,7 +172,7 @@ public class NCDCareController {
 		}
 		return response.toString();
 	}
-	
+
 	/**
 	 * @Objective Fetching beneficiary history details enterted by nurse.
 	 * @param comingRequest
@@ -194,13 +205,13 @@ public class NCDCareController {
 		}
 		return response.toString();
 	}
-	
+
 	/**
 	 * @Objective Fetching beneficiary vital details enterted by nurse.
 	 * @param comingRequest
 	 * @return visit details in JSON format
 	 */
-	
+
 	@CrossOrigin()
 	@ApiOperation(value = "Get NCD care beneficiary vitals", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/getBenVitalDetailsFrmNurseNCDCare" }, method = { RequestMethod.POST })
@@ -228,7 +239,7 @@ public class NCDCareController {
 		}
 		return response.toString();
 	}
-	
+
 	/**
 	 * @Objective Fetching beneficiary doctor details.
 	 * @param comingRequest
@@ -262,7 +273,7 @@ public class NCDCareController {
 		}
 		return response.toString();
 	}
-	
+
 	@CrossOrigin
 	@ApiOperation(value = "Update NCD care beneficiary history", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/update/historyScreen" }, method = { RequestMethod.POST })
@@ -361,11 +372,13 @@ public class NCDCareController {
 			logger.info("Doctor data update Response:" + response);
 		} catch (Exception e) {
 			response.setError(500, "Unable to modify data. " + e.getMessage());
-			logger.error("Error while updating doctor data :" + e);
+			if (e.getMessage().equalsIgnoreCase("Error while booking slot."))
+				response.setError(5000, "Already booked slot, Please choose another slot");
+			else
+				logger.error("Error while updating doctor data :" + e);
 		}
 
 		return response.toString();
 	}
-	
-	
+
 }

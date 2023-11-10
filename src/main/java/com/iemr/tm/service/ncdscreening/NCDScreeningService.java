@@ -28,6 +28,8 @@ public interface NCDScreeningService {
 	public String getNCDScreeningDetails(Long beneficiaryRegID, Long benVisitID);
 
     String saveNCDScreeningNurseData(JsonObject requestOBJ, String Authorization) throws Exception;
+    
+    public void deleteVisitDetails(JsonObject requestOBJ) throws Exception;
 
 	Integer updateNurseNCDScreeningDetails(JsonObject jsonObject) throws Exception;
 	

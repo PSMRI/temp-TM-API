@@ -40,6 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
 import com.iemr.tm.data.anc.ANCCareDetails;
 import com.iemr.tm.data.anc.ANCDiagnosis;
 import com.iemr.tm.data.anc.BenAdherence;
@@ -77,12 +78,15 @@ import com.iemr.tm.data.tele_consultation.TeleconsultationRequestOBJ;
 import com.iemr.tm.repo.benFlowStatus.BeneficiaryFlowStatusRepo;
 import com.iemr.tm.repo.foetalmonitor.FoetalMonitorRepo;
 import com.iemr.tm.repo.nurse.BenAnthropometryRepo;
+import com.iemr.tm.repo.nurse.BenVisitDetailRepo;
 import com.iemr.tm.repo.nurse.anc.ANCCareRepo;
 import com.iemr.tm.repo.nurse.anc.ANCDiagnosisRepo;
+import com.iemr.tm.repo.nurse.anc.BenAdherenceRepo;
 import com.iemr.tm.repo.nurse.anc.BenMedHistoryRepo;
 import com.iemr.tm.repo.nurse.anc.BenMenstrualDetailsRepo;
 import com.iemr.tm.repo.nurse.anc.BencomrbidityCondRepo;
 import com.iemr.tm.repo.nurse.anc.FemaleObstetricHistoryRepo;
+import com.iemr.tm.repo.quickConsultation.BenChiefComplaintRepo;
 import com.iemr.tm.service.benFlowStatus.CommonBenStatusFlowServiceImpl;
 import com.iemr.tm.service.common.transaction.CommonDoctorServiceImpl;
 import com.iemr.tm.service.common.transaction.CommonNurseServiceImpl;
@@ -113,6 +117,14 @@ public class ANCServiceImpl implements ANCService {
 	private ANCDiagnosisRepo aNCDiagnosisRepo;
 	@Autowired
 	private FoetalMonitorRepo foetalMonitorRepo;
+	@Autowired
+	private BenVisitDetailRepo benVisitDetailRepo;
+	@Autowired
+	private BenChiefComplaintRepo benChiefComplaintRepo;
+	@Autowired
+	private BenAdherenceRepo benAdherenceRepo;
+
+	
 
 	@Autowired
 	private BenMenstrualDetailsRepo benMenstrualDetailsRepo;
@@ -151,7 +163,6 @@ public class ANCServiceImpl implements ANCService {
 	private SMSGatewayServiceImpl sMSGatewayServiceImpl;
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	public String saveANCNurseData(JsonObject requestOBJ, String Authorization) throws Exception {
 		// String vr = "";
 		Long saveSuccessFlag = null;
@@ -254,6 +265,25 @@ public class ANCServiceImpl implements ANCService {
 			responseMap.put("response", "Unable to save data");
 		}
 		return new  Gson().toJson(responseMap);			
+	}
+	
+	@Override
+	public void deleteVisitDetails(JsonObject requestOBJ) throws Exception {
+		if (requestOBJ != null && requestOBJ.has("visitDetails") && !requestOBJ.get("visitDetails").isJsonNull()) {
+
+			CommonUtilityClass nurseUtilityClass = InputMapper.gson().fromJson(requestOBJ, CommonUtilityClass.class);
+
+			Long visitCode = benVisitDetailRepo.getVisitCode(nurseUtilityClass.getBeneficiaryRegID(),
+					nurseUtilityClass.getProviderServiceMapID());
+
+			if (visitCode != null) {
+				benChiefComplaintRepo.deleteVisitDetails(visitCode);
+				benAdherenceRepo.deleteVisitDetails(visitCode);
+				benVisitDetailRepo.deleteVisitDetails(visitCode);
+			}
+
+		}
+
 	}
 
 	private int updateBenFlowNurseAfterNurseActivityANC(JsonObject investigationDataCheck, JsonObject tmpOBJ,

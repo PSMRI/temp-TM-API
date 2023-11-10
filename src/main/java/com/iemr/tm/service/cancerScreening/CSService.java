@@ -32,5 +32,7 @@ public interface CSService {
 	public int updateBenVitalDetail(BenCancerVitalDetail benCancerVitalDetail);
 
 	int updateCancerDiagnosisDetailsByOncologist(CancerDiagnosis cancerDiagnosis);
+	
+	public void deleteVisitDetails(JsonObject requestOBJ) throws Exception;
 
 }
