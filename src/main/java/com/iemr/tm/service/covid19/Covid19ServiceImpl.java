@@ -35,6 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
 import com.iemr.tm.data.anc.BenAllergyHistory;
 import com.iemr.tm.data.anc.BenChildDevelopmentHistory;
 import com.iemr.tm.data.anc.BenFamilyHistory;
@@ -58,6 +59,7 @@ import com.iemr.tm.data.nurse.CommonUtilityClass;
 import com.iemr.tm.data.quickConsultation.PrescribedDrugDetail;
 import com.iemr.tm.data.quickConsultation.PrescriptionDetail;
 import com.iemr.tm.data.tele_consultation.TeleconsultationRequestOBJ;
+import com.iemr.tm.repo.nurse.BenVisitDetailRepo;
 import com.iemr.tm.repo.nurse.covid19.Covid19BenFeedbackRepo;
 import com.iemr.tm.repo.quickConsultation.PrescriptionDetailRepo;
 import com.iemr.tm.service.benFlowStatus.CommonBenStatusFlowServiceImpl;
@@ -90,9 +92,13 @@ public class Covid19ServiceImpl implements Covid19Service {
 	private Covid19BenFeedbackRepo covid19BenFeedbackRepo;
 	@Autowired
 	private PrescriptionDetailRepo prescriptionDetailRepo;
+	@Autowired
+	private BenVisitDetailRepo benVisitDetailRepo;
+	
+
+	
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	public String saveCovid19NurseData(JsonObject requestOBJ, String Authorization) throws Exception {
 		Long saveSuccessFlag = null;
 		TeleconsultationRequestOBJ tcRequestOBJ = null;
@@ -195,6 +201,23 @@ public class Covid19ServiceImpl implements Covid19Service {
 			responseMap.put("response", "Unable to save data");
 		}
 		return new  Gson().toJson(responseMap);			
+	}
+	
+	public void deleteVisitDetails(JsonObject requestOBJ) throws Exception {
+		if (requestOBJ != null && requestOBJ.has("visitDetails") && !requestOBJ.get("visitDetails").isJsonNull()) {
+
+			CommonUtilityClass nurseUtilityClass = InputMapper.gson().fromJson(requestOBJ, CommonUtilityClass.class);
+
+			Long visitCode = benVisitDetailRepo.getVisitCode(nurseUtilityClass.getBeneficiaryRegID(),
+					nurseUtilityClass.getProviderServiceMapID());
+
+			if (visitCode != null) {
+				covid19BenFeedbackRepo.deleteVisitDetails(visitCode);
+				benVisitDetailRepo.deleteVisitDetails(visitCode);
+			}
+
+		}
+
 	}
 
 	/**

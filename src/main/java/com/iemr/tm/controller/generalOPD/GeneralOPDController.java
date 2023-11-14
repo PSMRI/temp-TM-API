@@ -52,7 +52,7 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping(value = "/generalOPD", headers = "Authorization")
 public class GeneralOPDController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
-    
+
 	@Autowired
 	private GeneralOPDService generalOPDService;
 
@@ -65,7 +65,7 @@ public class GeneralOPDController {
 	 * @Objective Save General OPD data for nurse.
 	 * @param requestObj
 	 * @return success or failure response
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@CrossOrigin
 	@ApiOperation(value = "Save general OPD data collected by nurse", consumes = "application/json", produces = "application/json")
@@ -73,32 +73,27 @@ public class GeneralOPDController {
 	public String saveBenGenOPDNurseData(@RequestBody String requestObj,
 			@RequestHeader(value = "Authorization") String Authorization) throws Exception {
 		OutputResponse response = new OutputResponse();
-		try {
-			logger.info("Request object for GeneralOPD nurse data saving :" + requestObj);
 
+		if (null != requestObj) {
 			JsonObject jsnOBJ = new JsonObject();
 			JsonParser jsnParser = new JsonParser();
 			JsonElement jsnElmnt = jsnParser.parse(requestObj);
 			jsnOBJ = jsnElmnt.getAsJsonObject();
 
-			if (jsnOBJ != null) {
-				String genOPDRes = generalOPDService.saveNurseData(jsnOBJ, Authorization);
-				response.setResponse(genOPDRes);
+			try {
+				logger.info("Request object for GeneralOPD nurse data saving :" + requestObj);
 
-			} else {
-				response.setResponse("Invalid request");
-			}
-		} catch (Exception e) {
-			logger.error("Error in nurse data saving :" + e);
-			if (e.getMessage().equalsIgnoreCase("Error while booking slot.")) {
-				JsonObject jsnOBJ = new JsonObject();
-				JsonParser jsnParser = new JsonParser();
-				JsonElement jsnElmnt = jsnParser.parse(requestObj);
-				jsnOBJ = jsnElmnt.getAsJsonObject();
+				if (jsnOBJ != null) {
+					String genOPDRes = generalOPDService.saveNurseData(jsnOBJ, Authorization);
+					response.setResponse(genOPDRes);
+
+				} else {
+					response.setResponse("Invalid request");
+				}
+			} catch (Exception e) {
+				logger.error("Error in nurse data saving :" + e.getMessage());
 				generalOPDService.deleteVisitDetails(jsnOBJ);
-				response.setError(5000, "Already booked slot, Please choose another slot");
-			} else {
-				response.setError(5000, "Unable to save data");
+				response.setError(5000, e.getMessage());
 			}
 		}
 		return response.toString();
@@ -135,11 +130,8 @@ public class GeneralOPDController {
 				response.setResponse("Invalid request");
 			}
 		} catch (Exception e) {
-			logger.error("Error in doctor data saving :" + e);
-			if (e.getMessage().equalsIgnoreCase("Error while booking slot."))
-				response.setError(5000, "Already booked slot, Please choose another slot");
-			else
-				response.setError(5000, "Unable to save data. " + e.getMessage());
+			logger.error("Error in doctor data saving :" + e.getMessage());
+			response.setError(5000, e.getMessage());
 		}
 		return response.toString();
 	}
@@ -471,11 +463,8 @@ public class GeneralOPDController {
 			}
 			logger.info("Doctor data update response:" + response);
 		} catch (Exception e) {
-			response.setError(5000, "Unable to modify data. " + e.getMessage());
-			if (e.getMessage().equalsIgnoreCase("Error while booking slot."))
-				response.setError(5000, "Already booked slot, Please choose another slot");
-			else
-				logger.error("Error while updating General OPD doctor data:" + e);
+			logger.error("Unable to modify data. " + e.getMessage());
+			response.setError(5000, e.getMessage());
 		}
 
 		return response.toString();
