@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -216,7 +217,7 @@ public class CommonDoctorServiceImpl {
 		// if valid chief complaints is present than save to DB
 		if (tmpBenCHiefComplaintsTMP.size() > 0) {
 			ArrayList<BenChiefComplaint> benChiefComplaintListRS = (ArrayList<BenChiefComplaint>) benChiefComplaintRepo
-					.save(tmpBenCHiefComplaintsTMP);
+					.saveAll(tmpBenCHiefComplaintsTMP);
 			if (tmpBenCHiefComplaintsTMP.size() == benChiefComplaintListRS.size()) {
 				chiefComFlag = 1;
 			}
@@ -486,7 +487,7 @@ public class CommonDoctorServiceImpl {
 
 		}
 
-		ArrayList<BenReferDetails> res = (ArrayList<BenReferDetails>) benReferDetailsRepo.save(referDetailsList);
+		ArrayList<BenReferDetails> res = (ArrayList<BenReferDetails>) benReferDetailsRepo.saveAll(referDetailsList);
 		if (referDetailsList.size() == res.size()) {
 			ID = new Long(1);
 		}
@@ -566,7 +567,7 @@ public class CommonDoctorServiceImpl {
 		if (null != benChiefComplaintList && benChiefComplaintList.size() > 0) {
 
 			List<BenChiefComplaint> benChiefComplaintResultList = (List<BenChiefComplaint>) benChiefComplaintRepo
-					.save(benChiefComplaintList);
+					.saveAll(benChiefComplaintList);
 
 			if (benChiefComplaintResultList != null && benChiefComplaintResultList.size() > 0) {
 				r = benChiefComplaintResultList.size();
@@ -674,7 +675,7 @@ public class CommonDoctorServiceImpl {
 				referDetailsList.add(referDetails);
 		}
 
-		ArrayList<BenReferDetails> res = (ArrayList<BenReferDetails>) benReferDetailsRepo.save(referDetailsList);
+		ArrayList<BenReferDetails> res = (ArrayList<BenReferDetails>) benReferDetailsRepo.saveAll(referDetailsList);
 		if (referDetailsList.size() == res.size()) {
 			ID = new Long(1);
 		}
@@ -959,7 +960,12 @@ public class CommonDoctorServiceImpl {
 	public String deletePrescribedMedicine(JSONObject obj) {
 		int i = 0;
 		if (obj != null && obj.has("id")) {
-			i = prescribedDrugDetailRepo.deletePrescribedmedicine(obj.getLong("id"));
+			try {
+				i = prescribedDrugDetailRepo.deletePrescribedmedicine(obj.getLong("id"));
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else {
 
 		}

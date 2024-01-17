@@ -21,6 +21,7 @@
 */
 package com.iemr.tm.utils.gateway.email;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -36,35 +37,42 @@ public class GenericEmailServiceImpl implements EmailService {
 
 	@Override
 	public void sendEmail(String jsonObject, String template) {
-		SimpleMailMessage mailMessage = new SimpleMailMessage();
-		JSONObject requestObj = new JSONObject(jsonObject);
-		String to = requestObj.getString("to");
-		String from = requestObj.getString("from");
-		String subject = requestObj.getString("subject");
-		String message = requestObj.getString("message");
-
-		mailMessage.setTo(to);
-		mailMessage.setFrom(from);
-		mailMessage.setSubject(subject);
-		mailMessage.setText(message);
+		SimpleMailMessage mailMessage = new SimpleMailMessage();	
+		try {
+			JSONObject requestObj = new JSONObject(jsonObject);		
+			String to = requestObj.getString("to");
+			String from = requestObj.getString("from");
+			String subject = requestObj.getString("subject");
+			String message = requestObj.getString("message");
+			mailMessage.setTo(to);
+			mailMessage.setFrom(from);
+			mailMessage.setSubject(subject);
+			mailMessage.setText(message);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 		javaMailSender.send(mailMessage);
-
 	}
 
 	@Override
 	public void sendEmail(String jsonObject) {
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
-		JSONObject requestObj = new JSONObject(jsonObject);
-		String to = requestObj.getString("to");
-		String from = requestObj.getString("from");
-		String subject = requestObj.getString("subject");
-		String message = requestObj.getString("message");
-		mailMessage.setTo(to.split(";"));
-		mailMessage.setFrom(from);
-		mailMessage.setSubject(subject);
-		mailMessage.setText(message);
+		try {
+			JSONObject requestObj = new JSONObject(jsonObject);
+			String to = requestObj.getString("to");
+			String from = requestObj.getString("from");
+			String subject = requestObj.getString("subject");
+			String message = requestObj.getString("message");
+			mailMessage.setTo(to.split(";"));
+			mailMessage.setFrom(from);
+			mailMessage.setSubject(subject);
+			mailMessage.setText(message);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 		javaMailSender.send(mailMessage);
-
 	}
 
 	@Override

@@ -23,7 +23,7 @@ package com.iemr.tm.data.report;
 
 import java.sql.Timestamp;
 
-import javax.persistence.Transient;
+import jakarta.persistence.Transient;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;

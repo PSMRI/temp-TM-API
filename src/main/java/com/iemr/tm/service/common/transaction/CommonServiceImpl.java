@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -535,7 +536,7 @@ public class CommonServiceImpl implements CommonService {
 
 	// end
 
-	public String getOpenKMDocURL(String requestOBJ, String Authorization) {
+	public String getOpenKMDocURL(String requestOBJ, String Authorization) throws JSONException {
 		RestTemplate restTemplate = new RestTemplate();
 		String fileUUID = null;
 		JSONObject obj = new JSONObject(requestOBJ);

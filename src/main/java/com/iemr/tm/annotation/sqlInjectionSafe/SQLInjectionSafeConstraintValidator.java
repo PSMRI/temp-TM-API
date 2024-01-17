@@ -21,12 +21,13 @@
 */
 package com.iemr.tm.annotation.sqlInjectionSafe;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class SQLInjectionSafeConstraintValidator implements ConstraintValidator<SQLInjectionSafe, String> {
 

@@ -21,17 +21,14 @@
 */
 package com.iemr.tm.common;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyVararg;
-import static org.mockito.Matchers.isA;
+import static org.hamcrest.CoreMatchers.isA;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -55,7 +52,6 @@ import com.iemr.tm.data.anc.PhyGeneralExamination;
 import com.iemr.tm.data.anc.PhyHeadToToeExamination;
 import com.iemr.tm.data.anc.SysCardiovascularExamination;
 import com.iemr.tm.data.anc.SysCentralNervousExamination;
-import com.iemr.tm.data.anc.SysGastrointestinalExamination;
 import com.iemr.tm.data.anc.SysGenitourinarySystemExamination;
 import com.iemr.tm.data.anc.SysMusculoskeletalSystemExamination;
 import com.iemr.tm.data.anc.SysRespiratoryExamination;
@@ -219,27 +215,27 @@ public class TestCommonServices
 		
 		jsnOBJPve = new JsonObject();
 		JsonParser jsnParser = new JsonParser();
-		JsonElement jsnElmnt = jsnParser.parse(requestObjPve);
+		JsonElement jsnElmnt = jsnParser.parseString(requestObjPve);
 		jsnOBJPve = jsnElmnt.getAsJsonObject();
 		
 		doctorSaveJsnPve = new JsonObject();
-		jsnElmnt = jsnParser.parse(doctorSaveObjPve);
+		jsnElmnt = jsnParser.parseString(doctorSaveObjPve);
 		doctorSaveJsnPve = jsnElmnt.getAsJsonObject();
 		
 		jsnOBJNve = new JsonObject();
-		JsonElement jsnElmntNve = jsnParser.parse(requestObjNve);
+		JsonElement jsnElmntNve = jsnParser.parseString(requestObjNve);
 		jsnOBJNve = jsnElmntNve.getAsJsonObject();
 		
 		updateHstryJsnPve = new JsonObject();
-		JsonElement updatejsnElmntPve = jsnParser.parse(updateHistoryPve);
+		JsonElement updatejsnElmntPve = jsnParser.parseString(updateHistoryPve);
 		updateHstryJsnPve = updatejsnElmntPve.getAsJsonObject();
 		
 		updateVitalJsnPve = new JsonObject();
-		updatejsnElmntPve = jsnParser.parse(updateVitalPve);
+		updatejsnElmntPve = jsnParser.parseString(updateVitalPve);
 		updateVitalJsnPve = updatejsnElmntPve.getAsJsonObject();
 		
 		updateExaminationJsnPve = new JsonObject();
-		updatejsnElmntPve = jsnParser.parse(updateExaminationPve);
+		updatejsnElmntPve = jsnParser.parseString(updateExaminationPve);
 		updateExaminationJsnPve = updatejsnElmntPve.getAsJsonObject();
 		
 		//Expected Responses

@@ -33,6 +33,7 @@ import java.util.Objects;
 
 import javax.ws.rs.core.MediaType;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -262,7 +263,7 @@ public class RegistrarServiceImpl implements RegistrarService {
 	public int createBenGovIdMapping(JsonObject benD, Long benRegID) {
 		Long tempBenGovMapID = null;
 		ArrayList<BenGovIdMapping> benGovIDMap = (ArrayList<BenGovIdMapping>) registrarRepoBenGovIdMapping
-				.save(BenGovIdMapping.getBenGovIdMappingOBJList(benD, benRegID));
+				.saveAll(BenGovIdMapping.getBenGovIdMappingOBJList(benD, benRegID));
 		return benGovIDMap.size();
 	}
 
@@ -543,7 +544,7 @@ public class RegistrarServiceImpl implements RegistrarService {
 
 		int x = registrarRepoBenGovIdMapping.deletePreviousGovMapID(benRegID);
 		ArrayList<BenGovIdMapping> benGovIDMaps = (ArrayList<BenGovIdMapping>) registrarRepoBenGovIdMapping
-				.save(benGovIDMap);
+				.saveAll(benGovIDMap);
 
 		return benGovIDMaps.size();
 	}
@@ -711,7 +712,7 @@ public class RegistrarServiceImpl implements RegistrarService {
 	}
 
 	// beneficiary quick search new integrated with common and identity
-	public String beneficiaryQuickSearch(String requestObj, String Authorization) {
+	public String beneficiaryQuickSearch(String requestObj, String Authorization) throws JSONException {
 		String returnOBJ = null;
 		RestTemplate restTemplate = new RestTemplate();
 		JSONObject obj = new JSONObject(requestObj);
@@ -741,7 +742,7 @@ public class RegistrarServiceImpl implements RegistrarService {
 	}
 
 	// beneficiary advance search new integrated with common and identity
-	public String beneficiaryAdvanceSearch(String requestObj, String Authorization) {
+	public String beneficiaryAdvanceSearch(String requestObj, String Authorization) throws JSONException {
 		String returnOBJ = null;
 		RestTemplate restTemplate = new RestTemplate();
 		JSONObject obj = new JSONObject(requestObj);
