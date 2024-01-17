@@ -23,7 +23,10 @@ package com.iemr.tm.service.foetalmonitor;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -45,6 +48,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -173,34 +177,54 @@ public class FoetalMonitorServiceImpl implements FoetalMonitorService {
 
 	// generate report file in file storage
 	private String generatePDF(String filePath) throws IEMRException {
-		String filePathLocal = "";
-		Long timeStamp = System.currentTimeMillis();
-		try {
-			URL url = new URL(filePath);
-			con = (HttpURLConnection) url.openConnection();
-			con.setRequestMethod("GET");
-			con.setDoInput(true);
-			filePathLocal = foetalMonitorFilePath + "/" + timeStamp.toString() + ".pdf";
-			Path path = Paths.get(filePathLocal);
-			Files.copy(con.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
-			// base64 = readPDFANDGetBase64(filePathLocal);
+		try {
+			URI tempFilePath1 = URI.create(filePath).normalize();
+			String tempFilePath2 = tempFilePath1.toString();
+			String sanitizedPath = Paths.get(UriComponentsBuilder.fromPath(tempFilePath2).build().getPath()).toString();
+
+			URL url = new URL(sanitizedPath);
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			con.setRequestMethod("GET");
+
+			// "Best Practice": Set headers as needed for the specific API
+			/*
+			 * con.addRequestProperty("User-Agent", "Your-User-Agent");
+			 * con.addRequestProperty("Authorization", "Bearer Your-AccessToken");
+			 * con.setDoInput(true);
+			 */
+
+			String fileName = System.currentTimeMillis() + ".pdf";
+			Path filePathLocal = Paths.get(foetalMonitorFilePath, fileName);
+			try (InputStream inputStream = con.getInputStream()) {
+				Files.copy(inputStream, filePathLocal, StandardCopyOption.REPLACE_EXISTING);
+			}
+			return filePathLocal.toString();
 
 		} catch (IOException e) {
 			throw new RuntimeException(e.getMessage());
 		} finally {
-			con.disconnect();
+			if (con != null) {
+				con.disconnect(); // Close the HTTP connection in the finally block
+			}
 		}
 
-		return filePathLocal;
 	}
 
 	// generate report file in file storage
 	@Override
 	public String readPDFANDGetBase64(String filePath) throws IEMRException, IOException, FileNotFoundException {
-//		FileInputStream file = new FileInputStream(filePath);
-		byte[] byteArray = Files.readAllBytes(Paths.get(filePath));
-		return Base64.getEncoder().encodeToString(byteArray);
+
+		URI tempFilePath1 = URI.create(filePath).normalize();
+		String tempFilePath2 = tempFilePath1.toString();
+		Path sanitizedPath = Paths.get(UriComponentsBuilder.fromPath(tempFilePath2).build().getPath());
+		try {
+			byte[] byteArray = Files.readAllBytes(sanitizedPath);
+			return Base64.getEncoder().encodeToString(byteArray);
+		} catch (MalformedURLException e) {
+			return "This is a malformed URL";
+		}
+
 	}
 
 	/***
@@ -293,8 +317,7 @@ public class FoetalMonitorServiceImpl implements FoetalMonitorService {
 				foetalMonitorRepo.save(request);
 			}
 			if (jsnOBJ.get("status") != null && jsnOBJ.get("message") != null)
-//			throw new Exception("Unable to raise test request, error is : " + ("status code "+(jsnOBJ.get("status").getAsString())
-//					+","+(jsnOBJ.get("message").getAsString())));
+
 				throw new Exception(
 						"Unable to raise test request, error is : " + (jsnOBJ.get("message").getAsString()));
 			else
