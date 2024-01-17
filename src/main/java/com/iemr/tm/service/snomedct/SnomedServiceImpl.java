@@ -64,7 +64,7 @@ public class SnomedServiceImpl implements SnomedService {
 		Page<SCTDescription> sctList;
 		Map<String, Object> dataMap = new HashMap<>();
 		if (sctdescription != null && sctdescription.getTerm() != null && sctdescription.getPageNo() != null) {
-			PageRequest pr = new PageRequest(sctdescription.getPageNo(), snomedCTPageSize);
+			PageRequest pr = PageRequest.of(sctdescription.getPageNo(), snomedCTPageSize);
 			sctList = snomedRepository.findSnomedCTRecordList(sctdescription.getTerm(), pr);
 
 			dataMap.put("sctMaster", sctList.getContent());
