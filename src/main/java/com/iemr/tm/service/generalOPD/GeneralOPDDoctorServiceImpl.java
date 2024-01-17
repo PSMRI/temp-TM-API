@@ -51,11 +51,6 @@ public class GeneralOPDDoctorServiceImpl implements GeneralOPDDoctorService {
 		PrescriptionDetail obj;
 		SCTDescription sctOBJ;
 		ArrayList<SCTDescription> sctOBJList = new ArrayList<>();
-		// ArrayList<Object[]> diagnosisDetails =
-		// prescriptionDetailRepo.getBenPrescription(beneficiaryRegID, visitCode);
-		// PrescriptionDetail diagnosisList =
-		// PrescriptionDetail.getPrescriptions(diagnosisDetails);
-
 		ArrayList<PrescriptionDetail> prescriptionDetailRS = prescriptionDetailRepo
 				.findByBeneficiaryRegIDAndVisitCode(beneficiaryRegID, visitCode);
 
@@ -68,10 +63,6 @@ public class GeneralOPDDoctorServiceImpl implements GeneralOPDDoctorService {
 				// StringBuilder pd = new StringBuilder();
 				int pointer = 0;
 				for (String s : termArr) {
-					// if (termArr.length == (pointer + 1))
-					// pd.append(s);
-					// else
-					// pd.append(s).append(" || ");
 					sctOBJ = new SCTDescription();
 					sctOBJ.setConceptID(conceptIDArr[pointer]);
 					sctOBJ.setTerm(s);

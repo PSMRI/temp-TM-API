@@ -96,7 +96,6 @@ public class IemrMmuLoginServiceImpl implements IemrMmuLoginService {
 				parkingPlaceLocationMap.put("blockName", obj[6]);
 				parkingPlaceLocationList.add(parkingPlaceLocationMap);
 			}
-			// System.out.println("hello");
 			List<Object[]> vanList = masterVanRepo.getUserVanDatails(ppS);
 			Map<String, Object> vMap;
 			ArrayList<Map<String, Object>> vanListResponse = new ArrayList<>();
@@ -111,7 +110,6 @@ public class IemrMmuLoginServiceImpl implements IemrMmuLoginService {
 				vMap = new HashMap<String, Object>();
 				vanListResponse.add(vMap);
 			}
-			// System.out.println("hello");
 
 			List<Object[]> servicePointList = vanServicepointMappingRepo.getuserSpSessionDetails(ppS);
 			Map<String, Object> spMap;
@@ -132,8 +130,6 @@ public class IemrMmuLoginServiceImpl implements IemrMmuLoginService {
 			responseMap.put("userVanDetails", vanListResponse);
 			responseMap.put("userSpDetails", servicePointListResponse);
 			responseMap.put("parkingPlaceLocationList", parkingPlaceLocationList);
-
-			// System.out.println("hello");
 
 		}
 		return new Gson().toJson(responseMap);
@@ -169,8 +165,6 @@ public class IemrMmuLoginServiceImpl implements IemrMmuLoginService {
 			}
 		}
 		resMap.put("UserVanSpDetails", userVanSpDetails_ViewList);
-		// System.out.println("helloo bhai---" + new Gson().toJson(resMap));
-		// Later will remove below part till 1.1 new api is getting called on
 		// continue button
 		List<Object[]> parkingPlaceList = userParkingplaceMappingRepo.getUserParkingPlce(userID);
 		Map<String, Object> parkingPlaceLocationMap = new HashMap<>();
@@ -188,11 +182,9 @@ public class IemrMmuLoginServiceImpl implements IemrMmuLoginService {
 		// 1.1
 		return new Gson().toJson(resMap);
 	}
-	
-	/* created by = DU20091017 */
-	
+
 	@Override
-	public String getUserSpokeDetails (Integer psmId)  {
+	public String getUserSpokeDetails(Integer psmId) {
 		MasterVan mVan;
 		ArrayList<MasterVan> vanMasterList = new ArrayList<>();
 		mVan = new MasterVan(0, "All");

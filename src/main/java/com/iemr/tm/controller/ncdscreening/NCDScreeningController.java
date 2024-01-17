@@ -59,6 +59,7 @@ public class NCDScreeningController {
 	private NCDScreeningService ncdScreeningService;
 	@Autowired
 	private NCDSCreeningDoctorService ncdSCreeningDoctorService;
+
 	@Autowired
 	public void setNcdScreeningServiceImpl(NCDScreeningServiceImpl ncdScreeningServiceImpl) {
 		this.ncdScreeningServiceImpl = ncdScreeningServiceImpl;
@@ -66,39 +67,43 @@ public class NCDScreeningController {
 
 	/**
 	 * @Objective Save NCD Screening data for nurse.
-	 * @param JSON requestObj 
+	 * @param JSON requestObj
 	 * @return success or failure response
+	 * @throws Exception
 	 */
 	@CrossOrigin
 	@ApiOperation(value = "Save NCD screening beneficiary data collected by nurse", consumes = "application/json", produces = "application/json")
 
 	@RequestMapping(value = { "/save/nurseData" }, method = { RequestMethod.POST })
 	public String saveBeneficiaryNCDScreeningDetails(@RequestBody String requestObj,
-			@RequestHeader(value = "Authorization") String Authorization) {
+			@RequestHeader(value = "Authorization") String Authorization) throws Exception {
 
 		logger.info("Request object for NCD Screening nurse data saving :" + requestObj);
 		OutputResponse response = new OutputResponse();
 
-		JsonObject jsonObject = new JsonObject();
-		JsonParser jsonParser = new JsonParser();
+		if (null != requestObj) {
+			JsonObject jsonObject = new JsonObject();
+			JsonParser jsnParser = new JsonParser();
+			JsonElement jsnElmnt = jsnParser.parse(requestObj);
+			jsonObject = jsnElmnt.getAsJsonObject();
 
-		try {
-			JsonElement jsonElement = jsonParser.parse(requestObj);
-			jsonObject = jsonElement.getAsJsonObject();
+			try {
 
-			if (jsonObject != null) {
-				String r = ncdScreeningServiceImpl.saveNCDScreeningNurseData(jsonObject,Authorization);
-				response.setResponse(r);
-			} else {
-				response.setError(5000, "Invalid request");
+				if (jsonObject != null) {
+					String r = ncdScreeningServiceImpl.saveNCDScreeningNurseData(jsonObject, Authorization);
+					response.setResponse(r);
+				} else {
+					response.setError(5000, "Invalid request");
+				}
+			} catch (Exception e) {
+				logger.error("Error in nurse data saving :" + e.getMessage());
+				ncdScreeningServiceImpl.deleteVisitDetails(jsonObject);
+				response.setError(5000, e.getMessage());
 			}
-		} catch (Exception e) {
-			response.setError(5000, "Unable to save data");
-			logger.error("Error while storing NCD Screening nurse data: " + e);
 		}
 		return response.toString();
 	}
-	
+
 	@CrossOrigin
 	@ApiOperation(value = "Save NCD screening beneficiary data collected by doctor", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/save/doctorData" }, method = { RequestMethod.POST })
@@ -125,12 +130,12 @@ public class NCDScreeningController {
 				response.setResponse("Invalid request");
 			}
 		} catch (Exception e) {
-			logger.error("Error while saving NCD Screening doctor data :" + e);
-			response.setError(5000, "Unable to save data. " + e.getMessage());
+			logger.error("Error while saving NCD Screening doctor data :" + e.getMessage());
+			response.setError(5000, e.getMessage());
 		}
 		return response.toString();
 	}
-	
+
 	@CrossOrigin()
 	@ApiOperation(value = "Get NCD screening beneficiary visit details", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/get/nurseData" }, method = { RequestMethod.POST })
@@ -180,7 +185,6 @@ public class NCDScreeningController {
 		}
 		return response.toString();
 	}
-	
 
 	/**
 	 * @Objective Fetching beneficiary doctor details.
@@ -244,7 +248,7 @@ public class NCDScreeningController {
 		}
 		return response.toString();
 	}
-	
+
 	@CrossOrigin()
 	@ApiOperation(value = "Get NCD screening beneficiary general OPD history", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/getBenHistoryDetails" }, method = { RequestMethod.POST })
@@ -272,7 +276,7 @@ public class NCDScreeningController {
 		}
 		return response.toString();
 	}
-	
+
 	@CrossOrigin()
 	@ApiOperation(value = "Get NCD screening beneficiary vitals from general OPD nurse", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/getBenVitalDetailsFrmNurse" }, method = { RequestMethod.POST })
@@ -300,7 +304,7 @@ public class NCDScreeningController {
 		}
 		return response.toString();
 	}
-	
+
 	@CrossOrigin()
 	@ApiOperation(value = "Get NCD screening IDRS details from general OPD nurse", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/getBenIdrsDetailsFrmNurse" }, method = { RequestMethod.POST })
@@ -329,7 +333,7 @@ public class NCDScreeningController {
 		}
 		return response.toString();
 	}
-	
+
 	@CrossOrigin
 	@ApiOperation(value = "Get NCD screening beneficiary case record and referral", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/update/nurseData" }, method = { RequestMethod.POST })
@@ -473,11 +477,11 @@ public class NCDScreeningController {
 			else
 				response.setError(5000, "Error in data update");
 		} catch (Exception e) {
-			response.setError(5000, "Unable to modify data");
-			logger.error("Error while updating doctor data :" + e);
+			logger.error("Unable to modify data" + e.getMessage());
+			response.setError(5000, e.getMessage());
 		}
 
 		return response.toString();
 	}
-	
+
 }

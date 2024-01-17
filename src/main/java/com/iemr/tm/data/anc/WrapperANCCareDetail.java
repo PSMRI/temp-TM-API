@@ -23,8 +23,6 @@ package com.iemr.tm.data.anc;
 
 import java.util.List;
 
-import com.iemr.tm.data.doctor.CancerSignAndSymptoms;
-
 public class WrapperANCCareDetail {
 	
 	private ANCCareDetails ancCareDetails;

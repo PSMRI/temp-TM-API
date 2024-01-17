@@ -38,11 +38,6 @@ import com.iemr.tm.repo.benFlowStatus.BeneficiaryFlowStatusRepo;
 import com.iemr.tm.repo.nurse.BenVisitDetailRepo;
 import com.iemr.tm.utils.mapper.InputMapper;
 
-/***
- * 
- * @author NE298657
- *
- */
 @Service
 public class CommonBenStatusFlowServiceImpl implements CommonBenStatusFlowService {
 	private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
@@ -97,7 +92,6 @@ public class CommonBenStatusFlowServiceImpl implements CommonBenStatusFlowServic
 
 			}
 		} catch (Exception e) {
-			// e.printStackTrace();
 			logger.error("Error in ben flow creation = " + e);
 		}
 		return returnOBJ;
@@ -112,9 +106,7 @@ public class CommonBenStatusFlowServiceImpl implements CommonBenStatusFlowServic
 			i = beneficiaryFlowStatusRepo.updateBenFlowStatusAfterNurseActivity(benFlowID, benRegID, benVisitID,
 					visitReason, visitCategory, nurseFlag, docFlag, labIteration, radiologistFlag, oncologistFlag,
 					visitCode, vanID, specialistFlag, tcDate, tcSpecialistUserID);
-			// System.out.println("hello");
 		} catch (Exception e) {
-			// e.printStackTrace();
 			logger.error("Error in ben flow creation = " + e);
 		}
 		return i;
@@ -129,9 +121,7 @@ public class CommonBenStatusFlowServiceImpl implements CommonBenStatusFlowServic
 			i = beneficiaryFlowStatusRepo.updateBenFlowStatusAfterNurseActivityANC(benFlowID, benRegID, benVisitID,
 					visitReason, visitCategory, nurseFlag, docFlag, labIteration, radiologistFlag, oncologistFlag,
 					visitCode, vanID, specialistFlag, tcDate, tcSpecialistUserID,labTechnician);
-			// System.out.println("hello");
 		} catch (Exception e) {
-			// e.printStackTrace();
 			logger.error("Error in ben flow creation = " + e);
 		}
 		return i;

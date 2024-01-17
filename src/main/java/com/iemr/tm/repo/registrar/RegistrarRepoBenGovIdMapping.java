@@ -34,12 +34,6 @@ import com.iemr.tm.data.registrar.BenGovIdMapping;
 @Repository
 @RestResource(exported = false)
 public interface RegistrarRepoBenGovIdMapping extends CrudRepository<BenGovIdMapping, Long> {
-	// @Transactional
-	// @Modifying
-	// @Query("Delete from BenGovIdMapping where ID = :ID and "
-	// + "beneficiaryRegID = :beneficiaryRegID ")
-	// public Integer deleteBenGovIdMapping(@Param("ID") Long ID,
-	// @Param("beneficiaryRegID") Long beneficiaryRegID);
 	@Modifying
     @Transactional
 	@Query("Delete from BenGovIdMapping where beneficiaryRegID =:benRegID")

@@ -23,7 +23,6 @@ package com.iemr.tm.data.registrar;
 
 import java.sql.Timestamp;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,10 +33,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.Expose;
 import com.iemr.tm.data.login.MasterServicePoint;
-import com.iemr.tm.data.provider.ProviderServiceMapping;
 
 @Entity
 @Table(name = "I_bendemographics")
@@ -140,15 +137,7 @@ public class BeneficiaryDemographicData {
 	@Expose
 	@Column(name = "LastModDate", insertable = false, updatable = false)
 	private Timestamp lastModDate;
-	/*
-	 * @Expose
-	 * 
-	 * @Column(name = "SubDistrictID") private int subDistrictID;
-	 * 
-	 * @Expose
-	 * 
-	 * @Column(name = "VillageID") private int villageID;
-	 */
+
 	@Expose
 	@Column(name = "ZoneID")
 	private Integer zoneID;
@@ -486,16 +475,6 @@ public class BeneficiaryDemographicData {
 		this.lastModDate = lastModDate;
 	}
 
-	/*
-	 * public int getSubDistrictID() { return subDistrictID; }
-	 * 
-	 * public void setSubDistrictID(int subDistrictID) { this.subDistrictID =
-	 * subDistrictID; }
-	 * 
-	 * public int getVillageID() { return villageID; }
-	 * 
-	 * public void setVillageID(int villageID) { this.villageID = villageID; }
-	 */
 	public Integer getZoneID() {
 		return zoneID;
 	}

@@ -84,8 +84,6 @@ public class ANCDoctorServiceImpl implements ANCDoctorService {
 	}
 
 	public String getANCDiagnosisDetails(Long beneficiaryRegID, Long visitCode) {
-//		String externalInvestigation = prescriptionDetailRepo.getExternalinvestigationForVisitCode(beneficiaryRegID,
-//		visitCode);
 
 		ArrayList<Object[]> prescriptionData = prescriptionDetailRepo
 				.getExternalinvestigationForVisitCode(beneficiaryRegID, visitCode);

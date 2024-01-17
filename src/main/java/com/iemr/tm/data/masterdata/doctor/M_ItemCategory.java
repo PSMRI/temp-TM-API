@@ -29,10 +29,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.google.gson.annotations.Expose;
-import com.iemr.tm.utils.mapper.OutputMapper;
 
 @Entity
 @Table(name = "m_itemcategory")
@@ -96,14 +94,6 @@ public class M_ItemCategory {
 	@Column(name="LastModDate",insertable = false, updatable = false)
 	private Date lastModDate;
 	
-//	@Transient
-//	private OutputMapper outputMapper = new OutputMapper();
-//
-//	@Override
-//	public String toString() {
-//		return outputMapper.gson().toJson(this);
-//	}
-
 	public Integer getItemCategoryID() {
 		return itemCategoryID;
 	}
@@ -215,13 +205,5 @@ public class M_ItemCategory {
 	public void setLastModDate(Date lastModDate) {
 		this.lastModDate = lastModDate;
 	}
-
-//	public OutputMapper getOutputMapper() {
-//		return outputMapper;
-//	}
-//
-//	public void setOutputMapper(OutputMapper outputMapper) {
-//		this.outputMapper = outputMapper;
-//	}
 }
 

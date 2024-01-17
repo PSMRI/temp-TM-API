@@ -21,8 +21,6 @@
 */
 package com.iemr.tm.repo.registrar;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -32,7 +30,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.stereotype.Repository;
 
-import com.iemr.tm.data.nurse.BeneficiaryVisitDetail;
 import com.iemr.tm.data.registrar.BeneficiaryDemographicAdditional;
 
 @Repository

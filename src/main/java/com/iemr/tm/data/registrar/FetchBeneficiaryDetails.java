@@ -22,7 +22,6 @@
 package com.iemr.tm.data.registrar;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
@@ -259,8 +258,6 @@ public class FetchBeneficiaryDetails {
 			cal.setTime(date);
 
 			int year = cal.get(Calendar.YEAR);
-			// int month = cal.get(Calendar.MONTH) + 1;
-			// int day = cal.get(Calendar.DAY_OF_MONTH);
 
 			Date date1 = (Date) obj[5];
 			Calendar cal1 = Calendar.getInstance();
@@ -268,16 +265,8 @@ public class FetchBeneficiaryDetails {
 			cal1.setTime(date1);
 
 			int year1 = cal1.get(Calendar.YEAR);
-			// int month1 = cal.get(Calendar.MONTH) + 1;
-			// int day1 = cal.get(Calendar.DAY_OF_MONTH);
-
-			// java.time.LocalDate todayDate = java.time.LocalDate.now();
-			// java.time.LocalDate marriageDate = java.time.LocalDate.of(year,
-			// month, day);
-			// Period p = Period.between(marriageDate, todayDate);
 
 			ageWhenMarried = year - year1;
-			//System.out.println("helloo...");
 
 		} else {
 			ageWhenMarried = null;

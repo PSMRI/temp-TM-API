@@ -21,8 +21,6 @@
 */
 package com.iemr.tm.service.common.master;
 
-import com.iemr.tm.data.registrar.BeneficiaryData;
-
 public interface RegistrarServiceMasterData {
 
 	String getBenDetailsByRegID(Long beneficiaryRegID);

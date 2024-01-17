@@ -67,6 +67,9 @@ import com.iemr.tm.data.quickConsultation.BenChiefComplaint;
 import com.iemr.tm.data.quickConsultation.PrescribedDrugDetail;
 import com.iemr.tm.data.quickConsultation.PrescriptionDetail;
 import com.iemr.tm.data.tele_consultation.TeleconsultationRequestOBJ;
+import com.iemr.tm.repo.nurse.BenVisitDetailRepo;
+import com.iemr.tm.repo.nurse.anc.BenAdherenceRepo;
+import com.iemr.tm.repo.quickConsultation.BenChiefComplaintRepo;
 import com.iemr.tm.service.benFlowStatus.CommonBenStatusFlowServiceImpl;
 import com.iemr.tm.service.common.transaction.CommonDoctorServiceImpl;
 import com.iemr.tm.service.common.transaction.CommonNurseServiceImpl;
@@ -90,6 +93,12 @@ public class PNCServiceImpl implements PNCService {
 
 	@Autowired
 	private CommonServiceImpl commonServiceImpl;
+	@Autowired
+	private BenVisitDetailRepo benVisitDetailRepo;
+	@Autowired
+	private BenChiefComplaintRepo benChiefComplaintRepo;
+	@Autowired
+	private BenAdherenceRepo benAdherenceRepo;
 
 	@Autowired
 	public void setLabTechnicianServiceImpl(LabTechnicianServiceImpl labTechnicianServiceImpl) {
@@ -125,7 +134,6 @@ public class PNCServiceImpl implements PNCService {
 	private SMSGatewayServiceImpl sMSGatewayServiceImpl;
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	public String savePNCNurseData(JsonObject requestOBJ, String Authorization) throws Exception {
 		Long saveSuccessFlag = null;
 		TeleconsultationRequestOBJ tcRequestOBJ = null;
@@ -188,8 +196,6 @@ public class PNCServiceImpl implements PNCService {
 					examtnSaveSuccessFlag = saveBenExaminationDetails(requestOBJ.getAsJsonObject("examinationDetails"),
 							benVisitID, benVisitCode);
 
-				// i = commonNurseServiceImpl.updateBeneficiaryStatus('N',
-				// tmpOBJ.get("beneficiaryRegID").getAsLong());
 			} else {
 				throw new RuntimeException("Error occurred while creating beneficiary visit");
 			}
@@ -236,6 +242,25 @@ public class PNCServiceImpl implements PNCService {
 			responseMap.put("response", "Unable to save data");
 		}
 		return new  Gson().toJson(responseMap);			
+	}
+	
+	@Override
+	public void deleteVisitDetails(JsonObject requestOBJ) throws Exception {
+		if (requestOBJ != null && requestOBJ.has("visitDetails") && !requestOBJ.get("visitDetails").isJsonNull()) {
+
+			CommonUtilityClass nurseUtilityClass = InputMapper.gson().fromJson(requestOBJ, CommonUtilityClass.class);
+
+			Long visitCode = benVisitDetailRepo.getVisitCode(nurseUtilityClass.getBeneficiaryRegID(),
+					nurseUtilityClass.getProviderServiceMapID());
+
+			if (visitCode != null) {
+				benChiefComplaintRepo.deleteVisitDetails(visitCode);
+				benAdherenceRepo.deleteVisitDetails(visitCode);
+				benVisitDetailRepo.deleteVisitDetails(visitCode);
+			}
+
+		}
+
 	}
 
 	// method for updating ben flow status flag for nurse
@@ -416,7 +441,6 @@ public class PNCServiceImpl implements PNCService {
 	/// ------------------- END of saving doctor data ------------------------
 
 	/**
-	 * 
 	 * @param requestOBJ
 	 * @return success or failure flag for visitDetails data saving
 	 */
@@ -463,7 +487,6 @@ public class PNCServiceImpl implements PNCService {
 	}
 
 	/**
-	 * 
 	 * @param requestOBJ
 	 * @return success or failure flag for visitDetails data saving
 	 */
@@ -489,8 +512,6 @@ public class PNCServiceImpl implements PNCService {
 				benMedHistory.setBenVisitID(benVisitID);
 				benMedHistory.setVisitCode(benVisitCode);
 				pastHistorySuccessFlag = commonNurseServiceImpl.saveBenPastHistory(benMedHistory);
-				// pastHistorySuccessFlag =
-				// ancNurseServiceImpl.saveBenANCPastHistory(benMedHistory);
 			}
 
 		} else {
@@ -506,8 +527,6 @@ public class PNCServiceImpl implements PNCService {
 				wrapperComorbidCondDetails.setBenVisitID(benVisitID);
 				wrapperComorbidCondDetails.setVisitCode(benVisitCode);
 				comrbidSuccessFlag = commonNurseServiceImpl.saveBenComorbidConditions(wrapperComorbidCondDetails);
-				// comrbidSuccessFlag =
-				// ancNurseServiceImpl.saveBenANCComorbidConditions(wrapperComorbidCondDetails);
 			}
 		} else {
 			comrbidSuccessFlag = new Long(1);
@@ -524,8 +543,6 @@ public class PNCServiceImpl implements PNCService {
 				wrapperMedicationHistory.setVisitCode(benVisitCode);
 				medicationSuccessFlag = commonNurseServiceImpl.saveBenMedicationHistory(wrapperMedicationHistory);
 
-				// medicationSuccessFlag =
-				// ancNurseServiceImpl.saveBenANCMedicationHistory(wrapperMedicationHistory);
 			} else {
 				medicationSuccessFlag = new Long(1);
 			}
@@ -542,8 +559,6 @@ public class PNCServiceImpl implements PNCService {
 				personalHabit.setBenVisitID(benVisitID);
 				personalHabit.setVisitCode(benVisitCode);
 				personalHistorySuccessFlag = commonNurseServiceImpl.savePersonalHistory(personalHabit);
-				// personalHistorySuccessFlag =
-				// ancNurseServiceImpl.saveANCPersonalHistory(personalHabit);
 			}
 
 			BenAllergyHistory benAllergyHistory = InputMapper.gson().fromJson(pncHistoryOBJ.get("personalHistory"),
@@ -552,8 +567,6 @@ public class PNCServiceImpl implements PNCService {
 				benAllergyHistory.setBenVisitID(benVisitID);
 				benAllergyHistory.setVisitCode(benVisitCode);
 				allergyHistorySuccessFlag = commonNurseServiceImpl.saveAllergyHistory(benAllergyHistory);
-				// allergyHistorySuccessFlag =
-				// ancNurseServiceImpl.saveANCAllergyHistory(benAllergyHistory);
 			}
 
 		} else {
@@ -570,8 +583,6 @@ public class PNCServiceImpl implements PNCService {
 				benFamilyHistory.setBenVisitID(benVisitID);
 				benFamilyHistory.setVisitCode(benVisitCode);
 				familyHistorySuccessFlag = commonNurseServiceImpl.saveBenFamilyHistory(benFamilyHistory);
-				// familyHistorySuccessFlag =
-				// ancNurseServiceImpl.saveANCBenFamilyHistory(benFamilyHistory);
 			}
 		} else {
 			familyHistorySuccessFlag = new Long(1);
@@ -586,8 +597,6 @@ public class PNCServiceImpl implements PNCService {
 				menstrualDetails.setBenVisitID(benVisitID);
 				menstrualDetails.setVisitCode(benVisitCode);
 				menstrualHistorySuccessFlag = commonNurseServiceImpl.saveBenMenstrualHistory(menstrualDetails);
-				// menstrualHistorySuccessFlag =
-				// ancNurseServiceImpl.saveBenANCMenstrualHistory(menstrualDetails);
 			}
 
 		} else {
@@ -604,8 +613,6 @@ public class PNCServiceImpl implements PNCService {
 				wrapperFemaleObstetricHistory.setBenVisitID(benVisitID);
 				wrapperFemaleObstetricHistory.setVisitCode(benVisitCode);
 				obstetricSuccessFlag = commonNurseServiceImpl.saveFemaleObstetricHistory(wrapperFemaleObstetricHistory);
-				// obstetricSuccessFlag =
-				// ancNurseServiceImpl.saveFemaleObstetricHistory(wrapperFemaleObstetricHistory);
 			} else {
 				// Female Obstetric Details not provided.
 			}
@@ -624,8 +631,6 @@ public class PNCServiceImpl implements PNCService {
 				wrapperImmunizationHistory.setBenVisitID(benVisitID);
 				wrapperImmunizationHistory.setVisitCode(benVisitCode);
 				immunizationSuccessFlag = commonNurseServiceImpl.saveImmunizationHistory(wrapperImmunizationHistory);
-				// immunizationSuccessFlag =
-				// ancNurseServiceImpl.saveANCImmunizationHistory(wrapperImmunizationHistory);
 			} else {
 
 				// ImmunizationList Data not Available
@@ -645,8 +650,6 @@ public class PNCServiceImpl implements PNCService {
 				wrapperChildVaccineDetail.setVisitCode(benVisitCode);
 				childVaccineSuccessFlag = commonNurseServiceImpl
 						.saveChildOptionalVaccineDetail(wrapperChildVaccineDetail);
-				// childVaccineSuccessFlag =
-				// ancNurseServiceImpl.saveChildOptionalVaccineDetail(wrapperChildVaccineDetail);
 			} else {
 				// Child Optional Vaccine Detail not provided.
 			}
@@ -673,7 +676,6 @@ public class PNCServiceImpl implements PNCService {
 	}
 
 	/**
-	 * 
 	 * @param requestOBJ
 	 * @return success or failure flag for PNCDetails data saving
 	 */
@@ -696,7 +698,6 @@ public class PNCServiceImpl implements PNCService {
 	}
 
 	/**
-	 * 
 	 * @param requestOBJ
 	 * @return success or failure flag for vitalDetails data saving
 	 */
@@ -735,7 +736,6 @@ public class PNCServiceImpl implements PNCService {
 	}
 
 	/**
-	 * 
 	 * @param requestOBJ
 	 * @return success or failure flag for examinationDetails data saving
 	 */
@@ -975,7 +975,6 @@ public class PNCServiceImpl implements PNCService {
 	}
 
 	/**
-	 * 
 	 * @param requestOBJ
 	 * @return success or failure flag for PNC History updating by Doctor
 	 */
@@ -1157,7 +1156,6 @@ public class PNCServiceImpl implements PNCService {
 	}
 
 	/**
-	 * 
 	 * @param requestOBJ
 	 * @return success or failure flag for vitals data updating
 	 */
@@ -1187,7 +1185,6 @@ public class PNCServiceImpl implements PNCService {
 	}
 
 	/**
-	 * 
 	 * @param requestOBJ
 	 * @return success or failure flag for Examinationm data updating
 	 */
@@ -1301,7 +1298,6 @@ public class PNCServiceImpl implements PNCService {
 	}
 
 	/***
-	 * 
 	 * @param pncDetailsOBJ
 	 * @param benVisitID
 	 * @return success or failure flag for PNC update

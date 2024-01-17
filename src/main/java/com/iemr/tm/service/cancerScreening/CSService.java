@@ -21,15 +21,9 @@
 */
 package com.iemr.tm.service.cancerScreening;
 
-import java.util.List;
-
 import com.google.gson.JsonObject;
 import com.iemr.tm.data.doctor.CancerDiagnosis;
 import com.iemr.tm.data.nurse.BenCancerVitalDetail;
-import com.iemr.tm.data.nurse.BenFamilyCancerHistory;
-import com.iemr.tm.data.nurse.BenObstetricCancerHistory;
-import com.iemr.tm.data.nurse.BenPersonalCancerDietHistory;
-import com.iemr.tm.data.nurse.BenPersonalCancerHistory;
 
 public interface CSService {
 
@@ -38,5 +32,7 @@ public interface CSService {
 	public int updateBenVitalDetail(BenCancerVitalDetail benCancerVitalDetail);
 
 	int updateCancerDiagnosisDetailsByOncologist(CancerDiagnosis cancerDiagnosis);
+	
+	public void deleteVisitDetails(JsonObject requestOBJ) throws Exception;
 
 }

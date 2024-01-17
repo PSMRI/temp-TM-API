@@ -67,6 +67,7 @@ public class QuickConsultController {
 	/**
 	 * @param requestObj
 	 * @return success or failure response
+	 * @throws Exception
 	 * @objective first data will be pushed to BenVisitDetails Table and benVisitID
 	 *            will be generated and then this benVisitID will be patched with
 	 *            Beneficiary Vital and Anthropometry Detail Object and pushed to
@@ -76,24 +77,29 @@ public class QuickConsultController {
 	@ApiOperation(value = "Save quick consult nurse data", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/save/nurseData" }, method = { RequestMethod.POST })
 	public String saveBenQuickConsultDataNurse(@RequestBody String requestObj,
-			@RequestHeader(value = "Authorization") String Authorization) {
+			@RequestHeader(value = "Authorization") String Authorization) throws Exception {
 		OutputResponse response = new OutputResponse();
-		logger.info("Quick consult nurse data save request : " + requestObj);
-		try {
+
+		if (null != requestObj) {
 			JsonObject jsnOBJ = new JsonObject();
 			JsonParser jsnParser = new JsonParser();
 			JsonElement jsnElmnt = jsnParser.parse(requestObj);
 			jsnOBJ = jsnElmnt.getAsJsonObject();
 
-			if (jsnOBJ != null) {
-				String r = quickConsultationServiceImpl.quickConsultNurseDataInsert(jsnOBJ, Authorization);
-				response.setResponse(r);
-			} else {
-				response.setError(5000, "Invalid request");
+			logger.info("Quick consult nurse data save request : " + requestObj);
+			try {
+
+				if (jsnOBJ != null) {
+					String r = quickConsultationServiceImpl.quickConsultNurseDataInsert(jsnOBJ, Authorization);
+					response.setResponse(r);
+				} else {
+					response.setError(5000, "Invalid request");
+				}
+			} catch (Exception e) {
+				logger.error("Error while saving quick consult nurse data: " + e.getMessage());
+				quickConsultationServiceImpl.deleteVisitDetails(jsnOBJ);
+				response.setError(5000, e.getMessage());
 			}
-		} catch (Exception e) {
-			logger.error("Error while saving quick consult nurse data: " + e);
-			response.setError(5000, "Unable to save data");
 		}
 		return response.toString();
 	}
@@ -137,13 +143,13 @@ public class QuickConsultController {
 			}
 			logger.info("Quick consult doctor data save response:" + response);
 		} catch (Exception e) {
-			logger.error("Error while saving quick consult doctor data:" + e);
-			response.setError(5000, "Unable to save data. " + e.getMessage());
+			logger.error("Error while saving quick consult doctor data:" + e.getMessage());
+			response.setError(5000, e.getMessage());
 		}
 
 		return response.toString();
 	}
-	
+
 	@CrossOrigin()
 	@ApiOperation(value = "Get quick consult beneficiary visit details", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/getBenDataFrmNurseToDocVisitDetailsScreen" }, method = { RequestMethod.POST })
@@ -169,13 +175,14 @@ public class QuickConsultController {
 		}
 		return response.toString();
 	}
-	
+
 	/**
-	 * @Objective Fething beneficiary vital data filled by Nurse for Doctor screen...
+	 * @Objective Fething beneficiary vital data filled by Nurse for Doctor
+	 *            screen...
 	 * @param benRegID and benVisitID
 	 * @return visit details in JSON format
 	 */
-	
+
 	@CrossOrigin()
 	@ApiOperation(value = "Get quick consult beneficiary vital details", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/getBenVitalDetailsFrmNurse" }, method = { RequestMethod.POST })
@@ -203,7 +210,7 @@ public class QuickConsultController {
 		}
 		return response.toString();
 	}
-	
+
 	/**
 	 * @Objective Fetching beneficiary doctor data
 	 * @param benRegID and benVisitID
@@ -237,7 +244,7 @@ public class QuickConsultController {
 		}
 		return response.toString();
 	}
-	
+
 	@CrossOrigin
 	@ApiOperation(value = "Update quick consult doctor data", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/update/doctorData" }, method = { RequestMethod.POST })
@@ -267,11 +274,11 @@ public class QuickConsultController {
 			}
 			logger.info("Quick consult doctor data update response:" + response);
 		} catch (Exception e) {
-			response.setError(5000, "Unable to modify data");
-			logger.error("Error while updating quick consult doctor data :" + e);
+			logger.error("Unable to modify data" + e.getMessage());
+			response.setError(5000, e.getMessage());
 		}
 
 		return response.toString();
 	}
-	
+
 }

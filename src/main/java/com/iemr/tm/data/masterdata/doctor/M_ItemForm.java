@@ -21,8 +21,6 @@
 */
 package com.iemr.tm.data.masterdata.doctor;
 
-
-
 import java.sql.Date;
 
 import javax.persistence.Column;
@@ -35,9 +33,6 @@ import javax.persistence.Transient;
 
 import com.google.gson.annotations.Expose;
 import com.iemr.tm.utils.mapper.OutputMapper;
-
-
-
 
 @Entity
 @Table(name = "m_itemform")
@@ -91,12 +86,4 @@ public class M_ItemForm {
 	@Column(name = "LastModDate", insertable = false, updatable = false)
 	private Date LastModDate;
 
-
-//	@Transient
-//	private OutputMapper outputMapper = new OutputMapper();
-//
-//	@Override
-//	public String toString() {
-//		return outputMapper.gson().toJson(this);
-//	}
 }

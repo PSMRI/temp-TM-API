@@ -29,20 +29,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.google.gson.annotations.Expose;
-import com.iemr.tm.utils.mapper.OutputMapper;
 
 @Entity
-@Table(name="m_pharmacologicalcategory")
+@Table(name = "m_pharmacologicalcategory")
 public class M_Pharmacologicalcategory {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Expose
 	@Column(name = "PharmCategoryID")
-	private Integer pharmacologyCategoryID; 
+	private Integer pharmacologyCategoryID;
 	@Expose
 	@Column(name = "PharmCategoryName")
 	private String pharmCategoryName;
@@ -51,7 +49,7 @@ public class M_Pharmacologicalcategory {
 	private String pharmCategoryDesc;
 	@Expose
 	@Column(name = "PharmCategoryCode")
-	private String pharmCategoryCode; 
+	private String pharmCategoryCode;
 	@Expose
 	@Column(name = "Status")
 	private String status;
@@ -73,125 +71,41 @@ public class M_Pharmacologicalcategory {
 	@Expose
 	@Column(name = "LastModDate", insertable = false, updatable = false)
 	private Date lastModDate;
-	
-	
+
 	public M_Pharmacologicalcategory() {
-		// TODO Auto-generated constructor stub
 	}
-
-
-	
-
-
-
-
-
-
-
 
 	public String getPharmCategoryName() {
 		return pharmCategoryName;
 	}
 
-
-
-
-
 	public Integer getPharmacologyCategoryID() {
 		return pharmacologyCategoryID;
 	}
-
-
-
-
-
-
-
-
-
-
 
 	public void setPharmacologyCategoryID(Integer pharmacologyCategoryID) {
 		this.pharmacologyCategoryID = pharmacologyCategoryID;
 	}
 
-
-
-
-
-
-
-
-
-
-
-//	public OutputMapper getOutputMapper() {
-//		return outputMapper;
-//	}
-
-
-
-
-
-
-
-
-
-
-
-//	public void setOutputMapper(OutputMapper outputMapper) {
-//		this.outputMapper = outputMapper;
-//	}
-
-
-
-
-
-
-
-
-
-
-
 	public void setPharmCategoryName(String pharmCategoryName) {
 		this.pharmCategoryName = pharmCategoryName;
 	}
-
-
-
-
 
 	public String getPharmCategoryDesc() {
 		return pharmCategoryDesc;
 	}
 
-
-
-
-
 	public void setPharmCategoryDesc(String pharmCategoryDesc) {
 		this.pharmCategoryDesc = pharmCategoryDesc;
 	}
-
-
-
-
 
 	public String getPharmCategoryCode() {
 		return pharmCategoryCode;
 	}
 
-
-
-
-
 	public void setPharmCategoryCode(String pharmCategoryCode) {
 		this.pharmCategoryCode = pharmCategoryCode;
 	}
-
-
-
-
 
 	/**
 	 * @return the status
@@ -200,14 +114,12 @@ public class M_Pharmacologicalcategory {
 		return status;
 	}
 
-
 	/**
 	 * @param status the status to set
 	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
 
 	/**
 	 * @return the providerServiceMapID
@@ -216,14 +128,12 @@ public class M_Pharmacologicalcategory {
 		return providerServiceMapID;
 	}
 
-
 	/**
 	 * @param providerServiceMapID the providerServiceMapID to set
 	 */
 	public void setProviderServiceMapID(Integer providerServiceMapID) {
 		this.providerServiceMapID = providerServiceMapID;
 	}
-
 
 	/**
 	 * @return the deleted
@@ -232,14 +142,12 @@ public class M_Pharmacologicalcategory {
 		return deleted;
 	}
 
-
 	/**
 	 * @param deleted the deleted to set
 	 */
 	public void setDeleted(Boolean deleted) {
 		this.deleted = deleted;
 	}
-
 
 	/**
 	 * @return the createdBy
@@ -248,14 +156,12 @@ public class M_Pharmacologicalcategory {
 		return createdBy;
 	}
 
-
 	/**
 	 * @param createdBy the createdBy to set
 	 */
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
-
 
 	/**
 	 * @return the createdDate
@@ -264,14 +170,12 @@ public class M_Pharmacologicalcategory {
 		return createdDate;
 	}
 
-
 	/**
 	 * @param createdDate the createdDate to set
 	 */
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-
 
 	/**
 	 * @return the modifiedBy
@@ -280,14 +184,12 @@ public class M_Pharmacologicalcategory {
 		return modifiedBy;
 	}
 
-
 	/**
 	 * @param modifiedBy the modifiedBy to set
 	 */
 	public void setModifiedBy(String modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
-
 
 	/**
 	 * @return the lastModDate
@@ -296,27 +198,16 @@ public class M_Pharmacologicalcategory {
 		return lastModDate;
 	}
 
-
 	/**
 	 * @param lastModDate the lastModDate to set
 	 */
 	public void setLastModDate(Date lastModDate) {
 		this.lastModDate = lastModDate;
 	}
-	
-	
-//	@Transient
-//	private OutputMapper outputMapper = new OutputMapper();
-//
-//	@Override
-//	public String toString() {
-//		return outputMapper.gson().toJson(this);
-//	}
-	
-	public Integer getPharmCategoryID(){
+
+	public Integer getPharmCategoryID() {
 		return pharmacologyCategoryID;
-		
+
 	}
 
 }
-

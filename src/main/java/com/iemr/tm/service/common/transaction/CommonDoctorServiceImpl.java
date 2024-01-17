@@ -28,9 +28,10 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -82,11 +83,6 @@ import com.iemr.tm.utils.exception.IEMRException;
 import com.iemr.tm.utils.mapper.InputMapper;
 import com.iemr.tm.utils.mapper.OutputMapper;
 
-/***
- * 
- * @author NE298657
- *
- */
 @Service
 @PropertySource("classpath:application.properties")
 public class CommonDoctorServiceImpl {
@@ -276,11 +272,10 @@ public class CommonDoctorServiceImpl {
 	}
 
 	private BenClinicalObservations getBenClinicalObservations(WrapperAncFindings wrapperAncFindings) {
-		// snomedCT integration started on : 06-08-2018
+		// snomedCT integration started
 		String symptoms = wrapperAncFindings.getOtherSymptoms();
 		String[] responseString = getSnomedCTcode(symptoms);
 		// end of snomedCT integration
-
 		BenClinicalObservations benClinicalObservations = new BenClinicalObservations();
 		benClinicalObservations.setBeneficiaryRegID(wrapperAncFindings.getBeneficiaryRegID());
 		benClinicalObservations.setBenVisitID(wrapperAncFindings.getBenVisitID());
@@ -369,10 +364,6 @@ public class CommonDoctorServiceImpl {
 	// New doc work-list service (Future scheduled beneficiary for TM)
 	public String getDocWorkListNewFutureScheduledForTM(Integer providerServiceMapId, Integer serviceID,
 			Integer vanID) {
-
-		// Calendar cal = Calendar.getInstance();
-		// cal.add(Calendar.DAY_OF_YEAR, -7);
-		// long sevenDaysAgo = cal.getTimeInMillis();
 
 		ArrayList<BeneficiaryFlowStatus> docWorkListFutureScheduled = new ArrayList<>();
 		if (serviceID != null && serviceID == 4) {
@@ -520,30 +511,13 @@ public class CommonDoctorServiceImpl {
 	}
 
 	public String getPrescribedDrugs(Long beneficiaryRegID, Long visitCode) {
-		// ArrayList<Object[]> prescriptions =
-		// prescriptionDetailRepo.getBenPrescription(beneficiaryRegID, visitCode);
-		//
-		// PrescriptionDetail prescriptionData =
-		// PrescriptionDetail.getPrescriptions(prescriptions);
-		// if (null != prescriptionData) {
 		ArrayList<Object[]> resList = prescribedDrugDetailRepo.getBenPrescribedDrugDetails(beneficiaryRegID, visitCode);
 
 		ArrayList<PrescribedDrugDetail> prescribedDrugs = PrescribedDrugDetail.getprescribedDrugs(resList);
-		// prescriptionData.setPrescribedDrugs(prescribedDrugs);
-		// }
 
 		return new Gson().toJson(prescribedDrugs);
 	}
 
-	/*
-	 * public PrescriptionDetail getLatestPrescription(Long beneficiaryRegID, Long
-	 * benVisitID) { ArrayList<Object[]> prescriptions =
-	 * prescriptionDetailRepo.getBenPrescription(beneficiaryRegID, benVisitID);
-	 * 
-	 * PrescriptionDetail prescriptionData =
-	 * PrescriptionDetail.getPrescriptions(prescriptions); return prescriptionData;
-	 * }
-	 */
 
 	public String getReferralDetails(Long beneficiaryRegID, Long visitCode) {
 		ArrayList<Object[]> resList = benReferDetailsRepo.getBenReferDetails(beneficiaryRegID, visitCode);
@@ -794,11 +768,6 @@ public class CommonDoctorServiceImpl {
 
 		int i = 0;
 
-//		if(labTechnicianFlag == 3) {
-//			docFlag = 9;
-//		}else {
-//			docFlag = 2;
-//		}
 
 		if (commonUtilityClass != null && commonUtilityClass.getIsSpecialist() != null
 				&& commonUtilityClass.getIsSpecialist() == true) {
@@ -831,7 +800,7 @@ public class CommonDoctorServiceImpl {
 			i = commonBenStatusFlowServiceImpl.updateBenFlowAfterDocData(tmpBenFlowID, tmpbeneficiaryRegID,
 					tmpBeneficiaryID, tmpBenVisitID, docFlag, pharmaFalg, (short) 0, tcSpecialistFlag, tcUserID, tcDate,
 					labTechnicianFlag);
-		// Shubham Shekhar,15-10-2020,TM Prescription SMS
+		// TM Prescription SMS
 		if (commonUtilityClass.getIsSpecialist() == true) {
 			if (tcSpecialistFlag == 9) {
 				if (commonUtilityClass.getPrescriptionID() != null) {
@@ -862,10 +831,6 @@ public class CommonDoctorServiceImpl {
 
 	/// ------Start of beneficiary flow table after doctor data update-------------
 	/**
-	 * 
-	 * 
-	 * 
-	 * 
 	 * @param commonUtilityClass
 	 * @param isTestPrescribed
 	 * @param isMedicinePrescribed
@@ -903,12 +868,6 @@ public class CommonDoctorServiceImpl {
 					}
 				}
 			}
-//			commonUtilityClass.getVisitCategoryID()
-
-//			if(foetalMonitorData != null && foetalMonitorData.get(1).getResultState()) 
-//				labTechnicianFlag = 3;
-//			else if(foetalMonitorData != null && foetalMonitorData.get(1).getResultState())
-//				labTechnicianFlag = 2;
 		}
 
 		if (commonUtilityClass.getIsSpecialist() != null && commonUtilityClass.getIsSpecialist() == true) {
@@ -980,7 +939,7 @@ public class CommonDoctorServiceImpl {
 
 		}
 
-		// Shubham Shekhar,15-10-2020,TM Prescription SMS
+		//TM Prescription SMS
 		if (commonUtilityClass.getIsSpecialist() == true) {
 			if (tcSpecialistFlag == 9) {
 				if (commonUtilityClass.getPrescriptionID() != null)

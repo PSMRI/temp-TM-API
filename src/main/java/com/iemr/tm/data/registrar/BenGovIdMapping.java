@@ -84,7 +84,6 @@ public class BenGovIdMapping {
 	public static ArrayList<BenGovIdMapping> getBenGovIdMappingOBJList(JsonObject benD, Long benRegID) {
 		ArrayList<BenGovIdMapping> resArray = new ArrayList<>();
 		BenGovIdMapping benGovIdMapOBJ = null;
-		//System.out.println("ello");
 		for (JsonElement obj : benD.getAsJsonArray("govID")) {
 			benGovIdMapOBJ = new BenGovIdMapping();
 			benGovIdMapOBJ.beneficiaryRegID = benRegID;
@@ -99,10 +98,8 @@ public class BenGovIdMapping {
 			// ID will get only when to delete the GovID data
 			if (oo.has("benGovMapID") && !oo.get("benGovMapID").isJsonNull())
 				benGovIdMapOBJ.ID = oo.get("benGovMapID").getAsLong();
-		//	System.out.println("ello");
 			resArray.add(benGovIdMapOBJ);
 		}
-		//System.out.println("ello");
 
 		return resArray;
 

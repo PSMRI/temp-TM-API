@@ -31,7 +31,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.google.gson.annotations.Expose;
-import com.iemr.tm.data.masterdata.anc.CounsellingType;
 
 @Entity
 @Table(name = "m_chiefcomplaint")

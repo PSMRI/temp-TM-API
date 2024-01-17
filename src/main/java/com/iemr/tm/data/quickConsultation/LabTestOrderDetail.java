@@ -373,7 +373,6 @@ public class LabTestOrderDetail {
 
 				LabTestOrderDetail cOBJ = new LabTestOrderDetail((Integer) obj[3], (String) obj[4]);
 				laboratoryList.add(cOBJ);
-				// resArray.add(cOBJ);
 			}
 			testOrders.setLaboratoryList(laboratoryList);
 		}
@@ -396,8 +395,7 @@ public class LabTestOrderDetail {
 				   LabTestOrderDetail cOBJ = new LabTestOrderDetail("RBS Test");
 				  laboratoryList.add(cOBJ);
                  }
-				// resArray.add(cOBJ);
-			
+                 
 			testOrders.setLaboratoryList(laboratoryList);
 		}
 		return testOrders;

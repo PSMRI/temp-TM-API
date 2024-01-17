@@ -30,7 +30,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.iemr.tm.data.snomedct.SCTDescription;
@@ -68,8 +67,6 @@ public class SnomedServiceImpl implements SnomedService {
 			PageRequest pr = new PageRequest(sctdescription.getPageNo(), snomedCTPageSize);
 			sctList = snomedRepository.findSnomedCTRecordList(sctdescription.getTerm(), pr);
 
-			// System.out.println(sctList.getTotalPages());
-			// System.out.println(sctList.getNumberOfElements());
 			dataMap.put("sctMaster", sctList.getContent());
 			dataMap.put("pageCount", sctList.getTotalPages());
 			return OutputMapper.gson().toJson(dataMap);

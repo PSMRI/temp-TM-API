@@ -85,27 +85,6 @@ public class Utility {
 
 			long diffDays = diffInMilis / (24 * 60 * 60 * 1000);
 
-			// int year = CD.get(Calendar.YEAR) - YOI.get(Calendar.YEAR);
-			// int month = CD.get(Calendar.MONTH) - YOI.get(Calendar.MONTH);
-			// int day = CD.get(Calendar.DATE) - YOI.get(Calendar.DATE);
-			// if ((year != 0 || month != 0) && (month != 0 || day != 0) && (year != 0 ||
-			// day != 0)) {
-			// timePeriodUnit = "Weeks";
-			// int days = year * 365 + month * 30 + day;
-			// int weeks = days / 7;
-			// timePeriodAgo = weeks;
-			// } else {
-			// if (year != 0) {
-			// timePeriodUnit = "Years";
-			// timePeriodAgo = year;
-			// } else if (month != 0) {
-			// timePeriodUnit = "Months";
-			// timePeriodAgo = month;
-			// } else if (day != 0) {
-			// timePeriodUnit = "Days";
-			// timePeriodAgo = day;
-			// }
-			// }
 
 			if (diffDays >= 365) {
 				if (diffDays % 365 == 0) {
@@ -162,8 +141,6 @@ public class Utility {
 			sdf.setTimeZone(timeZone);
 
 			Date d = sdf.parse(dateTime.format(format));
-			// Date d = new SimpleDateFormat("yyyy-MM-dd
-			// hh:mm:ss.SSS").parse(dateTime.format(format));
 			tcScheduleDateTime = new Timestamp(d.getTime());
 		}
 		return tcScheduleDateTime;

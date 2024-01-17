@@ -108,12 +108,6 @@ public class CancerBreastExamination {
 	@Column(name = "MamogramReport")
 	private String mamogramReport;
 
-	/*
-	 * @JsonIgnore
-	 * 
-	 * @Column(name = "Image") private Blob image;
-	 */
-
 	@Expose
 	@Column(name = "Deleted", insertable = false, updatable = true)
 	private Boolean deleted;
@@ -168,7 +162,6 @@ public class CancerBreastExamination {
 
 	public CancerBreastExamination() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public CancerBreastExamination(Long iD, Long beneficiaryRegID, Long benVisitID, Integer providerServiceMapID,
@@ -195,7 +188,6 @@ public class CancerBreastExamination {
 		this.lumpTexture = lumpTexture;
 		this.referredToMammogram = referredToMammogram;
 		this.mamogramReport = mamogramReport;
-		// this.image = image;
 		this.deleted = deleted;
 		this.processed = processed;
 		this.createdBy = createdBy;
@@ -347,12 +339,6 @@ public class CancerBreastExamination {
 	public void setMamogramReport(String mamogramReport) {
 		this.mamogramReport = mamogramReport;
 	}
-
-	/*
-	 * public Blob getImage() { return image; }
-	 * 
-	 * public void setImage(Blob image) { this.image = image; }
-	 */
 
 	public Boolean getDeleted() {
 		return deleted;

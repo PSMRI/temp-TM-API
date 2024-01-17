@@ -32,12 +32,6 @@ import org.springframework.stereotype.Service;
 import com.iemr.tm.data.syncActivity_syncLayer.SyncUploadDataDigester;
 import com.iemr.tm.utils.mapper.InputMapper;
 
-/***
- * 
- * @author NE298657
- *
- */
-
 @Service
 public class GetDataFromVanAndSyncToDBImpl implements GetDataFromVanAndSyncToDB {
 
@@ -195,7 +189,6 @@ public class GetDataFromVanAndSyncToDBImpl implements GetDataFromVanAndSyncToDB 
 			columnsArr = serverColumns.split(",");
 
 		StringBuilder preparedStatementSetter = new StringBuilder();
-		/// StringBuilder updateStatement = new StringBuilder();
 
 		if (columnsArr != null && columnsArr.length > 0) {
 			int index = 0;

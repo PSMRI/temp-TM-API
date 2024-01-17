@@ -72,11 +72,6 @@ import com.iemr.tm.service.benFlowStatus.CommonBenStatusFlowServiceImpl;
 import com.iemr.tm.utils.mapper.InputMapper;
 import com.iemr.tm.utils.response.OutputResponse;
 
-/***
- * 
- * @author NE298657
- *
- */
 @Service
 @PropertySource("classpath:application.properties")
 public class RegistrarServiceImpl implements RegistrarService {
@@ -156,9 +151,6 @@ public class RegistrarServiceImpl implements RegistrarService {
 	@Override
 	public BeneficiaryData createBeneficiary(JsonObject benD) {
 		Long benRegID = null;
-		// Call repository for saving data in
-		// Table: i_beneficairy
-		// Persistence Class: BeneficiaryData
 		BeneficiaryData benData = registrarRepoBenData.save(getBenOBJ(benD));
 		return benData;
 	}
@@ -166,9 +158,6 @@ public class RegistrarServiceImpl implements RegistrarService {
 	@Override
 	public Long createBeneficiaryDemographic(JsonObject benD, Long benRegID) {
 		Long tmpBenDemoID = null;
-		// Call repository for saving data in
-		// Table: I_bendemographics
-		// Persistence Class: BeneficiaryDemographicData
 		BeneficiaryDemographicData benDemoData = registrarRepoBenDemoData.save(getBenDemoOBJ(benD, benRegID));
 		if (benDemoData != null) {
 			tmpBenDemoID = benDemoData.getBenDemographicsID();
@@ -244,10 +233,8 @@ public class RegistrarServiceImpl implements RegistrarService {
 			cal.set(Calendar.MONTH, 1);
 			cal.set(Calendar.DAY_OF_YEAR, 1);
 
-			// System.out.println(cal.getTime());
 
 			Timestamp timestamp = new java.sql.Timestamp(cal.getTimeInMillis());
-			// System.out.println(timestamp);
 			benDemoAd.setMarrigeDate(timestamp);
 
 		}
@@ -265,9 +252,6 @@ public class RegistrarServiceImpl implements RegistrarService {
 	@Override
 	public Long createBeneficiaryPhoneMapping(JsonObject benD, Long benRegID) {
 		Long tmpBenPhonMapID = null;
-		// Call repository for saving data in
-		// Table: m_benphonemap
-		// Persistence Class: BeneficiaryPhoneMapping
 		BeneficiaryPhoneMapping benPhoneMap = registrarRepoBenPhoneMapData.save(getBenPhoneOBJ(benD, benRegID));
 		if (benPhoneMap != null) {
 			tmpBenPhonMapID = benPhoneMap.getBenPhMapID();
@@ -277,31 +261,21 @@ public class RegistrarServiceImpl implements RegistrarService {
 
 	public int createBenGovIdMapping(JsonObject benD, Long benRegID) {
 		Long tempBenGovMapID = null;
-		// Call repository for saving Data to table m_bengovidmap and
-		// Persistence Class = BenGovIdMapping
-		// System.out.println("hello");
 		ArrayList<BenGovIdMapping> benGovIDMap = (ArrayList<BenGovIdMapping>) registrarRepoBenGovIdMapping
 				.save(BenGovIdMapping.getBenGovIdMappingOBJList(benD, benRegID));
-		// System.out.println("hello");
 		return benGovIDMap.size();
 	}
 
 	@Override
 	public String getRegWorkList(int i) {
-		// Call repository for fetching data from
-		// Table: i_beneficiary, I_bendemographics, m_benphonemap
-		// Persistence Class: BeneficiaryData, BeneficiaryDemographicData,
 		// ...................BeneficiaryPhoneMapping
 		List<Object[]> resList = registrarRepoBenData.getRegistrarWorkList(i);
-		// System.out.println("helloo.....");
 		return WrapperRegWorklist.getRegistrarWorkList(resList);
 	}
 
 	@Override
 	public String getQuickSearchBenData(String benID) {
-		// List<Object[]> resList = registrarRepoBenData.getQuickSearch(benID);
 		List<Object[]> resList = reistrarRepoBenSearch.getQuickSearch(benID);
-		// System.out.println("hello...");
 		return WrapperRegWorklist.getRegistrarWorkList(resList);
 	}
 
@@ -345,16 +319,10 @@ public class RegistrarServiceImpl implements RegistrarService {
 			if (null != v_BenAdvanceSearch.getDistrictID()) {
 				districtID = v_BenAdvanceSearch.getDistrictID() + "";
 			}
-			/*
-			 * reistrarRepoBenSearch.getAdvanceBenSearchList(benID, benFirstName,
-			 * benLastName, benGenderID, fatherName, phoneNo, aadharNo, govIDNo,
-			 * districtID);
-			 */
 			ArrayList<Object[]> resList = reistrarRepoBenSearch.getAdvanceBenSearchList(benID, benFirstName,
 					benLastName, phoneNo, aadharNo, govIDNo, stateID, districtID);
 
 			result = WrapperRegWorklist.getRegistrarWorkList(resList);
-			// System.out.println(resList);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -399,8 +367,6 @@ public class RegistrarServiceImpl implements RegistrarService {
 
 		if (benD.has("aadharNo") && !benD.get("aadharNo").isJsonNull())
 			benData.setAadharNo(benD.get("aadharNo").getAsString());
-		// System.out.println(benData);
-		// Following values will get only in update request
 		if (benD.has("beneficiaryRegID")) {
 			if (!benD.get("beneficiaryRegID").isJsonNull()) {
 				benData.setBeneficiaryRegID(benD.get("beneficiaryRegID").getAsLong());
@@ -411,7 +377,6 @@ public class RegistrarServiceImpl implements RegistrarService {
 				benData.setModifiedBy(benD.get("modifiedBy").getAsString());
 			}
 		}
-		// System.out.println(benData);
 		return benData;
 	}
 
@@ -480,7 +445,6 @@ public class RegistrarServiceImpl implements RegistrarService {
 		Gson gson = gsonBuilder.create();
 		List<Object[]> resList = registrarRepoBeneficiaryDetails.getBeneficiaryDetails(beneficiaryRegID);
 
-		// System.out.println("hello");
 
 		if (resList != null && resList.size() > 0) {
 
@@ -520,11 +484,6 @@ public class RegistrarServiceImpl implements RegistrarService {
 			return null;
 		}
 
-		// System.out.println("helooo");
-
-		// ArrayList<FetchBeneficiaryDetails> beneficiaryDetails =
-		// FetchBeneficiaryDetails.getBeneficiaryDetails(resList);
-
 	}
 
 	@Override
@@ -540,8 +499,6 @@ public class RegistrarServiceImpl implements RegistrarService {
 	@Override
 	public int updateBeneficiary(JsonObject benD) {
 		Long benRegID = null;
-		// Call repository for updating data in
-		// Table: i_beneficairy
 		// Persistence Class: BeneficiaryData
 		BeneficiaryData beneficiaryData = getBenOBJ(benD);
 		int response = registrarRepoBenData.updateBeneficiaryData(beneficiaryData.getFirstName(),
@@ -554,8 +511,6 @@ public class RegistrarServiceImpl implements RegistrarService {
 	@Override
 	public int updateBeneficiaryDemographic(JsonObject benD, Long benRegID) {
 		Long tmpBenDemoID = null;
-		// Call repository for updating data in
-		// Table: I_bendemographics
 		// Persistence Class: BeneficiaryDemographicData
 		BeneficiaryDemographicData benDemographicData = getBenDemoOBJ(benD, benRegID);
 		Integer benDemoData = registrarRepoBenDemoData.updateBendemographicData(benDemographicData.getCountryID(),
@@ -572,8 +527,6 @@ public class RegistrarServiceImpl implements RegistrarService {
 	@Override
 	public int updateBeneficiaryPhoneMapping(JsonObject benD, Long benRegID) {
 		Long tmpBenPhonMapID = null;
-		// Call repository for updating data in
-		// Table: m_benphonemap
 		// Persistence Class: BeneficiaryPhoneMapping
 		BeneficiaryPhoneMapping benPhoneMap = getBenPhoneOBJ(benD, benRegID);
 		Integer benPhoneMapRes = registrarRepoBenPhoneMapData.updateBenPhoneMap(benPhoneMap.getPhoneNo(),
@@ -585,19 +538,8 @@ public class RegistrarServiceImpl implements RegistrarService {
 	@Override
 	public int updateBenGovIdMapping(JsonObject benD, Long benRegID) {
 		Long tempBenGovMapID = null;
-		// Call repository for Delete Data from table m_bengovidmap and save
-		// Data to table m_bengovidmap
 		// Persistence Class = BenGovIdMapping
 		ArrayList<BenGovIdMapping> benGovIDMap = BenGovIdMapping.getBenGovIdMappingOBJList(benD, benRegID);
-		// List IDsToDelete = new ArrayList();
-		// for (BenGovIdMapping benGovID : benGovIDMap) {
-		// if (null != benGovID.getID()) {
-		// // delete
-		// //registrarRepoBenGovIdMapping.delete(benGovID);
-		// IDsToDelete.add(benGovID);
-		// benGovIDMap.remove(benGovIDMap.indexOf(benGovID));
-		// }
-		// }
 
 		int x = registrarRepoBenGovIdMapping.deletePreviousGovMapID(benRegID);
 		ArrayList<BenGovIdMapping> benGovIDMaps = (ArrayList<BenGovIdMapping>) registrarRepoBenGovIdMapping

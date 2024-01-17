@@ -62,14 +62,6 @@ public interface BenPersonalCancerDietHistoryRepo extends CrudRepository<BenPers
 			@Param("benRegID") Long benRegID, @Param("visitCode") Long visitCode,
 			@Param("processed") String processed);
 
-	// @Query("SELECT bpdh from BenPersonalCancerDietHistory bpdh WHERE
-	// bpdh.beneficiaryRegID = :benRegID AND bpdh.benVisitID = :benVisitID"
-	// + " AND DATE(createdDate) = :createdDate")
-	// public BenPersonalCancerDietHistory
-	// getBenPersonaDietHistory(@Param("benRegID") Long benRegID,
-	// @Param("benVisitID") Long benVisitID, @Param("createdDate") Date
-	// createdDate);
-
 	@Query(" SELECT dietType, fruitConsumptionDays, fruitQuantityPerDay, vegetableConsumptionDays, vegetableQuantityPerDay, "
 			+ "intakeOfOutsidePreparedMeal, typeOfOilConsumed, physicalActivityType, ssRadiationExposure, isThyroidDisorder, Date(createdDate) "
 			+ "from BenPersonalCancerDietHistory bph WHERE bph.beneficiaryRegID = :benRegID and (dietType is not null or fruitConsumptionDays is not null "

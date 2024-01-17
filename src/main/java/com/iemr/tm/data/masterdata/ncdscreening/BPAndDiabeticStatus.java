@@ -23,7 +23,6 @@ package com.iemr.tm.data.masterdata.ncdscreening;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,7 +32,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.google.gson.annotations.Expose;
-import com.iemr.tm.data.doctor.LabTestMaster;
 
 @Entity
 @Table(name = "m_bpanddiabeticstatus")

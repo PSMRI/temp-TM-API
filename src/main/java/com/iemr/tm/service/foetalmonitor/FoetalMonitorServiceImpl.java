@@ -40,14 +40,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.dom4j.DocumentException;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -117,9 +114,7 @@ public class FoetalMonitorServiceImpl implements FoetalMonitorService {
 
 			foetalMonitorDataOutside.setBeneficiaryID(foetalMonitorFetchDataDB.getBeneficiaryID());
 			foetalMonitorDataOutside.setBeneficiaryRegID(foetalMonitorFetchDataDB.getBeneficiaryRegID());
-
 			// setting the values from the DB response
-			// foetalMonitorDataOutside.setBeneficiaryRegID(fetosenseFetchDataDB.getBeneficiaryRegID());
 			if (foetalMonitorFetchDataDB.getVisitCode() != null)
 				foetalMonitorDataOutside.setVisitCode(foetalMonitorFetchDataDB.getVisitCode());
 			foetalMonitorDataOutside.setTestTime(foetalMonitorFetchDataDB.getTestTime());
@@ -134,7 +129,6 @@ public class FoetalMonitorServiceImpl implements FoetalMonitorService {
 
 			foetalMonitorDataOutside.setResultState(true);
 			foetalMonitorDataOutside.setDeleted(foetalMonitorFetchDataDB.getDeleted());
-
 			// need to write the code for changing the report path data to base 64 and save
 			// it in DB
 
@@ -143,6 +137,8 @@ public class FoetalMonitorServiceImpl implements FoetalMonitorService {
 
 			// saving the feto sense response to DB
 			foetalMonitorDataOutside = foetalMonitorRepo.save(foetalMonitorDataOutside);
+			// need to write the code for changing the report path data to base 64 and save
+			// it in DB
 
 			int flagUpdate = 0;
 
@@ -306,7 +302,6 @@ public class FoetalMonitorServiceImpl implements FoetalMonitorService {
 
 		}
 		/**
-		 * @author SH20094090
 		 * @purpose To get response body in case of exception
 		 */
 		catch (HttpClientErrorException e) {
@@ -322,9 +317,7 @@ public class FoetalMonitorServiceImpl implements FoetalMonitorService {
 				foetalMonitorRepo.save(request);
 			}
 			if (jsnOBJ.get("status") != null && jsnOBJ.get("message") != null)
-				// throw new Exception("Unable to raise test request, error is : " + ("status
-				// code "+(jsnOBJ.get("status").getAsString())
-				// +","+(jsnOBJ.get("message").getAsString())));
+
 				throw new Exception(
 						"Unable to raise test request, error is : " + (jsnOBJ.get("message").getAsString()));
 			else

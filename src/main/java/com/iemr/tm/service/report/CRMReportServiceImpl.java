@@ -60,20 +60,7 @@ public class CRMReportServiceImpl implements CRMReportService {
 
 	ObjectMapper mapper = new ObjectMapper();
 
-	/*
-	 * Integer getParkingplaceID(Integer userid, Integer providerServiceMapId)
-	 * throws TMException { UserParkingplaceMapping usermap =
-	 * userParkingplaceMappingRepo
-	 * .findOneByUserIDAndProviderServiceMapIdAndDeleted(userid,
-	 * providerServiceMapId, 0);
-	 * 
-	 * if (usermap == null || usermap.getParkingPlaceID() == null) { throw new
-	 * TMException("User Not mapped to any Parking Place"); } return
-	 * usermap.getParkingPlaceID(); }
-	 */
-
 	public Integer getParkingplaceID(Integer userID, Integer providerServiceMapId) throws TMException {
-		// Integer ppID = 0;
 		UserParkingplaceMapping usermap = userParkingplaceMappingRepo
 				.findOneByUserIDAndProviderServiceMapIdAndDeleted(userID, providerServiceMapId, 0);
 
@@ -82,7 +69,6 @@ public class CRMReportServiceImpl implements CRMReportService {
 
 		}
 		return usermap.getParkingPlaceID();
-		// return ppID;
 	}
 
 	static ChiefComplaintReport getBenChiefComplaintReportObj(Object[] obj) {
@@ -151,8 +137,6 @@ public class CRMReportServiceImpl implements CRMReportService {
 		}
 		report.setBeneficiaryArrivalTime((Timestamp) obj[16]);
 		report.setConsultationFirstStart((Timestamp) obj[17]);
-//		report.setConsultedTime((Timestamp) obj[17]);
-//		report.setWaitingTime(calculateTime(report.getConsultedTime(), report.getArrivalTime()));
 		report.setSpecialistConsultationStart((Timestamp) obj[23]);
 		report.setConsultationEnd((Timestamp) obj[24]);
 		report.settATForArrivalToConsultationStart((obj[25] == null) ? "" : obj[25].toString());
@@ -194,7 +178,6 @@ public class CRMReportServiceImpl implements CRMReportService {
 
 	@Override
 	public Set<SpokeReport> getChiefcomplaintreport(ReportInput input) throws TMException {
-		// TODO Auto-generated method stub
 		Integer ppid = getParkingplaceID(input.getUserID(), input.getProviderServiceMapID());
 		List<Object[]> result = benChiefComplaintReportRepo.getcmreport(input.getFromDate(), input.getToDate(), ppid);
 
@@ -235,7 +218,6 @@ public class CRMReportServiceImpl implements CRMReportService {
 
 	@Override
 	public String getTotalConsultationReport(ReportInput input) throws TMException {
-		// TODO Auto-generated method stub
 		Integer ppid = getParkingplaceID(input.getUserID(), input.getProviderServiceMapID());
 		List<Object[]> objarr = benChiefComplaintReportRepo.getTotalConsultationReport(input.getFromDate(),
 				input.getToDate(), ppid);
@@ -266,7 +248,6 @@ public class CRMReportServiceImpl implements CRMReportService {
 
 		}
 		List<LinkedHashMap<String, String>> output = new ArrayList<>();
-		// JSONArray arr = new JSONArray();
 
 		for (Map.Entry<SpokeReport, LinkedHashMap<String, String>> reportitr : report.entrySet()) {
 			output.add(reportitr.getValue());
@@ -298,7 +279,6 @@ public class CRMReportServiceImpl implements CRMReportService {
 		Date inputtodate = input.getToDate();
 		header.put("Indicator", "0");
 		while (inputfromdate.compareTo(inputtodate) <= 0) {
-			// System.out.println(inputfromdate);
 
 			header.put(new SimpleDateFormat("MMM-yy").format(inputfromdate), "0");
 			inputfromdate.setMonth(inputfromdate.getMonth() + 1);
@@ -321,7 +301,6 @@ public class CRMReportServiceImpl implements CRMReportService {
 
 		}
 		List<LinkedHashMap<String, String>> output = new ArrayList<>();
-		// JSONArray arr = new JSONArray();
 
 		for (Map.Entry<String, LinkedHashMap<String, String>> reportitr : report.entrySet()) {
 			output.add(reportitr.getValue());
@@ -337,7 +316,6 @@ public class CRMReportServiceImpl implements CRMReportService {
 
 	@Override
 	public List<TMDailyReport> getDailyReport(ReportInput input) throws TMException {
-		// TODO Auto-generated method stub
 		Integer ppid = getParkingplaceID(input.getUserID(), input.getProviderServiceMapID());
 		List<Object[]> objarr = benChiefComplaintReportRepo.getDailyReport(input.getFromDate(), ppid);
 

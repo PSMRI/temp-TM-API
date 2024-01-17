@@ -22,7 +22,6 @@
 package com.iemr.tm.data.quickConsultation;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +29,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 
@@ -353,13 +351,7 @@ public class ExternalLabTestOrder {
 			
 			if (emrgCasesheet.has("externalInvestigation") && !emrgCasesheet.get("externalInvestigation").isJsonNull())
 				externalLabTestOrder.setTestName(emrgCasesheet.get("externalInvestigation").getAsString());
-			
-/*			if (obj.has("testResult") && !obj.get("testResult").isJsonNull())
-				externalLabTestOrder.setTestResult(obj.get("testResult").getAsString());
-			
-			if (obj.has("testReport") && !obj.get("testReport").isJsonNull())
-				externalLabTestOrder.setTestReport(obj.get("testReport").getAsString());*/
-			
+						
 			if (emrgCasesheet.has("createdBy") && !emrgCasesheet.get("createdBy").isJsonNull())
 				externalLabTestOrder.setCreatedBy(emrgCasesheet.get("createdBy").getAsString());
 			

@@ -152,7 +152,6 @@ public class CommonMasterServiceImpl implements CommonMaterService {
 			switch (visitCategoryID) {
 			case 1: {
 				// 1 : Cancer Screening
-				// neeraj passed one parameter for tem reason
 				doctorMasterData = doctorMasterDataServiceImpl
 						.getCancerScreeningMasterDataForDoctor(providerServiceMapID);
 			}
@@ -194,12 +193,6 @@ public class CommonMasterServiceImpl implements CommonMaterService {
 				break;
 			case 7: {
 				// 7 : General OPD (QC)
-				// doctorMasterData =
-				// qCMasterDataServiceImpl.getQuickConsultMasterData(providerServiceMapID,
-				// gender,
-				// facilityID);
-
-				// ne298657 have commented the code on 27-07-2018
 				doctorMasterData = ancMasterDataServiceImpl.getCommonDoctorMasterDataForGenopdAncNcdcarePnc(
 						visitCategoryID, providerServiceMapID, gender, facilityID, vanID);
 			}

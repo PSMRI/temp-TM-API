@@ -55,4 +55,5 @@ replay_pid15072.log
 /.sts4-cache
 /logs
 
-
+# Properties
+src/main/environment/common_local.properties

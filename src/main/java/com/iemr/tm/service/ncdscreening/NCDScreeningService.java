@@ -22,13 +22,14 @@
 package com.iemr.tm.service.ncdscreening;
 
 import com.google.gson.JsonObject;
-import com.iemr.tm.data.ncdScreening.NCDScreening;
 
 public interface NCDScreeningService {
 	
 	public String getNCDScreeningDetails(Long beneficiaryRegID, Long benVisitID);
 
     String saveNCDScreeningNurseData(JsonObject requestOBJ, String Authorization) throws Exception;
+    
+    public void deleteVisitDetails(JsonObject requestOBJ) throws Exception;
 
 	Integer updateNurseNCDScreeningDetails(JsonObject jsonObject) throws Exception;
 	

@@ -21,29 +21,7 @@
 */
 package com.iemr.tm.service.generalOPD;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.iemr.tm.data.anc.BenChildDevelopmentHistory;
-import com.iemr.tm.data.anc.ChildFeedingDetails;
-import com.iemr.tm.data.anc.FemaleObstetricHistory;
-import com.iemr.tm.data.anc.PerinatalHistory;
-import com.iemr.tm.data.anc.SysGastrointestinalExamination;
-import com.iemr.tm.data.anc.WrapperFemaleObstetricHistory;
-import com.iemr.tm.data.anc.WrapperImmunizationHistory;
-import com.iemr.tm.data.quickConsultation.BenChiefComplaint;
-import com.iemr.tm.repo.nurse.anc.BenChildDevelopmentHistoryRepo;
-import com.iemr.tm.repo.nurse.anc.ChildFeedingDetailsRepo;
-import com.iemr.tm.repo.nurse.anc.PerinatalHistoryRepo;
-import com.iemr.tm.repo.nurse.anc.SysGastrointestinalExaminationRepo;
 
 @Service
 public class GeneralOPDNurseServiceImpl implements GeneralOPDNurseService {

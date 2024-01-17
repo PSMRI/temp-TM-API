@@ -41,11 +41,4 @@ public interface UserParkingplaceMappingRepo extends CrudRepository<UserParkingp
 
 	public UserParkingplaceMapping findOneByUserIDAndProviderServiceMapIdAndDeleted(Integer userID, Integer providerServiceMapId,
 			Integer deleted);
-
-//	@Query("SELECT u from UserParkingplaceMapping u WHERE u.userID= :userID and u.providerServiceMapId =:providerServiceMapId and u.deleted =:deleted")
-//	public List<Object[]> getUserParkingPlce1(@Param("userID") Integer userID,@Param("providerServiceMapId") Integer providerServiceMapId,@Param("deleted") Integer deleted );
-//	
-
-	// public UserParkingplaceMapping getUserParkingPlce1(Integer userid, Integer
-	// providerServiceMapId);
 }

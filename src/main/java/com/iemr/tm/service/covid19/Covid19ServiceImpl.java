@@ -35,6 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
 import com.iemr.tm.data.anc.BenAllergyHistory;
 import com.iemr.tm.data.anc.BenChildDevelopmentHistory;
 import com.iemr.tm.data.anc.BenFamilyHistory;
@@ -58,6 +59,7 @@ import com.iemr.tm.data.nurse.CommonUtilityClass;
 import com.iemr.tm.data.quickConsultation.PrescribedDrugDetail;
 import com.iemr.tm.data.quickConsultation.PrescriptionDetail;
 import com.iemr.tm.data.tele_consultation.TeleconsultationRequestOBJ;
+import com.iemr.tm.repo.nurse.BenVisitDetailRepo;
 import com.iemr.tm.repo.nurse.covid19.Covid19BenFeedbackRepo;
 import com.iemr.tm.repo.quickConsultation.PrescriptionDetailRepo;
 import com.iemr.tm.service.benFlowStatus.CommonBenStatusFlowServiceImpl;
@@ -90,9 +92,13 @@ public class Covid19ServiceImpl implements Covid19Service {
 	private Covid19BenFeedbackRepo covid19BenFeedbackRepo;
 	@Autowired
 	private PrescriptionDetailRepo prescriptionDetailRepo;
+	@Autowired
+	private BenVisitDetailRepo benVisitDetailRepo;
+	
+
+	
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	public String saveCovid19NurseData(JsonObject requestOBJ, String Authorization) throws Exception {
 		Long saveSuccessFlag = null;
 		TeleconsultationRequestOBJ tcRequestOBJ = null;
@@ -151,8 +157,6 @@ public class Covid19ServiceImpl implements Covid19Service {
 				vitalSaveSuccessFlag = saveBenCovid19VitalDetails(requestOBJ.getAsJsonObject("vitalDetails"),
 						benVisitID, benVisitCode);
 
-				// i = commonNurseServiceImpl.updateBeneficiaryStatus('N',
-				// tmpOBJ.get("beneficiaryRegID").getAsLong());
 			} else {
 				throw new RuntimeException("Error occurred while creating beneficiary visit");
 			}
@@ -197,6 +201,23 @@ public class Covid19ServiceImpl implements Covid19Service {
 			responseMap.put("response", "Unable to save data");
 		}
 		return new  Gson().toJson(responseMap);			
+	}
+	
+	public void deleteVisitDetails(JsonObject requestOBJ) throws Exception {
+		if (requestOBJ != null && requestOBJ.has("visitDetails") && !requestOBJ.get("visitDetails").isJsonNull()) {
+
+			CommonUtilityClass nurseUtilityClass = InputMapper.gson().fromJson(requestOBJ, CommonUtilityClass.class);
+
+			Long visitCode = benVisitDetailRepo.getVisitCode(nurseUtilityClass.getBeneficiaryRegID(),
+					nurseUtilityClass.getProviderServiceMapID());
+
+			if (visitCode != null) {
+				covid19BenFeedbackRepo.deleteVisitDetails(visitCode);
+				benVisitDetailRepo.deleteVisitDetails(visitCode);
+			}
+
+		}
+
 	}
 
 	/**
@@ -556,10 +577,6 @@ public class Covid19ServiceImpl implements Covid19Service {
 		resMap.put("covid19NurseVisitDetail", new Gson().toJson(visitDetail));
 		resMap.put("covidDetails", new Gson().toJson(covid19BenFeedback));
 
-//		resMap.put("BenAdherence", commonNurseServiceImpl.getBenAdherence(benRegID, visitCode));
-//
-//		resMap.put("Investigation", commonNurseServiceImpl.getLabTestOrders(benRegID, visitCode));
-
 		return resMap.toString();
 	}
 
@@ -716,7 +733,6 @@ public class Covid19ServiceImpl implements Covid19Service {
 	 */
 
 	/**
-	 * 
 	 * @param requestOBJ
 	 * @return success or failure flag for General OPD History updating by Doctor
 	 */
@@ -898,7 +914,6 @@ public class Covid19ServiceImpl implements Covid19Service {
 	}
 
 	/**
-	 * 
 	 * @param requestOBJ
 	 * @return success or failure flag for vitals data updating
 	 */
@@ -954,7 +969,6 @@ public class Covid19ServiceImpl implements Covid19Service {
 
 		if (requestOBJ != null) {
 			TeleconsultationRequestOBJ tcRequestOBJ = null;
-			// TcSpecialistSlotBookingRequestOBJ tcSpecialistSlotBookingRequestOBJ = null;
 			CommonUtilityClass commonUtilityClass = InputMapper.gson().fromJson(requestOBJ, CommonUtilityClass.class);
 
 			tcRequestOBJ = commonServiceImpl.createTcRequest(requestOBJ, commonUtilityClass, Authorization);
@@ -1015,18 +1029,6 @@ public class Covid19ServiceImpl implements Covid19Service {
 					wrapperBenInvestigationANC.getExternalInvestigations(), wrapperBenInvestigationANC.getVisitCode(),
 					wrapperBenInvestigationANC.getVanID(), wrapperBenInvestigationANC.getParkingPlaceID(), instruction,
 					doctorDiagnosis);
-
-			// save diagnosis
-			// not required in covid diagnosis
-//			if (requestOBJ.has("diagnosis") && !requestOBJ.get("diagnosis").isJsonNull()) {
-//				NCDCareDiagnosis ncdDiagnosis = InputMapper.gson().fromJson(requestOBJ.get("diagnosis"),
-//						NCDCareDiagnosis.class);
-//				ncdDiagnosis.setPrescriptionID(prescriptionID);
-//				diagnosisSuccessFlag = ncdCareDoctorServiceImpl.saveNCDDiagnosisData(ncdDiagnosis);
-//
-//			} else {
-//				diagnosisSuccessFlag = new Long(1);
-//			}
 
 			// save prescribed lab test
 			if (isTestPrescribed) {
@@ -1111,9 +1113,6 @@ public class Covid19ServiceImpl implements Covid19Service {
 		Map<String, Object> resMap = new HashMap<>();
 
 		resMap.put("findings", commonDoctorServiceImpl.getFindingsDetails(benRegID, visitCode));
-
-		// resMap.put("diagnosis",
-		// ncdCareDoctorServiceImpl.getNCDCareDiagnosisDetails(benRegID, visitCode));
 
 		resMap.put("diagnosis", getCovidDiagnosisData(benRegID, visitCode));
 

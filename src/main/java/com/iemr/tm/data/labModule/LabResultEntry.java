@@ -268,18 +268,14 @@ public class LabResultEntry {
 					tmpOBJ.setCreatedDate(obj.getCreatedDate());
 
 					compDetails = new HashMap<String, Object>();
-					// compDetails.put("resultEntryDate", obj.getCreatedDate());
 					compDetails.put("testComponentID", obj.getTestComponentID());
 					compDetails.put("componentName", obj.getTestComponentMaster().getTestComponentName());
-					// Shubham Shekhar,16-11-2020,lionic code added to casesheet
 					compDetails.put("loincName", obj.getTestComponentMaster().getLionicNum());
 					compDetails.put("loincTerm", obj.getTestComponentMaster().getLionicTerm());
-
 					compDetails.put("testResultValue", obj.getTestResultValue());
 					compDetails.put("testResultUnit", obj.getTestResultUnit());
 					compDetails.put("testReportFilePath", obj.getTestReportFilePath());
 					compDetails.put("stripsNotAvailable", obj.getStripsNotAvailable());
-					// file id array from string
 					Integer fileIds[];
 					if (obj.getTestReportFilePath() != null && obj.getTestReportFilePath().trim().length() > 0) {
 						String fileIdsTemp[] = obj.getTestReportFilePath().split(",");
@@ -306,10 +302,8 @@ public class LabResultEntry {
 
 				} else {
 					compDetails = new HashMap<String, Object>();
-					// compDetails.put("resultEntryDate", obj.getCreatedDate());
 					compDetails.put("testComponentID", obj.getTestComponentID());
 					compDetails.put("componentName", obj.getTestComponentMaster().getTestComponentName());
-					// Shubham Shekhar,16-11-2020,lionic code added to casesheet
 					compDetails.put("loincName", obj.getTestComponentMaster().getLionicNum());
 					compDetails.put("loincTerm", obj.getTestComponentMaster().getLionicTerm());
 
@@ -317,7 +311,6 @@ public class LabResultEntry {
 					compDetails.put("testResultUnit", obj.getTestResultUnit());
 					compDetails.put("testReportFilePath", obj.getTestReportFilePath());
 					compDetails.put("stripsNotAvailable", obj.getStripsNotAvailable());
-					// file id array from string
 					Integer fileIds[];
 					if (obj.getTestReportFilePath() != null && obj.getTestReportFilePath().trim().length() > 0) {
 						String fileIdsTemp[] = obj.getTestReportFilePath().split(",");
@@ -338,20 +331,6 @@ public class LabResultEntry {
 					compDetails.put("remarks", obj.getRemarks());
 					componentList.add(compDetails);
 				}
-
-				// tmpOBJ = new LabResultEntry();
-				// tmpOBJ.setProcedureID(obj.getProcedureID());
-				// tmpOBJ.setProcedureName(obj.getProcedureData().getProcedureName());
-				// tmpOBJ.setProcedureType(obj.getProcedureData().getProcedureType());
-				// tmpOBJ.setTestComponentID(obj.getTestComponentID());
-				// tmpOBJ.setComponentName(obj.getTestComponentMaster().getTestComponentName());
-				// tmpOBJ.setPrescriptionID(obj.getPrescriptionID());
-				// tmpOBJ.setTestResultValue(obj.getTestResultValue());
-				// tmpOBJ.setTestResultUnit(obj.getTestResultUnit());
-				// tmpOBJ.setTestReportFilePath(obj.getTestReportFilePath());
-
-				// returnList.add(tmpOBJ);
-
 			}
 		}
 		return returnList;

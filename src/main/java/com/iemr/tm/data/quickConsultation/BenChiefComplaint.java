@@ -345,7 +345,6 @@ public class BenChiefComplaint {
 	public static ArrayList<BenChiefComplaint> getBenChiefComplaintList(JsonObject emrgCasesheet) {
 		ArrayList<BenChiefComplaint> resArray = new ArrayList<>();
 		BenChiefComplaint benChiefComplaint = null;
-		// System.out.println("ello");
 		if (emrgCasesheet.has("chiefComplaintList") && !emrgCasesheet.get("chiefComplaintList").isJsonNull()
 				&& emrgCasesheet.get("chiefComplaintList").isJsonArray()) {
 			for (JsonElement csobj : emrgCasesheet.getAsJsonArray("chiefComplaintList")) {
@@ -389,13 +388,6 @@ public class BenChiefComplaint {
 
 				if (obj.has("parkingPlaceID") && !obj.get("parkingPlaceID").isJsonNull())
 					benChiefComplaint.setParkingPlaceID(obj.get("parkingPlaceID").getAsInt());
-
-				/*
-				 * if (emrgCasesheet.has("description") &&
-				 * !emrgCasesheet.get("description").isJsonNull())
-				 * benChiefComplaint.setDescription(emrgCasesheet.get("description").getAsString
-				 * ());
-				 */
 
 				if (emrgCasesheet.has("createdBy") && !emrgCasesheet.get("createdBy").isJsonNull())
 					benChiefComplaint.setCreatedBy(emrgCasesheet.get("createdBy").getAsString());

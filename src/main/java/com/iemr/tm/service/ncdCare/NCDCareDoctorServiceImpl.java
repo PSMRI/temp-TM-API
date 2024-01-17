@@ -22,8 +22,6 @@
 package com.iemr.tm.service.ncdCare;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,16 +87,10 @@ public class NCDCareDoctorServiceImpl implements NCDCareDoctorService {
 				instruction = String.valueOf(prescriptionData.get(0)[1]);
 		}
 
-//		String externalInvestigation = prescriptionDetailRepo.getExternalinvestigationForVisitCode(beneficiaryRegID,
-//				visitCode);
-
 		ArrayList<Object[]> resList = ncdCareDiagnosisRepo.getNCDCareDiagnosisDetails(beneficiaryRegID, visitCode);
 		NCDCareDiagnosis ncdCareDiagnosisDetails = NCDCareDiagnosis.getNCDCareDiagnosisDetails(resList);
-
-		// 07-09-2021 parsing the || seperated ncd_condition to array of string, if
+		// parsing the || seperated ncd_condition to array of string, if
 		// condition
-		// 07-09-2021
-
 		if (ncdCareDiagnosisDetails != null && ncdCareDiagnosisDetails.getNcdScreeningCondition() != null
 				&& ncdCareDiagnosisDetails.getNcdScreeningCondition().length() > 0) {
 
@@ -121,13 +113,8 @@ public class NCDCareDoctorServiceImpl implements NCDCareDoctorService {
 				String[] conceptIDArr = obj.getDiagnosisProvided_SCTCode().split(Pattern.quote("  ||  "));
 				String[] termArr = obj.getDiagnosisProvided().split(Pattern.quote("  ||  "));
 
-				// StringBuilder pd = new StringBuilder();
 				int pointer = 0;
 				for (String s : termArr) {
-					// if (termArr.length == (pointer + 1))
-					// pd.append(s);
-					// else
-					// pd.append(s).append(" || ");
 					sctOBJ = new SCTDescription();
 					sctOBJ.setConceptID(conceptIDArr[pointer]);
 					sctOBJ.setTerm(s);
@@ -140,7 +127,6 @@ public class NCDCareDoctorServiceImpl implements NCDCareDoctorService {
 				ncdCareDiagnosisDetails.setDiagnosisProvided(obj.getDiagnosisProvided());
 				ncdCareDiagnosisDetails.setDiagnosisProvided_SCTCode(obj.getDiagnosisProvided_SCTCode());
 				ncdCareDiagnosisDetails.setProvisionalDiagnosisList(sctOBJList);
-				// obj.setDiagnosisProvided(pd.toString());
 			}
 
 		} else {

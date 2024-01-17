@@ -29,7 +29,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,7 +74,6 @@ import com.iemr.tm.data.anc.WrapperMedicationHistory;
 import com.iemr.tm.data.benFlowStatus.BeneficiaryFlowStatus;
 import com.iemr.tm.data.bmi.BmiCalculation;
 import com.iemr.tm.data.doctor.BenReferDetails;
-import com.iemr.tm.data.doctor.CancerLymphNodeDetails;
 import com.iemr.tm.data.doctor.ProviderSpecificRequest;
 import com.iemr.tm.data.ncdScreening.IDRSData;
 import com.iemr.tm.data.ncdScreening.PhysicalActivityType;
@@ -387,7 +385,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 
 	/**
 	 * Save beneficiary visit details data and return beneficiary visit ID.
-	 * 
 	 * @param beneficiaryVisitDetail
 	 * @return
 	 */
@@ -466,10 +463,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 		}
 		visitIDString += visitID;
 
-		// Generating VISIT CODE
-		// visitCode += sessionID + dayString + monthString + vanIDString +
-		// visitIDString;
-		// changed logic 14 digit visit code, removed day & month
 		visitCode += sessionID + vanIDString + visitIDString;
 
 		int i = benVisitDetailRepo.updateVisitCode(Long.valueOf(visitCode), visitID);
@@ -486,8 +479,7 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 	}
 
 	/**
-	 * Neeraj have created this for getting visit count of patient
-	 * 
+	 * created this for getting visit count of patient
 	 * @return
 	 */
 	public Short getBenVisitCount(Long benRegID) {
@@ -655,12 +647,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 
 		StringBuilder postAbortionComp;
 		StringBuilder postAbortionCompValues;
-
-//		StringBuilder typeOfAbortionID;
-//		StringBuilder typeOfAbortionValue;
-//
-//		StringBuilder serviceFacilityID;
-//		StringBuilder serviceFacilityValue;
 
 		// iterate through pregnancy complication
 		for (FemaleObstetricHistory obj : femaleObstetricHistorylist) {
@@ -916,8 +902,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 	}
 
 	public Long saveBeneficiaryPhysicalVitalDetails(BenPhysicalVitalDetail benPhysicalVitalDetail) {
-		// ArrayList<Short> averageSystolicList = new ArrayList<>();
-		// ArrayList<Short> averageDiastolicList = new ArrayList<>();
 
 		short sysBP = 0;
 		short dysBP = 0;
@@ -946,39 +930,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 			benPhysicalVitalDetail.setAverageSystolicBP((short) (sysBP / j));
 			benPhysicalVitalDetail.setAverageDiastolicBP((short) (dysBP / j));
 		}
-		/**
-		 * 
-		 * 
-		 * Short systolicBP_1stReading =
-		 * benPhysicalVitalDetail.getSystolicBP_1stReading(); Short
-		 * diastolicBP_1stReading = benPhysicalVitalDetail.getDiastolicBP_1stReading();
-		 * if (systolicBP_1stReading != null && diastolicBP_1stReading != null) {
-		 * averageSystolicList.add(systolicBP_1stReading);
-		 * averageDiastolicList.add(diastolicBP_1stReading); }
-		 * 
-		 * Short systolicBP_2ndReading =
-		 * benPhysicalVitalDetail.getSystolicBP_2ndReading(); Short
-		 * diastolicBP_2ndReading = benPhysicalVitalDetail.getDiastolicBP_2ndReading();
-		 * if (systolicBP_2ndReading != null && diastolicBP_2ndReading != null) {
-		 * averageSystolicList.add(systolicBP_2ndReading);
-		 * averageDiastolicList.add(diastolicBP_2ndReading); }
-		 * 
-		 * Short systolicBP_3rdReading =
-		 * benPhysicalVitalDetail.getSystolicBP_3rdReading(); Short
-		 * diastolicBP_3rdReading = benPhysicalVitalDetail.getDiastolicBP_3rdReading();
-		 * if (systolicBP_3rdReading != null && diastolicBP_3rdReading != null) {
-		 * averageSystolicList.add(systolicBP_3rdReading);
-		 * averageDiastolicList.add(diastolicBP_3rdReading); }
-		 * 
-		 * Short averageSystolic = (short) ((averageSystolicList.stream().mapToInt(i ->
-		 * i.shortValue()).sum()) / averageSystolicList.size()); Short averageDiastolic
-		 * = (short) ((averageDiastolicList.stream().mapToInt(i ->
-		 * i.shortValue()).sum()) / averageDiastolicList.size());
-		 * 
-		 * benPhysicalVitalDetail.setAverageSystolicBP(averageSystolic);
-		 * benPhysicalVitalDetail.setAverageDiastolicBP(averageDiastolic);
-		 * 
-		 */
 
 		BenPhysicalVitalDetail response = benPhysicalVitalRepo.save(benPhysicalVitalDetail);
 		if (response != null)
@@ -1102,7 +1053,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 	}
 
 	public Long saveSysRespiratoryExamination(SysRespiratoryExamination respiratoryExamination) {
-		// TODO Auto-generated method stub
 		Long r = null;
 		SysRespiratoryExamination respiratoryExaminationRS = sysRespiratoryExaminationRepo.save(respiratoryExamination);
 		if (respiratoryExaminationRS != null)
@@ -1111,7 +1061,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 	}
 
 	public Long saveSysCentralNervousExamination(SysCentralNervousExamination centralNervousExamination) {
-		// TODO Auto-generated method stub
 		Long r = null;
 		SysCentralNervousExamination centralNervousExaminationRS = sysCentralNervousExaminationRepo
 				.save(centralNervousExamination);
@@ -1123,7 +1072,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 
 	public Long saveSysMusculoskeletalSystemExamination(
 			SysMusculoskeletalSystemExamination musculoskeletalSystemExamination) {
-		// TODO Auto-generated method stub
 		Long r = null;
 		SysMusculoskeletalSystemExamination musculoskeletalSystemExaminationRS = sysMusculoskeletalSystemExaminationRepo
 				.save(musculoskeletalSystemExamination);
@@ -1135,7 +1083,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 
 	public Long saveSysGenitourinarySystemExamination(
 			SysGenitourinarySystemExamination genitourinarySystemExamination) {
-		// TODO Auto-generated method stub
 		Long r = null;
 		SysGenitourinarySystemExamination sysGenitourinarySystemExaminationRS = sysGenitourinarySystemExaminationRepo
 				.save(genitourinarySystemExamination);
@@ -1241,11 +1188,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 		column.put("keyName", "tobaccoUseStatus");
 		columns.add(column);
 
-		/*
-		 * column = new HashMap<String, Object>(); column.put("columnName",
-		 * "Tobacco Use Type ID"); column.put("keyName", "tobaccoUseTypeID");
-		 * columns.add(column);
-		 */
 
 		column = new HashMap<String, Object>();
 		column.put("columnName", "Tobacco Use Type");
@@ -1318,11 +1260,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 		column.put("keyName", "alcoholIntakeStatus");
 		columns.add(column);
 
-		/*
-		 * column = new HashMap<String, Object>(); column.put("columnName",
-		 * "Alcohol Type ID"); column.put("keyName", "alcoholTypeID");
-		 * columns.add(column);
-		 */
 		column = new HashMap<String, Object>();
 		column.put("columnName", "Alcohol Type");
 		column.put("keyName", "alcoholType");
@@ -1396,12 +1333,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 		column.put("columnName", "Allergy Name");
 		column.put("keyName", "allergyName");
 		columns.add(column);
-
-		/*
-		 * column = new HashMap<String, Object>(); column.put("columnName",
-		 * "Allergic Reaction Type ID"); column.put("keyName",
-		 * "allergicReactionTypeID"); columns.add(column);
-		 */
 
 		column = new HashMap<String, Object>();
 		column.put("columnName", "Allergic Reaction Type");
@@ -1479,12 +1410,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 		column.put("columnName", "Date of Capture");
 		column.put("keyName", "captureDate");
 		columns.add(column);
-
-		/*
-		 * column = new HashMap<String, Object>(); column.put("columnName",
-		 * "Disease Type ID"); column.put("keyName", "diseaseTypeID");
-		 * columns.add(column);
-		 */
 
 		column = new HashMap<String, Object>();
 		column.put("columnName", "Disease Type");
@@ -1856,15 +1781,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 		column.put("keyName", "otherVaccineName");
 		columns.add(column);
 
-		/** Later we will enable these two if needed **/
-		/*
-		 * column = new HashMap<String, Object>(); column.put("columnName", "Status");
-		 * column.put("keyName", "status"); columns.add(column);
-		 * 
-		 * column = new HashMap<String, Object>(); column.put("columnName",
-		 * "Received Date"); column.put("keyName", "receivedDate"); columns.add(column);
-		 */
-
 		column = new HashMap<String, Object>();
 		column.put("columnName", "Actual Receiving Age");
 		column.put("keyName", "actualReceivingAge");
@@ -1898,10 +1814,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 	}
 
 	public BenFamilyHistory getFamilyHistoryDetail(Long beneficiaryRegID, Long visitCode) {
-//		BenFamilyHistory familyHistory = benFamilyHistoryRepo.getBenFamilyHistoryDetails(beneficiaryRegID, visitCode);
-//		
-//
-//		return new Gson().toJson(familyHistory);
 		ArrayList<Object[]> familyHistory = benFamilyHistoryRepo.getBenFamilyHisDetail(beneficiaryRegID, visitCode);
 		BenFamilyHistory familyHistoryDetails = BenFamilyHistory.getBenFamilyHist(familyHistory);
 
@@ -2017,7 +1929,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 
 	private WrapperFemaleObstetricHistory getWrapperFemaleObstetricHistory(
 			WrapperFemaleObstetricHistory femaleObstetricHistoryDetails) {
-		// s
 		if (femaleObstetricHistoryDetails != null
 				&& femaleObstetricHistoryDetails.getFemaleObstetricHistoryList() != null
 				&& femaleObstetricHistoryDetails.getFemaleObstetricHistoryList().size() > 0) {
@@ -2143,7 +2054,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 			}
 
 		}
-		// e
 		return femaleObstetricHistoryDetails;
 	}
 
@@ -2819,13 +2729,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 	public Long saveBeneficiaryPrescription(JsonObject caseSheet) throws Exception {
 
 		PrescriptionDetail prescriptionDetail = InputMapper.gson().fromJson(caseSheet, PrescriptionDetail.class);
-		// String[] snomedCTArr =
-		// commonDoctorServiceImpl.getSnomedCTcode(prescriptionDetail.getDiagnosisProvided());
-		// if (snomedCTArr != null && snomedCTArr.length > 1) {
-		// prescriptionDetail.setDiagnosisProvided_SCTCode(snomedCTArr[0]);
-		// prescriptionDetail.setDiagnosisProvided_SCTTerm(snomedCTArr[1]);
-		// }
-		// prescriptionDetail.setPrescriptionID(null);
 		return saveBenPrescription(prescriptionDetail);
 	}
 
@@ -2859,7 +2762,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 			}
 			prescription.setDiagnosisProvided(pdTerm.toString());
 			prescription.setDiagnosisProvided_SCTCode(pdConceptID.toString());
-			// prescription.setDiagnosisProvided_SCTTerm(pdTerm.toString());
 
 		}
 
@@ -2905,12 +2807,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 
 		}
 
-//		String processed = prescriptionDetailRepo.getGeneralOPDDiagnosisStatus(prescription.getBeneficiaryRegID(),
-//				prescription.getVisitCode(), prescription.getPrescriptionID());
-//		if (null != processed && !processed.equals("N")) {
-//			processed = "U";
-//		}
-
 		String processed;
 		PrescriptionDetail pDetails = prescriptionDetailRepo.getGeneralOPDDiagnosisStatus(
 				prescription.getBeneficiaryRegID(), prescription.getVisitCode(), prescription.getPrescriptionID());
@@ -2924,9 +2820,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 		}
 
 		prescription.setProcessed(processed);
-//		if (pDetails.getInstruction() != null) {
-//			prescription.setInstruction(pDetails.getInstruction());}
-//		
 		if (pDetails != null && prescription.getInstruction() == null && pDetails.getInstruction() != null) {
 			prescription.setInstruction(pDetails.getInstruction());
 		}
@@ -2938,19 +2831,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 		PrescriptionDetail resultSet = prescriptionDetailRepo.save(prescription);
 		if (resultSet != null && resultSet.getPrescriptionID() > 0)
 			i = 1;
-
-//		if (processed != null) {
-//			i = prescriptionDetailRepo.updatePrescription(prescription.getDiagnosisProvided(),
-//					prescription.getInstruction(), prescription.getCreatedBy(), prescription.getProcessed(),
-//					prescription.getBeneficiaryRegID(), prescription.getVisitCode(), prescription.getPrescriptionID(),
-//					prescription.getExternalInvestigation(), prescription.getDiagnosisProvided_SCTCode(),
-//					prescription.getDiagnosisProvided_SCTTerm());
-//		} else {
-//			PrescriptionDetail prescriptionRS = prescriptionDetailRepo.save(prescription);
-//			if (prescriptionRS != null && prescriptionRS.getPrescriptionID() > 0)
-//				i = 1;
-//		}
-
 		return i;
 	}
 
@@ -3273,7 +3153,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 
 	public String getNurseWorkList() {
 		List<Object[]> nurseWorkListData = reistrarRepoBenSearch.getNurseWorkList();
-		// System.out.println("hello");
 		return WrapperRegWorklist.getRegistrarWorkList(nurseWorkListData);
 	}
 
@@ -3593,39 +3472,20 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 		column.put("keyName", "grossMotorMilestone");
 		columns.add(column);
 
-		/*
-		 * column = new HashMap<>(); column.put("columnName", "Is GMM Attained");
-		 * column.put("keyName", "isGMMAttained"); columns.add(column);
-		 */
-
 		column = new HashMap<>();
 		column.put("columnName", "Fine Motor Milestone");
 		column.put("keyName", "fineMotorMilestone");
 		columns.add(column);
 
-		/*
-		 * column = new HashMap<>(); column.put("columnName", "Is FMM Attained");
-		 * column.put("keyName", "isFMMAttained"); columns.add(column);
-		 */
 		column = new HashMap<>();
 		column.put("columnName", "Social Milestone");
 		column.put("keyName", "socialMilestone");
 		columns.add(column);
 
-		/*
-		 * column = new HashMap<>(); column.put("columnName", "Is SM Attained");
-		 * column.put("keyName", "isSMAttained"); columns.add(column);
-		 */
-
 		column = new HashMap<>();
 		column.put("columnName", "Language Milestone");
 		column.put("keyName", "languageMilestone");
 		columns.add(column);
-
-		/*
-		 * column = new HashMap<>(); column.put("columnName", "Is LM Attained");
-		 * column.put("keyName", "isLMAttained"); columns.add(column);
-		 */
 
 		column = new HashMap<>();
 		column.put("columnName", "Development Problem");
@@ -3918,7 +3778,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 	}
 
 	public int updateBenFamilyHistoryNCDScreening(BenFamilyHistory benFamilyHistory) {
-		// TODO Auto-generated method stub
 		int familyHistorySuccessFlag = 0;
 
 		ArrayList<BenFamilyHistory> familyHistoryList = benFamilyHistory.getBenFamilyHist();
@@ -3935,16 +3794,8 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 	}
 
 	public int updateBenPhysicalActivityHistoryNCDScreening(PhysicalActivityType physicalActivityType) {
-		// TODO Auto-generated method stub
 		int pysicalActivityHistorySuccessFlag = 0;
 
-//		ArrayList<BenFamilyHistory> familyHistoryList = benFamilyHistory.getBenFamilyHistory();
-//		if (familyHistoryList.size() > 0) {
-//			ArrayList<BenFamilyHistory> res = (ArrayList<BenFamilyHistory>) benFamilyHistoryRepo
-//					.save(familyHistoryList);
-//			if (familyHistoryList.size() == res.size()) {
-//				familyHistorySuccessFlag = 1;
-//			}
 		if (physicalActivityType.getID() != null)
 			physicalActivityType.setProcessed("U");
 		else
@@ -4030,49 +3881,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 		return new Gson().toJson(responseMap);
 	}
 
-//	@Override
-//	public String getBenPreviousDiabetesData(Long benRegID) throws Exception {
-//		Map<String, Object> response = new HashMap<String, Object>();
-//
-//		ArrayList<IDRSData> resultSet = new ArrayList<>();
-//		ArrayList<Object[]> resultSet1 = new ArrayList<>();
-//		Map<String, String> column;
-//		ArrayList<Map<String, String>> columns = new ArrayList<>();
-//
-//		column = new HashMap<>();
-//		column.put("columnName", "Date of Capture");
-//		column.put("keyName", "createdDate");
-//		columns.add(column);
-//
-//		column = new HashMap<>();
-//		column.put("columnName", "Visit Code");
-//		column.put("keyName", "visitCode");
-//		columns.add(column);
-//
-//		column = new HashMap<>();
-//		column.put("columnName", "Question");
-//		column.put("keyName", "question");
-//		columns.add(column);
-//
-//		column = new HashMap<>();
-//		column.put("columnName", "Answer");
-//		column.put("keyName", "answer");
-//		columns.add(column);
-//		IDRSData idrs=new IDRSData();
-//		resultSet1 = iDRSDataRepo.getBenPreviousDiabetesDetails(benRegID);
-//        if(resultSet1 !=null && resultSet1.size()>0)
-//        {
-//        	for(Object[] obj:resultSet1)
-//        	{
-//        		idrs=new IDRSData(((BigInteger) obj[0]).longValue(),(Timestamp)obj[1],(String)obj[2],(String)obj[3],((BigInteger) obj[4]).longValue(),((Integer) obj[5])
-//        				,(String)obj[6]);
-//        		resultSet.add(idrs);
-//        	}
-//        }
-//		response.put("columns", columns);
-//		response.put("data", resultSet);
-//		return new Gson().toJson(response);
-//	}
 	@Override
 	public String getBenPreviousDiabetesData(Long benRegID) throws Exception {
 
@@ -4216,15 +4024,9 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 		columns.add(column);
 		response.put("columns", columns);
 		try {
-			// ArrayList<BenReferDetails> resList =
-			// benReferDetailsRepo.getBenReferDetails2(request.getBenRegID(),
-			// request.getVisitCode());
 			ArrayList<Object[]> resList = benReferDetailsRepo.getBenReferDetails(request.getBenRegID(),
 					request.getVisitCode());
 			BenReferDetails referDetails = BenReferDetails.getBenReferDetails(resList);
-//			value.put("data",
-//					commonDoctorServiceImpl.getReferralDetails(request.getBenRegID(), request.getVisitCode()));
-			// values.add(value);
 			response.put("data", referDetails);
 
 		} catch (Exception e) {
@@ -4279,9 +4081,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 
 		response.put("columns", columns);
 		try {
-			// ArrayList<PrescribedDrugDetail> resList =
-			// prescribedDrugDetailRepo.getBenPrescribedDrugDetails2(request.getBenRegID(),
-			// request.getVisitCode());
 			ArrayList<Object[]> resList = prescribedDrugDetailRepo.getBenPrescribedDrugDetails(request.getBenRegID(),
 					request.getVisitCode());
 
@@ -4304,7 +4103,6 @@ public class CommonNurseServiceImpl implements CommonNurseService {
 
 		response.put("columns", columns);
 		try {
-//			ArrayList<LabTestOrderDetail> labTestOrders = labTestOrderDetailRepo.getLabTestOrderDetails2(request.getBenRegID(), request.getVisitCode());
 			ArrayList<Object[]> labTestOrders = labTestOrderDetailRepo.getLabTestOrderDetails(request.getBenRegID(),
 					request.getVisitCode());
 			WrapperBenInvestigationANC labTestOrdersList = LabTestOrderDetail.getLabTestOrderDetails(labTestOrders);

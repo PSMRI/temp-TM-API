@@ -21,8 +21,6 @@
 */
 package com.iemr.tm.service.videoconsultation;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +28,6 @@ import com.iemr.tm.data.videoconsultation.UserJitsi;
 import com.iemr.tm.data.videoconsultation.UserVideoConsultation;
 import com.iemr.tm.repo.login.MasterVanRepo;
 import com.iemr.tm.repo.videoconsultation.UserJitsiRepo;
-import com.iemr.tm.repo.videoconsultation.UserRepo;
 import com.iemr.tm.repo.videoconsultation.VideoConsultationUserRepo;
 import com.iemr.tm.utils.config.ConfigProperties;
 import com.iemr.tm.utils.exception.VideoConsultationException;
@@ -39,18 +36,15 @@ import com.iemr.tm.utils.exception.VideoConsultationException;
 public class VideoConsultationServiceImpl implements VideoConsultationService {
 
 	private String videoConsultationDNS = ConfigProperties.getPropertyByName("swymed_dnsname");
-	
+
 	private String jitsi_dnsname = ConfigProperties.getPropertyByName("jitsi_dnsname");
 
-	
-	
 	@Autowired
 	private VideoConsultationUserRepo userRepo;
-	
+
 	@Autowired
 	private UserJitsiRepo userJitsiRepo;
 
-	
 	@Autowired
 	private MasterVanRepo masterVanRepo;
 
@@ -100,10 +94,9 @@ public class VideoConsultationServiceImpl implements VideoConsultationService {
 
 		return data.toString();
 	}
-	
+
 	@Override
 	public String callUserjitsi(Long fromuserid, Long touserid) throws VideoConsultationException {
-		// TODO Auto-generated method stub
 		UserJitsi user = userJitsiRepo.findOneJitsiMap(fromuserid);
 		UserJitsi touser = userJitsiRepo.findOneJitsiMap(touserid);
 
@@ -112,15 +105,14 @@ public class VideoConsultationServiceImpl implements VideoConsultationService {
 		}
 		if (touser == null) {
 			throw new VideoConsultationException("Callee  couldnt be found. Please call manually");
-		}	
-		
+		}
 
 		StringBuilder data = new StringBuilder();
 
 		data.append(jitsi_dnsname);
 		data.append("/");
 		data.append(user.getJitsiUserName());
-		if(user.getJitsiPassword() != null) {
+		if (user.getJitsiPassword() != null) {
 			data.append("/");
 			data.append(user.getJitsiPassword());
 		}
@@ -154,7 +146,7 @@ public class VideoConsultationServiceImpl implements VideoConsultationService {
 
 		return data.toString();
 	}
-	
+
 	@Override
 	public String callVanJitsi(Long fromuserid, Integer vanID) throws VideoConsultationException {
 		UserJitsi user = userJitsiRepo.findOneJitsiMap(fromuserid);
@@ -166,14 +158,13 @@ public class VideoConsultationServiceImpl implements VideoConsultationService {
 		if (userVan == null) {
 			throw new VideoConsultationException("Callee  couldnt be found. Please call manually");
 		}
-		
 
 		StringBuilder data = new StringBuilder();
 
 		data.append(jitsi_dnsname);
 		data.append("/");
 		data.append(userVan.getJitsiUserName());
-		if(user.getJitsiPassword() != null) {
+		if (user.getJitsiPassword() != null) {
 			data.append("/");
 			data.append(userVan.getJitsiPassword());
 		}

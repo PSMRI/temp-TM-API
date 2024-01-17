@@ -31,8 +31,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.google.gson.annotations.Expose;
-import com.iemr.tm.annotation.sqlInjectionSafe.SQLInjectionSafe;
-import com.iemr.tm.data.doctor.ChiefComplaintMaster;
 
 @Entity
 @Table(name = "t_BenAdherence")

@@ -33,7 +33,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.google.gson.annotations.Expose;
-import com.iemr.tm.annotation.sqlInjectionSafe.SQLInjectionSafe;
 import com.iemr.tm.data.snomedct.SCTDescription;
 
 @Entity

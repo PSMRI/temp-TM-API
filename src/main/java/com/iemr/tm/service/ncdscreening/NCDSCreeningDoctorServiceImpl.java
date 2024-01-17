@@ -35,7 +35,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.iemr.tm.data.anc.WrapperAncFindings;
 import com.iemr.tm.data.anc.WrapperBenInvestigationANC;
-import com.iemr.tm.data.ncdcare.NCDCareDiagnosis;
 import com.iemr.tm.data.nurse.CommonUtilityClass;
 import com.iemr.tm.data.quickConsultation.PrescribedDrugDetail;
 import com.iemr.tm.data.quickConsultation.PrescriptionDetail;
@@ -77,14 +76,11 @@ public class NCDSCreeningDoctorServiceImpl implements NCDSCreeningDoctorService 
 		Long prescriptionID = null;
 		Long investigationSuccessFlag = null;
 		Integer findingSuccessFlag = null;
-		// Integer diagnosisSuccessFlag = null;
 		Integer prescriptionSuccessFlag = null;
 		Long referSaveSuccessFlag = null;
-		// Integer tcRequestStatusFlag = null;
 
 		if (requestOBJ != null) {
 			TeleconsultationRequestOBJ tcRequestOBJ = null;
-//			TcSpecialistSlotBookingRequestOBJ tcSpecialistSlotBookingRequestOBJ = null;
 			CommonUtilityClass commonUtilityClass = InputMapper.gson().fromJson(requestOBJ, CommonUtilityClass.class);
 
 			// teleconsultation request
@@ -136,41 +132,6 @@ public class NCDSCreeningDoctorServiceImpl implements NCDSCreeningDoctorService 
 			WrapperBenInvestigationANC wrapperBenInvestigationANC = InputMapper.gson()
 					.fromJson(requestOBJ.get("investigation"), WrapperBenInvestigationANC.class);
 
-//			//save specialist diagnosis
-//			String instruction = null;
-//			if (requestOBJ.has("diagnosis") && !requestOBJ.get("diagnosis").isJsonNull()
-//			&& requestOBJ.get("diagnosis").getAsJsonObject().has("specialistDiagnosis")
-//			&& !requestOBJ.get("diagnosis").getAsJsonObject().get("specialistDiagnosis").isJsonNull()) {
-//				instruction = requestOBJ.get("diagnosis").getAsJsonObject().get("specialistDiagnosis").getAsString();
-//			}
-//			
-//			// save doctor diagnosis
-//			String doctorDiagnosis = null;
-//			if (requestOBJ.has("diagnosis") && !requestOBJ.get("diagnosis").isJsonNull()
-//					&& requestOBJ.get("diagnosis").getAsJsonObject().has("doctorDiagnosis")
-//					&& !requestOBJ.get("diagnosis").getAsJsonObject().get("doctorDiagnosis").isJsonNull()) {
-//				doctorDiagnosis = requestOBJ.get("diagnosis").getAsJsonObject().get("doctorDiagnosis").getAsString();
-//			}
-
-//			// generate prescription OBJ & diagnosis OBJ
-//			PrescriptionDetail prescriptionDetail = null;
-//			NCDCareDiagnosis ncdCareDiagnosis = null;
-//			if (requestOBJ.has("diagnosis") && !requestOBJ.get("diagnosis").isJsonNull()) {
-//				prescriptionDetail = InputMapper.gson().fromJson(requestOBJ.get("diagnosis"), PrescriptionDetail.class);
-//				prescriptionDetail.setExternalInvestigation(wrapperBenInvestigationANC.getExternalInvestigations());
-//				prescriptionID = prescriptionDetail.getPrescriptionID();
-//				;
-//			    if (commonUtilityClass.getIsSpecialist() && instruction != null)
-//			                    prescriptionDetail.setInstruction(instruction);
-//
-//			    if (!commonUtilityClass.getIsSpecialist() && doctorDiagnosis != null)
-//			                    prescriptionDetail.setDiagnosisProvided(doctorDiagnosis);
-//
-////				if (doctorDiagnosis != null)
-////					prescriptionDetail.setDiagnosisProvided(doctorDiagnosis);
-//				// ncdCareDiagnosis = InputMapper.gson().fromJson(requestOBJ.get("diagnosis"),
-//				// NCDCareDiagnosis.class);
-//			}
 			
 			if (prescriptionDetail != null) {
 				prescriptionDetail.setExternalInvestigation(wrapperBenInvestigationANC.getExternalInvestigations());
@@ -256,10 +217,6 @@ public class NCDSCreeningDoctorServiceImpl implements NCDSCreeningDoctorService 
 		PrescriptionDetail obj;
 		SCTDescription sctOBJ;
 		ArrayList<SCTDescription> sctOBJList = new ArrayList<>();
-		// ArrayList<Object[]> diagnosisDetails =
-		// prescriptionDetailRepo.getBenPrescription(beneficiaryRegID, visitCode);
-		// PrescriptionDetail diagnosisList =
-		// PrescriptionDetail.getPrescriptions(diagnosisDetails);
 
 		ArrayList<PrescriptionDetail> prescriptionDetailRS = prescriptionDetailRepo
 				.findByBeneficiaryRegIDAndVisitCode(beneficiaryRegID, visitCode);
@@ -273,10 +230,6 @@ public class NCDSCreeningDoctorServiceImpl implements NCDSCreeningDoctorService 
 				// StringBuilder pd = new StringBuilder();
 				int pointer = 0;
 				for (String s : termArr) {
-					// if (termArr.length == (pointer + 1))
-					// pd.append(s);
-					// else
-					// pd.append(s).append(" || ");
 					sctOBJ = new SCTDescription();
 					sctOBJ.setConceptID(conceptIDArr[pointer]);
 					sctOBJ.setTerm(s);

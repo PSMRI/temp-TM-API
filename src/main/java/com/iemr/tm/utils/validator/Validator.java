@@ -46,11 +46,6 @@ public class Validator {
 		this.session = sessionObject;
 	}
 
-	// private static void setSessionObject() {
-	// if (session == null) {
-	// session = new SessionObject();
-	// }
-	// }
 
 	private Logger logger = LoggerFactory.getLogger(Validator.class);
 

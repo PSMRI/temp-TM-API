@@ -62,33 +62,38 @@ public class PostnatalCareController {
 	 * @Objective Saving PNC nurse data
 	 * @param requestObj
 	 * @return success or failure response
+	 * @throws Exception
 	 */
 
 	@CrossOrigin
 	@ApiOperation(value = "Save PNC nurse data", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/save/nurseData" }, method = { RequestMethod.POST })
 	public String saveBenPNCNurseData(@RequestBody String requestObj,
-			@RequestHeader(value = "Authorization") String Authorization) {
+			@RequestHeader(value = "Authorization") String Authorization) throws Exception {
 		OutputResponse response = new OutputResponse();
-		try {
-			logger.info("Request object for PNC nurse data saving :" + requestObj);
 
+		if (null != requestObj) {
 			JsonObject jsnOBJ = new JsonObject();
 			JsonParser jsnParser = new JsonParser();
 			JsonElement jsnElmnt = jsnParser.parse(requestObj);
 			jsnOBJ = jsnElmnt.getAsJsonObject();
 
-			if (jsnOBJ != null) {
-				String ancRes = pncServiceImpl.savePNCNurseData(jsnOBJ, Authorization);
-				response.setResponse(ancRes);
+			try {
+				logger.info("Request object for PNC nurse data saving :" + requestObj);
 
-			} else {
-				response.setError(5000, "Invalid request");
+				if (jsnOBJ != null) {
+					String ancRes = pncServiceImpl.savePNCNurseData(jsnOBJ, Authorization);
+					response.setResponse(ancRes);
+
+				} else {
+					response.setError(5000, "Invalid request");
+				}
+
+			} catch (Exception e) {
+				logger.error("Error while saving nurse data :" + e.getMessage());
+				pncServiceImpl.deleteVisitDetails(jsnOBJ);
+				response.setError(5000, e.getMessage());
 			}
-
-		} catch (Exception e) {
-			logger.error("Error while saving nurse data :" + e);
-			response.setError(5000, "Unable to save data");
 		}
 		return response.toString();
 	}
@@ -126,12 +131,12 @@ public class PostnatalCareController {
 			}
 
 		} catch (Exception e) {
-			logger.error("Error while saving doctor data :" + e);
-			response.setError(5000, "Unable to save data. " + e.getMessage());
+			logger.error("Error while saving doctor data :" + e.getMessage());
+			response.setError(5000, e.getMessage());
 		}
 		return response.toString();
 	}
-	
+
 	@CrossOrigin()
 	@ApiOperation(value = "Get PNC beneficiary visit details from nurse", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/getBenVisitDetailsFrmNursePNC" }, method = { RequestMethod.POST })
@@ -160,7 +165,7 @@ public class PostnatalCareController {
 		}
 		return response.toString();
 	}
-	
+
 	/**
 	 * @Objective Fetching Beneficiary PNC Care data entered by nurse
 	 * @param comingRequest
@@ -194,7 +199,7 @@ public class PostnatalCareController {
 		}
 		return response.toString();
 	}
-	
+
 	/**
 	 * @Objective Fetching Beneficiary history data entered by nurse
 	 * @param comingRequest
@@ -260,7 +265,7 @@ public class PostnatalCareController {
 		}
 		return response.toString();
 	}
-	
+
 	/**
 	 * @Objective Fetching Beneficiary examination data entered by nurse
 	 * @param comingRequest
@@ -327,7 +332,7 @@ public class PostnatalCareController {
 		}
 		return response.toString();
 	}
-	
+
 	@CrossOrigin
 	@ApiOperation(value = "Update PNC doctor data", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/update/PNCScreen" }, method = { RequestMethod.POST })
@@ -491,11 +496,11 @@ public class PostnatalCareController {
 			}
 			logger.info("Doctor data update response:" + response);
 		} catch (Exception e) {
-			response.setError(5000, "Unable to modify data. " + e.getMessage());
-			logger.error("Error while updating doctor data :" + e);
+			logger.error("Unable to modify data. " + e.getMessage());
+			response.setError(5000, e.getMessage());
 		}
 
 		return response.toString();
 	}
-	
+
 }

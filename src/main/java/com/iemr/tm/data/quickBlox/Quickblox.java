@@ -21,7 +21,6 @@
 */
 package com.iemr.tm.data.quickBlox;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;

@@ -21,7 +21,6 @@
 */
 package com.iemr.tm.data.masterdata.nurse;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import javax.persistence.Column;

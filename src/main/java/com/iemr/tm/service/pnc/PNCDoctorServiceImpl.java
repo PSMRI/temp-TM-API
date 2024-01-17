@@ -93,7 +93,6 @@ public class PNCDoctorServiceImpl implements PNCDoctorService {
 		}
 		pncDiagnosis.setProvisionalDiagnosis(pdTerm.toString());
 		pncDiagnosis.setProvisionalDiagnosisSCTCode(pdConceptID.toString());
-		// pncDiagnosis.setProvisionalDiagnosisSCTTerm(pdTerm.toString());
 
 		// confirmatory diagnosis
 		StringBuilder cdTerm = new StringBuilder();
@@ -135,8 +134,6 @@ public class PNCDoctorServiceImpl implements PNCDoctorService {
 	}
 
 	public String getPNCDiagnosisDetails(Long beneficiaryRegID, Long visitCode) {
-//		String externalInvestigation = prescriptionDetailRepo.getExternalinvestigationForVisitCode(beneficiaryRegID,
-//				visitCode);
 
 		ArrayList<Object[]> prescriptionData = prescriptionDetailRepo
 				.getExternalinvestigationForVisitCode(beneficiaryRegID, visitCode);
@@ -173,10 +170,6 @@ public class PNCDoctorServiceImpl implements PNCDoctorService {
 				int pointer = 0;
 
 				for (String s : termArr) {
-					// if (termArr.length == (pointer + 1))
-					// pd.append(s);
-					// else
-					// pd.append(s).append(" || ");
 					sctOBJ = new SCTDescription();
 					sctOBJ.setConceptID(conceptIDArr[pointer]);
 					sctOBJ.setTerm(s);
@@ -200,10 +193,6 @@ public class PNCDoctorServiceImpl implements PNCDoctorService {
 				int pointer = 0;
 
 				for (String s : termArr) {
-					// if (termArr.length == (pointer + 1))
-					// cd.append(s);
-					// else
-					// cd.append(s).append(" || ");
 					sctOBJ = new SCTDescription();
 					sctOBJ.setConceptID(conceptIDArr[pointer]);
 					sctOBJ.setTerm(s);
@@ -212,7 +201,6 @@ public class PNCDoctorServiceImpl implements PNCDoctorService {
 					pointer++;
 				}
 				pncDiagnosisDetails.setConfirmatoryDiagnosisList(sctOBJList);
-				// pncDiagnosisDetails.setConfirmatoryDiagnosis(cd.toString());
 			}
 
 		} else {
@@ -256,7 +244,6 @@ public class PNCDoctorServiceImpl implements PNCDoctorService {
 		}
 		pncDiagnosis.setProvisionalDiagnosis(pdTerm.toString());
 		pncDiagnosis.setProvisionalDiagnosisSCTCode(pdConceptID.toString());
-		// pncDiagnosis.setProvisionalDiagnosisSCTTerm(pdTerm.toString());
 
 		// confirmatory diagnosis
 		StringBuilder cdTerm = new StringBuilder();

@@ -48,13 +48,9 @@ import com.iemr.tm.data.syncActivity_syncLayer.SyncUtilityClass;
 import com.iemr.tm.repo.syncActivity_syncLayer.DataSyncGroupsRepo;
 
 /***
- * 
- * @author NE298657
- * @date 16-08-2018
  * @purpose "This service is user for data sync activity from van side. Means
  *          taking unprocessed data from van and sync to server and based on
  *          success or failure update local tables processed flag"
- *
  */
 @Service
 @PropertySource("classpath:application.properties")
@@ -73,7 +69,6 @@ public class UploadDataToServerImpl implements UploadDataToServer {
 	private static final int BATCH_SIZE = 30;
 
 	/**
-	 * 
 	 * @param groupName
 	 * @param Authorization
 	 * @return
@@ -88,7 +83,6 @@ public class UploadDataToServerImpl implements UploadDataToServer {
 	}
 
 	/**
-	 * 
 	 * @param Authorization
 	 * @return
 	 */
@@ -101,7 +95,6 @@ public class UploadDataToServerImpl implements UploadDataToServer {
 	}
 
 	/**
-	 * 
 	 * @param syncTableDetailsIDs
 	 * @param Authorization
 	 * @return
@@ -152,7 +145,6 @@ public class UploadDataToServerImpl implements UploadDataToServer {
 	}
 
 	/**
-	 * 
 	 * @param syncTableDetailsIDs
 	 * @return
 	 */
@@ -163,7 +155,6 @@ public class UploadDataToServerImpl implements UploadDataToServer {
 	}
 
 	/**
-	 * 
 	 * @param schemaName
 	 * @param tableName
 	 * @param columnNames
@@ -178,7 +169,6 @@ public class UploadDataToServerImpl implements UploadDataToServer {
 	}
 
 	/**
-	 * 
 	 * @param syncData
 	 * @param startIndex
 	 * @param size
@@ -192,7 +182,6 @@ public class UploadDataToServerImpl implements UploadDataToServer {
 	}
 
 	/**
-	 * 
 	 * @param schemaName
 	 * @param tableName
 	 * @param vanAutoIncColumnName
@@ -254,7 +243,6 @@ public class UploadDataToServerImpl implements UploadDataToServer {
 	}
 
 	/**
-	 * 
 	 * @param vanAutoIncColumnName
 	 * @param dataToBesync
 	 * @return

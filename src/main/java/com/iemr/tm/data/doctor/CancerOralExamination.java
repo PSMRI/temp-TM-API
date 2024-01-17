@@ -87,12 +87,6 @@ public class CancerOralExamination {
 	@Column(name = "Observation")
 	private String observation;
 
-	/*
-	 * @JsonIgnore
-	 * 
-	 * @Column(name = "Image") private Blob image;
-	 */
-
 	@Expose
 	@Column(name = "Deleted", insertable = false, updatable = true)
 	private Boolean deleted;
@@ -147,7 +141,6 @@ public class CancerOralExamination {
 
 	public CancerOralExamination() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public CancerOralExamination(Long iD, Long beneficiaryRegID, Long benVisitID, Integer providerServiceMapID,
@@ -167,7 +160,6 @@ public class CancerOralExamination {
 		this.prolongedIrritation = prolongedIrritation;
 		this.chronicBurningSensation = chronicBurningSensation;
 		this.observation = observation;
-		// this.image = image;
 		this.deleted = deleted;
 		this.processed = processed;
 		this.createdBy = createdBy;
@@ -271,12 +263,6 @@ public class CancerOralExamination {
 	public void setObservation(String observation) {
 		this.observation = observation;
 	}
-
-	/*
-	 * public Blob getImage() { return image; }
-	 * 
-	 * public void setImage(Blob image) { this.image = image; }
-	 */
 
 	public Boolean getDeleted() {
 		return deleted;

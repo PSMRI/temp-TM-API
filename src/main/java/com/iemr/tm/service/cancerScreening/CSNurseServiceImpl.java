@@ -171,7 +171,6 @@ public class CSNurseServiceImpl implements CSNurseService {
 				benFamilyCancerHistoryListFinal.add(benFamilyCancerHistoryOBJ);
 			}
 
-			// System.out.println("hello...");
 		}
 
 		int responseData = 0;
@@ -271,7 +270,6 @@ public class CSNurseServiceImpl implements CSNurseService {
 				delRes = 1;
 			}
 
-			// }
 			ArrayList<BenFamilyCancerHistory> newbenFamilyCancerHistoryList = new ArrayList<BenFamilyCancerHistory>();
 			if (delRes > 0) {
 				for (BenFamilyCancerHistory benFamilyCancerHistory : benFamilyCancerHistoryList) {
@@ -517,7 +515,6 @@ public class CSNurseServiceImpl implements CSNurseService {
 					}
 				}
 				obj.setFamilyMemberList(famMemlist);
-				// System.out.println("hello");
 			}
 		}
 
@@ -616,7 +613,6 @@ public class CSNurseServiceImpl implements CSNurseService {
 	public ArrayList<WrapperCancerExamImgAnotasn> getCancerExaminationImageAnnotationCasesheet(Long benRegID,
 			Long visitCode) {
 		ArrayList<WrapperCancerExamImgAnotasn> resList = new ArrayList<>();
-		// System.out.println("hello");
 		List<CancerExaminationImageAnnotation> cancerExaminationImageAnnotationList = cancerExaminationImageAnnotationRepo
 				.getCancerExaminationImageAnnotationList(benRegID, visitCode);
 
@@ -670,7 +666,6 @@ public class CSNurseServiceImpl implements CSNurseService {
 		} else {
 
 		}
-		// System.out.println("hello");
 		return resList;
 	}
 
@@ -1171,7 +1166,6 @@ public class CSNurseServiceImpl implements CSNurseService {
 
 	public Long saveDocExaminationImageAnnotation(List<WrapperCancerExamImgAnotasn> wrapperCancerExamImgAnotasnList,
 			Long benVisitID, Long benVisitCode) {
-		// System.out.println("hello");
 		Long x = null;
 		for (WrapperCancerExamImgAnotasn wrapperCancerExamImgAnotasn : wrapperCancerExamImgAnotasnList) {
 			wrapperCancerExamImgAnotasn.setVisitID(benVisitID);
@@ -1215,14 +1209,6 @@ public class CSNurseServiceImpl implements CSNurseService {
 							objList.add(cancerExaminationImageAnnotation);
 						}
 					} else {
-						// CancerExaminationImageAnnotation
-						// cancerExaminationImageAnnotation = new
-						// CancerExaminationImageAnnotation();
-						// cancerExaminationImageAnnotation.setCancerImageID(obj.getImageID());
-						// cancerExaminationImageAnnotation.setBeneficiaryRegID(obj.getBeneficiaryRegID());
-						// cancerExaminationImageAnnotation.setBenVisitID(obj.getVisitID());
-						// cancerExaminationImageAnnotation.setCreatedBy(obj.getCreatedBy());
-						// objList.add(cancerExaminationImageAnnotation);
 					}
 				}
 			}
@@ -1315,7 +1301,6 @@ public class CSNurseServiceImpl implements CSNurseService {
 				}
 			}
 
-			// }
 			if (delRes > 0) {
 				for (CancerLymphNodeDetails o : cancerLymphNodeDetails) {
 					if (o.getMobility_Left() != null || o.getMobility_Right() != null || o.getSize_Left() != null

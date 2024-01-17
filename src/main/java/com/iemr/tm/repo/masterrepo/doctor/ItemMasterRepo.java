@@ -30,7 +30,6 @@ import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.stereotype.Repository;
 
 import com.iemr.tm.data.masterdata.doctor.ItemMaster;
-import com.iemr.tm.data.masterdata.doctor.V_DrugPrescription;
 
 @Repository
 @RestResource(exported = false)
