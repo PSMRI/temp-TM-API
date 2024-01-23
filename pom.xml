@@ -275,14 +275,7 @@
     		<groupId>org.springframework.session</groupId>
     		<artifactId>spring-session-data-redis</artifactId>
     	</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/com.dukescript.api/junit-browser-runner -->
-		<dependency>
-    		<groupId>com.dukescript.api</groupId>
-    		<artifactId>junit-browser-runner</artifactId>
-    		<version>1.0</version>
-    		<scope>test</scope>
-		</dependency>
+	
 		
 		
 		<!-- https://mvnrepository.com/artifact/org.dom4j/dom4j -->
@@ -297,14 +290,21 @@
 		<dependency>
     		<groupId>org.mockito</groupId>
     		<artifactId>mockito-core</artifactId>
-    		<scope>test</scope>
 		</dependency>
-	    <dependency>
-   			<groupId>org.mockito</groupId>
-   			<artifactId>mockito-all</artifactId>
-   			<version>1.9.5</version>
-  			<scope>test</scope>
-		</dependency>
+		
+	    <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+		<dependency>
+		    <groupId>org.junit.jupiter</groupId>
+		    <artifactId>junit-jupiter-api</artifactId>
+		 </dependency>
+		 
+		 <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
+		 <dependency>
+			    <groupId>org.junit.jupiter</groupId>
+			    <artifactId>junit-jupiter-engine</artifactId>
+		 </dependency>
+
+
 		
 		<!-- https://mvnrepository.com/artifact/com.github.ramalapure/json-parser -->
 		<dependency>
@@ -312,39 +312,133 @@
 		    <artifactId>json-parser</artifactId>
 		    <version>1.1</version>
 		</dependency>
-
-		
-		<!-- https://mvnrepository.com/artifact/org.owasp/dependency-check-maven -->
-		<dependency>
-		    <groupId>org.owasp</groupId>
-		    <artifactId>dependency-check-maven</artifactId>
-		    <version>9.0.8</version>
-		</dependency>
 	</dependencies>			
 		
 	<build>
-	<finalName>TMapi-v1.0</finalName>
-	<plugins>
-		<plugin>
-			<groupId>org.owasp</groupId>
-			<artifactId>dependency-check-maven</artifactId>
-			<version>9.0.8</version>
-			<configuration>
-			<format>HTML</format>
-			<nvdApiServerId>nvd</nvdApiServerId>
-			<nvdApiKey>79597933-f3cc-4601-949b-12513434ade3</nvdApiKey>
-			</configuration>
-			<executions>
-			<execution>
-			<goals>
-			<goal>check</goal>
-			</goals>
-			</execution>
-			</executions>
- 		</plugin>
-	</plugins>
-	</build>
-	
+		<finalName>tmapi-v1.0</finalName>
+		
+		<plugins>
+			<plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>filter-resources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>resources</goal>
+						</goals>
+						<configuration>
+							<delimiters>@</delimiters>
+							<useDefaultDelimiters>false</useDefaultDelimiters>
+							<resources>
+								<resource>
+									<directory>src/main/environment</directory>
+									<filtering>true</filtering>
+									<includes>
+										<include>common_${environment}.properties</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.0.2</version>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version><!--$NO-MVN-MAN-VER$ -->
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${lombok.version}</version>
+						</path>
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>${org.mapstruct.version}</version>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version><!--$NO-MVN-MAN-VER$ -->
+				<executions>
+					<execution>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<id>merge-properties</id>
+						<configuration>
+							<target>
+								<echo>
+									concatenating properties file ${target-properties} and
+									${source-properties}
+								</echo>
+								<concat destfile="${target-properties}" append="yes"
+									force="yes">
+									<fileset file="${source-properties}">
+									</fileset>
+								</concat>
+							</target>
+						</configuration>
+					</execution>
+					<execution>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<id>clean-property-files</id>
+						<configuration>
+							<tasks>
+								<delete>
+									<file file="${source-properties}"/>
+								</delete>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+				</configuration>
+			</plugin>
+			<plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <webResources>
+                        <resource>
+                            <filtering>true</filtering>
+                            <directory>src/packaging/</directory>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+		</plugins>
+	</build>	
 
 	<repositories>
 		<repository>
