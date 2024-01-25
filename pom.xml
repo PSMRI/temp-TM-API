@@ -31,7 +31,7 @@
 
 		<environment>${ENV_VAR}</environment>
 		<target-properties>target/classes/application.properties</target-properties>
-		<source-properties>src/main/environment/common_${environment}.properties</source-properties>
+		<source-properties>target/classes/common_${environment}.properties</source-properties>
 		<hostname-test>10.208.122.38</hostname-test>
 		<port-test>9990</port-test>
 		<hostname-dev>10.208.122.32</hostname-dev>
@@ -82,6 +82,17 @@
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-autoconfigure</artifactId>
+
+		</dependency>
+		
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework.plugin/spring-plugin-core -->
+		<dependency>
+		    <groupId>org.springframework.plugin</groupId>
+		    <artifactId>spring-plugin-core</artifactId>
+		    <version>3.0.0</version>
+
+
 		</dependency>
 		
 		
@@ -94,11 +105,16 @@
 
 
 
+
+
+
 		<!-- https://mvnrepository.com/artifact/jakarta.servlet.jsp.jstl/jakarta.servlet.jsp.jstl-api -->
 		<dependency>
     		<groupId>jakarta.servlet.jsp.jstl</groupId>
     		<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
     	</dependency>
+    	
+    	
     	
     	<!-- https://mvnrepository.com/artifact/jakarta.persistence/jakarta.persistence-api -->
 		<dependency>
@@ -314,6 +330,81 @@
 		</dependency>
 	</dependencies>			
 		
+
+		<dependency>
+		    <groupId>io.lettuce</groupId>
+		    <artifactId>lettuce-core</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.session/spring-session-core -->
+		<dependency>
+    		<groupId>org.springframework.session</groupId>
+    		<artifactId>spring-session-core</artifactId>
+    		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework.session/spring-session-data-redis -->
+		<dependency>
+    		<groupId>org.springframework.session</groupId>
+    		<artifactId>spring-session-data-redis</artifactId>
+    	</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.dukescript.api/junit-browser-runner -->
+		<dependency>
+    		<groupId>com.dukescript.api</groupId>
+    		<artifactId>junit-browser-runner</artifactId>
+    		<version>1.0</version>
+    		<scope>test</scope>
+		</dependency>
+		
+		
+		<!-- https://mvnrepository.com/artifact/org.dom4j/dom4j -->
+		<dependency>
+    		<groupId>org.dom4j</groupId>
+    		<artifactId>dom4j</artifactId>
+    		<version>2.1.4</version>
+		</dependency>
+		
+		
+		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
+		<dependency>
+    		<groupId>org.mockito</groupId>
+    		<artifactId>mockito-core</artifactId>
+    		<scope>test</scope>
+		</dependency>
+	    <dependency>
+   			<groupId>org.mockito</groupId>
+   			<artifactId>mockito-all</artifactId>
+   			<version>1.9.5</version>
+  			<scope>test</scope>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.github.ramalapure/json-parser -->
+		<dependency>
+		    <groupId>com.github.ramalapure</groupId>
+		    <artifactId>json-parser</artifactId>
+		    <version>1.1</version>
+		</dependency>
+
+		
+		<!-- https://mvnrepository.com/artifact/org.owasp/dependency-check-maven -->
+		<dependency>
+		    <groupId>org.owasp</groupId>
+		    <artifactId>dependency-check-maven</artifactId>
+		    <version>9.0.8</version>
+		</dependency>
+	</dependencies>			
+		
+	
+
+	<repositories>
+		<repository>
+			<id>openkm.com</id>
+			<name>OpenKM Maven Repository</name>
+			<url>https://maven.openkm.com</url>
+		</repository>
+	</repositories>
+
+
 	<build>
 		<finalName>tmapi-v1.0</finalName>
 		
@@ -440,6 +531,7 @@
 		</plugins>
 	</build>	
 
+
 	<repositories>
 		<repository>
 			<id>openkm.com</id>
@@ -447,6 +539,7 @@
 			<url>https://maven.openkm.com</url>
 		</repository>
 	</repositories>
+
 	
     
 	<dependencyManagement>
