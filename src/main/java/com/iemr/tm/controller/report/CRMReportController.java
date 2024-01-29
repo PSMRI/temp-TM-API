@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,7 +40,9 @@ import com.iemr.tm.data.report.SpokeReport;
 import com.iemr.tm.data.report.TMDailyReport;
 import com.iemr.tm.service.report.CRMReportService;
 import com.iemr.tm.utils.response.OutputResponse;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.Operation;
+
 
 @RequestMapping("/TMReport")
 @RestController
@@ -51,9 +54,8 @@ public class CRMReportController {
 	private CRMReportService cRMReportService;
 
 	@CrossOrigin()
-	@ApiOperation(value = "Fetch chief complaints report", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = "/chiefcomplaintreport", headers = "Authorization", method = {
-			RequestMethod.POST }, produces = { "application/json" })
+	@Operation(summary = "Fetch chief complaints report")
+	@PostMapping(value = "/chiefcomplaintreport", headers = "Authorization", produces = { "application/json" })
 	public String chiefcomplaintreport(@RequestBody ReportInput input) {
 
 		OutputResponse response = new OutputResponse();
@@ -77,9 +79,8 @@ public class CRMReportController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Fetch consultation report", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = "/ConsultationReport", headers = "Authorization", method = {
-			RequestMethod.POST }, produces = { "application/json" })
+	@Operation(summary = "Fetch consultation report")
+	@PostMapping(value = "/ConsultationReport", headers = "Authorization", produces = { "application/json" })
 	public String getConsultationReport(@RequestBody ReportInput input) {
 
 		OutputResponse response = new OutputResponse();
@@ -103,9 +104,8 @@ public class CRMReportController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Fetch total consultation report", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = "/TotalConsultationReport", headers = "Authorization", method = {
-			RequestMethod.POST }, produces = { "application/json" })
+	@Operation(summary = "Fetch total consultation report")
+	@PostMapping(value = "/TotalConsultationReport", headers = "Authorization", produces = { "application/json" })
 	public String getTotalConsultationReport(@RequestBody ReportInput input) {
 
 		OutputResponse response = new OutputResponse();
@@ -129,8 +129,8 @@ public class CRMReportController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Fetch monthly report", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = "/MonthlyReport", headers = "Authorization", method = { RequestMethod.POST }, produces = {
+	@Operation(summary = "Fetch monthly report")
+	@PostMapping(value = "/MonthlyReport", headers = "Authorization", produces = {
 			"application/json" })
 	public String getMonthlyReport(@RequestBody ReportInput input) {
 
@@ -155,8 +155,8 @@ public class CRMReportController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Fetch daily report", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = "/DailyReport", headers = "Authorization", method = { RequestMethod.POST }, produces = {
+	@Operation(summary = "Fetch daily report")
+	@PostMapping(value = "/DailyReport", headers = "Authorization", produces = {
 			"application/json" })
 	public String getDailyReport(@RequestBody ReportInput input) {
 

@@ -27,7 +27,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,15 +44,17 @@ import com.iemr.tm.service.ncdscreening.NCDScreeningService;
 import com.iemr.tm.service.ncdscreening.NCDScreeningServiceImpl;
 import com.iemr.tm.utils.response.OutputResponse;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.lettuce.core.dynamic.annotation.Param;
+import io.swagger.v3.oas.annotations.Operation;
+
+
 
 /**
  * @Objective Saving NCD Screening nurse data.
  */
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/NCD", headers = "Authorization")
+@RequestMapping(value = "/NCD", headers = "Authorization", consumes = "application/json", produces = "application/json")
 public class NCDScreeningController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
@@ -72,9 +76,9 @@ public class NCDScreeningController {
 	 * @throws Exception
 	 */
 	@CrossOrigin
-	@ApiOperation(value = "Save NCD screening beneficiary data collected by nurse", consumes = "application/json", produces = "application/json")
+	@Operation(summary = "Save NCD screening beneficiary data collected by nurse")
 
-	@RequestMapping(value = { "/save/nurseData" }, method = { RequestMethod.POST })
+	@PostMapping(value = { "/save/nurseData" })
 	public String saveBeneficiaryNCDScreeningDetails(@RequestBody String requestObj,
 			@RequestHeader(value = "Authorization") String Authorization) throws Exception {
 
@@ -105,8 +109,8 @@ public class NCDScreeningController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Save NCD screening beneficiary data collected by doctor", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/save/doctorData" }, method = { RequestMethod.POST })
+	@Operation(summary = "Save NCD screening beneficiary data collected by doctor")
+	@PostMapping(value = { "/save/doctorData" })
 	public String saveBenNCDScreeningDoctorData(@RequestBody String requestObj,
 			@RequestHeader(value = "Authorization") String Authorization) {
 		OutputResponse response = new OutputResponse();
@@ -137,10 +141,10 @@ public class NCDScreeningController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get NCD screening beneficiary visit details", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/get/nurseData" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get NCD screening beneficiary visit details")
+	@PostMapping(value = { "/get/nurseData" })
 	public String getNCDScreenigDetails(
-			@ApiParam(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 
 		OutputResponse response = new OutputResponse();
 		logger.info("Request obj to fetch nurse data :" + comingRequest);
@@ -164,8 +168,8 @@ public class NCDScreeningController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get NCD screening visit count for beneficiary register id", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getNcdScreeningVisitCount/{beneficiaryRegID}" }, method = RequestMethod.GET)
+	@Operation(summary = "Get NCD screening visit count for beneficiary register id")
+	@GetMapping(value = { "/getNcdScreeningVisitCount/{beneficiaryRegID}"} )
 	public String getNcdScreeningVisitCount(@PathVariable("beneficiaryRegID") Long beneficiaryRegID) {
 		OutputResponse response = new OutputResponse();
 		try {
@@ -192,11 +196,11 @@ public class NCDScreeningController {
 	 * @return visit details in JSON format
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get NCD screening beneficiary case record and referral", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenCaseRecordFromDoctorNCDScreening" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get NCD screening beneficiary case record and referral")
+	@PostMapping(value = { "/getBenCaseRecordFromDoctorNCDScreening" })
 	@Transactional(rollbackFor = Exception.class)
 	public String getBenCaseRecordFromDoctorNCDCare(
-			@ApiParam(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("Request object for NCD Screening doctor data fetching :" + comingRequest);
@@ -221,11 +225,11 @@ public class NCDScreeningController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get NCD screening beneficiary visit details", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenVisitDetailsFrmNurseNCDScreening" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get NCD screening beneficiary visit details")
+	@PostMapping(value = { "/getBenVisitDetailsFrmNurseNCDScreening" })
 	@Transactional(rollbackFor = Exception.class)
 	public String getBenVisitDetailsFrmNurseGOPD(
-			@ApiParam(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("Request obj to fetch NCD screening visit details :" + comingRequest);
@@ -250,11 +254,11 @@ public class NCDScreeningController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get NCD screening beneficiary general OPD history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenHistoryDetails" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get NCD screening beneficiary general OPD history")
+	@PostMapping(value = { "/getBenHistoryDetails" })
 
 	public String getBenHistoryDetails(
-			@ApiParam(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenHistoryDetails request:" + comingRequest);
@@ -278,10 +282,10 @@ public class NCDScreeningController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get NCD screening beneficiary vitals from general OPD nurse", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenVitalDetailsFrmNurse" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get NCD screening beneficiary vitals from general OPD nurse")
+	@PostMapping(value = { "/getBenVitalDetailsFrmNurse" })
 	public String getBenVitalDetailsFrmNurse(
-			@ApiParam(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenVitalDetailsFrmNurse request:" + comingRequest);
@@ -306,10 +310,10 @@ public class NCDScreeningController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get NCD screening IDRS details from general OPD nurse", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenIdrsDetailsFrmNurse" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get NCD screening IDRS details from general OPD nurse")
+	@PostMapping(value = { "/getBenIdrsDetailsFrmNurse" })
 	public String getBenIdrsDetailsFrmNurse(
-			@ApiParam(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenIdrsDetailsFrmNurse request:" + comingRequest);
@@ -335,8 +339,8 @@ public class NCDScreeningController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Get NCD screening beneficiary case record and referral", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/update/nurseData" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get NCD screening beneficiary case record and referral")
+	@PostMapping(value = { "/update/nurseData" })
 	public String updateBeneficiaryNCDScreeningDetails(@RequestBody String requestObj) {
 
 		logger.info("Update NCDScreening Details request:" + requestObj);
@@ -370,8 +374,8 @@ public class NCDScreeningController {
 	 * Updating the history WDF requirement 9-12-2020
 	 */
 	@CrossOrigin
-	@ApiOperation(value = "Update NCD screening beneficiary history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/update/historyScreen" }, method = { RequestMethod.POST })
+	@Operation(summary = "Update NCD screening beneficiary history")
+	@PostMapping(value = { "/update/historyScreen" })
 	public String updateHistoryNurse(@RequestBody String requestObj) {
 
 		OutputResponse response = new OutputResponse();
@@ -399,8 +403,8 @@ public class NCDScreeningController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Update NCD screening beneficiary vitals", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/update/vitalScreen" }, method = { RequestMethod.POST })
+	@Operation(summary = "Update NCD screening beneficiary vitals")
+	@PostMapping(value = { "/update/vitalScreen" })
 	public String updateVitalNurse(@RequestBody String requestObj) {
 
 		OutputResponse response = new OutputResponse();
@@ -428,8 +432,8 @@ public class NCDScreeningController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Update NCD screening beneficiary history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/update/idrsScreen" }, method = { RequestMethod.POST })
+	@Operation(summary = "Update NCD screening beneficiary history")
+	@PostMapping(value = { "/update/idrsScreen" })
 	public String updateIDRSScreen(@RequestBody String requestObj) {
 
 		OutputResponse response = new OutputResponse();
@@ -457,8 +461,8 @@ public class NCDScreeningController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Update NCD screening beneficiary case record and referral", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/update/doctorData" }, method = { RequestMethod.POST })
+	@Operation(summary = "Update NCD screening beneficiary case record and referral")
+	@PostMapping(value = { "/update/doctorData" })
 	public String updateDoctorData(@RequestBody String requestObj,
 			@RequestHeader(value = "Authorization") String Authorization) {
 

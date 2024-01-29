@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,8 +41,9 @@ import com.iemr.tm.service.generalOPD.GeneralOPDService;
 import com.iemr.tm.service.generalOPD.GeneralOPDServiceImpl;
 import com.iemr.tm.utils.response.OutputResponse;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.lettuce.core.dynamic.annotation.Param;
+import io.swagger.v3.oas.annotations.Operation;
+
 
 /***
  * @Objective Saving General OPD data for Nurse and Doctor.
@@ -49,7 +51,7 @@ import io.swagger.annotations.ApiParam;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/generalOPD", headers = "Authorization")
+@RequestMapping(value = "/generalOPD", headers = "Authorization", consumes = "application/json", produces = "application/json")
 public class GeneralOPDController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
@@ -68,8 +70,8 @@ public class GeneralOPDController {
 	 * @throws Exception
 	 */
 	@CrossOrigin
-	@ApiOperation(value = "Save general OPD data collected by nurse", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/save/nurseData" }, method = { RequestMethod.POST })
+	@Operation(summary = "Save general OPD data collected by nurse")
+	@PostMapping(value = { "/save/nurseData" })
 	public String saveBenGenOPDNurseData(@RequestBody String requestObj,
 			@RequestHeader(value = "Authorization") String Authorization) throws Exception {
 		OutputResponse response = new OutputResponse();
@@ -105,8 +107,8 @@ public class GeneralOPDController {
 	 * @return success or failure response
 	 */
 	@CrossOrigin
-	@ApiOperation(value = "Save general OPD data collected by doctor", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/save/doctorData" }, method = { RequestMethod.POST })
+	@Operation(summary = "Save general OPD data collected by doctor")
+	@PostMapping(value = { "/save/doctorData" })
 	public String saveBenGenOPDDoctorData(@RequestBody String requestObj,
 			@RequestHeader(value = "Authorization") String Authorization) {
 		OutputResponse response = new OutputResponse();
@@ -137,11 +139,11 @@ public class GeneralOPDController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get general OPD beneficiary visit details", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenVisitDetailsFrmNurseGOPD" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get general OPD beneficiary visit details")
+	@PostMapping(value = { "/getBenVisitDetailsFrmNurseGOPD" })
 	@Transactional(rollbackFor = Exception.class)
 	public String getBenVisitDetailsFrmNurseGOPD(
-			@ApiParam(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("Request obj to fetch General OPD visit details :" + comingRequest);
@@ -171,11 +173,11 @@ public class GeneralOPDController {
 	 * @return history details in JSON format
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get general OPD beneficiary history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenHistoryDetails" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get general OPD beneficiary history")
+	@PostMapping(value = { "/getBenHistoryDetails" })
 
 	public String getBenHistoryDetails(
-			@ApiParam(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenHistoryDetails request:" + comingRequest);
@@ -204,10 +206,10 @@ public class GeneralOPDController {
 	 * @return vital details in JSON format
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get general OPD beneficiary vitals", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenVitalDetailsFrmNurse" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get general OPD beneficiary vitals")
+	@PostMapping(value = { "/getBenVitalDetailsFrmNurse" })
 	public String getBenVitalDetailsFrmNurse(
-			@ApiParam(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenVitalDetailsFrmNurse request:" + comingRequest);
@@ -237,11 +239,11 @@ public class GeneralOPDController {
 	 * @return examination details in JSON format
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get general OPD beneficiary examination details", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenExaminationDetails" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get general OPD beneficiary examination details")
+	@PostMapping(value = { "/getBenExaminationDetails" })
 
 	public String getBenExaminationDetails(
-			@ApiParam(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenExaminationDetails request:" + comingRequest);
@@ -270,11 +272,11 @@ public class GeneralOPDController {
 	 * @return doctor details in JSON format
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get general OPD beneficiary case record and referral", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenCaseRecordFromDoctorGeneralOPD" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get general OPD beneficiary case record and referral")
+	@PostMapping(value = { "/getBenCaseRecordFromDoctorGeneralOPD" })
 	@Transactional(rollbackFor = Exception.class)
 	public String getBenCaseRecordFromDoctorGeneralOPD(
-			@ApiParam(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenCaseRecordFromDoctorGeneralOPD request:" + comingRequest);
@@ -299,8 +301,8 @@ public class GeneralOPDController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Update beneficiary's general OPD visit details", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/update/visitDetailsScreen" }, method = { RequestMethod.POST })
+	@Operation(summary = "Update beneficiary's general OPD visit details")
+	@PostMapping(value = { "/update/visitDetailsScreen" })
 	public String updateVisitNurse(@RequestBody String requestObj) {
 
 		OutputResponse response = new OutputResponse();
@@ -335,8 +337,8 @@ public class GeneralOPDController {
 	 */
 
 	@CrossOrigin
-	@ApiOperation(value = "Update beneficiary history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/update/historyScreen" }, method = { RequestMethod.POST })
+	@Operation(summary = "Update beneficiary history")
+	@PostMapping(value = { "/update/historyScreen" })
 	public String updateHistoryNurse(@RequestBody String requestObj) {
 
 		OutputResponse response = new OutputResponse();
@@ -371,8 +373,8 @@ public class GeneralOPDController {
 	 */
 
 	@CrossOrigin
-	@ApiOperation(value = "Update general OPD beneficiary vitals", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/update/vitalScreen" }, method = { RequestMethod.POST })
+	@Operation(summary = "Update general OPD beneficiary vitals")
+	@PostMapping(value = { "/update/vitalScreen" })
 	public String updateVitalNurse(@RequestBody String requestObj) {
 
 		OutputResponse response = new OutputResponse();
@@ -407,8 +409,8 @@ public class GeneralOPDController {
 	 */
 
 	@CrossOrigin
-	@ApiOperation(value = "Update general OPD beneficiary examination data", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/update/examinationScreen" }, method = { RequestMethod.POST })
+	@Operation(summary = "Update general OPD beneficiary examination data")
+	@PostMapping(value = { "/update/examinationScreen" })
 	public String updateGeneralOPDExaminationNurse(@RequestBody String requestObj) {
 
 		OutputResponse response = new OutputResponse();
@@ -441,8 +443,8 @@ public class GeneralOPDController {
 	 * @objective Replace General OPD doctor data for the doctor next visit
 	 */
 	@CrossOrigin
-	@ApiOperation(value = "Update general OPD beneficiary case record and referral", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/update/doctorData" }, method = { RequestMethod.POST })
+	@Operation(summary = "Update general OPD beneficiary case record and referral")
+	@PostMapping(value = { "/update/doctorData" })
 	public String updateGeneralOPDDoctorData(@RequestBody String requestObj,
 			@RequestHeader(value = "Authorization") String Authorization) {
 

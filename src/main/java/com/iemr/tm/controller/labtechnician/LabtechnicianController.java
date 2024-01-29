@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,7 +37,9 @@ import com.google.gson.JsonParser;
 import com.iemr.tm.service.labtechnician.LabTechnicianServiceImpl;
 import com.iemr.tm.utils.response.OutputResponse;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+
+
 
 /***
  * 
@@ -45,7 +48,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/labTechnician", headers = "Authorization")
+@RequestMapping(value = "/labTechnician", headers = "Authorization", consumes = "application/json", produces = "application/json")
 public class LabtechnicianController {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
@@ -63,8 +66,8 @@ public class LabtechnicianController {
 	 * @return success or failure response
 	 */
 	@CrossOrigin
-	@ApiOperation(value = "Save lab test result", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/save/LabTestResult" }, method = { RequestMethod.POST })
+	@Operation(summary = "Save lab test result")
+	@PostMapping(value = { "/save/LabTestResult" })
 	public String saveLabTestResult(@RequestBody String requestObj) {
 		OutputResponse response = new OutputResponse();
 		try {
@@ -94,8 +97,8 @@ public class LabtechnicianController {
 	}
 	
 	@CrossOrigin
-	@ApiOperation(value = "Get beneficiary lab test prescription", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/get/prescribedProceduresList" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get beneficiary lab test prescription")
+	@PostMapping(value = { "/get/prescribedProceduresList" })
 	public String getBeneficiaryPrescribedProcedure(@RequestBody String requestOBJ) {
 		OutputResponse response = new OutputResponse();
 		try {
@@ -125,8 +128,8 @@ public class LabtechnicianController {
 
 	// API for getting lab result based on beneficiaryRegID and visitCode
 	@CrossOrigin()
-	@ApiOperation(value = "Get lab test result for a beneficiary visit", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/get/labResultForVisitcode" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get lab test result for a beneficiary visit")
+	@PostMapping(value = { "/get/labResultForVisitcode" })
 	public String getLabResultForVisitCode(@RequestBody String requestOBJ) {
 		OutputResponse response = new OutputResponse();
 		try {

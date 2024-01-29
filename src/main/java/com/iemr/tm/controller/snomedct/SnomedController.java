@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,10 +37,12 @@ import com.iemr.tm.service.snomedct.SnomedService;
 import com.iemr.tm.utils.mapper.InputMapper;
 import com.iemr.tm.utils.response.OutputResponse;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.lettuce.core.dynamic.annotation.Param;
+import io.swagger.v3.oas.annotations.Operation;
 
-@RequestMapping(value = "/snomed")
+
+
+@RequestMapping(value = "/snomed", consumes = "application/json", produces = "application/json")
 @RestController
 public class SnomedController {
 	private Logger logger = LoggerFactory.getLogger(SnomedController.class);
@@ -52,9 +55,9 @@ public class SnomedController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Retrieve Snomed clinical term", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = "/getSnomedCTRecord", method = RequestMethod.POST, headers = "Authorization")
-	public String getSnomedCTRecord(@ApiParam(value = "{\"term\":\"String\"}") @RequestBody String request) {
+	@Operation(summary = "Retrieve Snomed clinical term")
+	@PostMapping(value = "/getSnomedCTRecord",  headers = "Authorization")
+	public String getSnomedCTRecord(@Param(value = "{\"term\":\"String\"}") @RequestBody String request) {
 		OutputResponse output = new OutputResponse();
 		try {
 
@@ -78,9 +81,9 @@ public class SnomedController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Retrieve Snomed clinical term list", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = "/getSnomedCTRecordList", method = RequestMethod.POST, headers = "Authorization")
-	public String getSnomedCTRecordList(@ApiParam(value = "{\"term\":\"String\"}") @RequestBody String request) {
+	@Operation(summary = "Retrieve Snomed clinical term list")
+	@PostMapping(value = "/getSnomedCTRecordList", headers = "Authorization")
+	public String getSnomedCTRecordList(@Param(value = "{\"term\":\"String\"}") @RequestBody String request) {
 		OutputResponse output = new OutputResponse();
 		try {
 

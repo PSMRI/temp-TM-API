@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +37,8 @@ import com.iemr.tm.service.dataSyncLayerCentral.GetDataFromVanAndSyncToDBImpl;
 import com.iemr.tm.service.dataSyncLayerCentral.GetMasterDataFromCentralForVanImpl;
 import com.iemr.tm.utils.response.OutputResponse;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+
 
 /***
  * 
@@ -47,7 +49,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/dataSync", headers = "Authorization")
+@RequestMapping(value = "/dataSync", headers = "Authorization", consumes = "application/json", produces = "application/json")
 public class MMUDataSyncVanToServer {
 	private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
@@ -57,8 +59,8 @@ public class MMUDataSyncVanToServer {
 	private GetMasterDataFromCentralForVanImpl getMasterDataFromCentralForVanImpl;
 
 	@CrossOrigin()
-	@ApiOperation(value = "Download data from van-to-server (Mobile Medical Unit)", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/van-to-server" }, method = { RequestMethod.POST })
+	@Operation(summary = "Download data from van-to-server (Mobile Medical Unit)")
+	@PostMapping(value = { "/van-to-server" })
 	public String dataSyncToServer(@RequestBody String requestOBJ,
 			@RequestHeader(value = "Authorization") String Authorization) {
 		OutputResponse response = new OutputResponse();
@@ -76,8 +78,8 @@ public class MMUDataSyncVanToServer {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Download data from server to van (Mobile Medical Unit)", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/server-to-van" }, method = { RequestMethod.POST })
+	@Operation(summary = "Download data from server to van (Mobile Medical Unit)")
+	@PostMapping(value = { "/server-to-van" })
 	public String dataDownloadFromServer(@RequestBody SyncDownloadMaster syncDownloadMaster,
 			@RequestHeader(value = "Authorization") String Authorization) {
 		OutputResponse response = new OutputResponse();

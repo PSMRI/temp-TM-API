@@ -26,6 +26,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,15 +38,14 @@ import com.google.gson.Gson;
 import com.iemr.tm.service.dataSyncActivity.DownloadDataFromServerImpl;
 import com.iemr.tm.service.dataSyncActivity.UploadDataToServerImpl;
 import com.iemr.tm.utils.response.OutputResponse;
-
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 
 /***
  * * @purpose Class used for data sync from van-to-server & server-to-van
  */
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/dataSyncActivity", headers = "Authorization")
+@RequestMapping(value = "/dataSyncActivity", headers = "Authorization", consumes = "application/json", produces = "application/json")
 public class StartSyncActivity {
 	private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
@@ -54,7 +55,7 @@ public class StartSyncActivity {
 	private DownloadDataFromServerImpl downloadDataFromServerImpl;
 
 	@CrossOrigin()
-	@ApiOperation(value = "Initiate data sync from van to server", consumes = "application/json", produces = "application/json")
+	@Operation(summary = "Initiate data sync from van to server")
 	@RequestMapping(value = { "/van-to-server" }, method = { RequestMethod.POST })
 	public String dataSyncToServer(@RequestBody String requestOBJ,
 			@RequestHeader(value = "Authorization") String Authorization,
@@ -81,8 +82,8 @@ public class StartSyncActivity {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get data sync group details", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getSyncGroupDetails" }, method = { RequestMethod.GET })
+	@Operation(summary = "Get data sync group details")
+	@GetMapping(value = { "/getSyncGroupDetails" })
 	public String getSyncGroupDetails() {
 		OutputResponse response = new OutputResponse();
 		try {
@@ -103,8 +104,8 @@ public class StartSyncActivity {
 	 * @return Masters download in van from central server
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Data synced master data", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/startMasterDownload" }, method = { RequestMethod.POST })
+	@Operation(summary = "Data synced master data")
+	@PostMapping(value = { "/startMasterDownload" })
 	public String startMasterDownload(@RequestBody String requestOBJ,
 			@RequestHeader(value = "Authorization") String Authorization,
 			@RequestHeader(value = "ServerAuthorization") String ServerAuthorization) {
@@ -136,8 +137,8 @@ public class StartSyncActivity {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Master data sync download progress check", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/checkMastersDownloadProgress" }, method = { RequestMethod.GET })
+	@Operation(summary = "Master data sync download progress check")
+	@GetMapping(value = { "/checkMastersDownloadProgress" })
 	public String checkMastersDownloadProgress() {
 		OutputResponse response = new OutputResponse();
 		try {
@@ -150,8 +151,8 @@ public class StartSyncActivity {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get van details for master sync data download", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getVanDetailsForMasterDownload" }, method = { RequestMethod.GET })
+	@Operation(summary = "Get van details for master sync data download")
+	@GetMapping(value = { "/getVanDetailsForMasterDownload" })
 	public String getVanDetailsForMasterDownload() {
 		OutputResponse response = new OutputResponse();
 		try {

@@ -28,7 +28,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,12 +44,14 @@ import com.iemr.tm.service.common.transaction.CommonServiceImpl;
 import com.iemr.tm.utils.mapper.InputMapper;
 import com.iemr.tm.utils.response.OutputResponse;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.lettuce.core.dynamic.annotation.Param;
+import io.swagger.v3.oas.annotations.Operation;
+
+
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/common", headers = "Authorization")
+@RequestMapping(value = "/common", headers = "Authorization", consumes = "application/json", produces = "application/json")
 public class WorklistController {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
@@ -73,9 +77,8 @@ public class WorklistController {
 
 	// doc worklist new
 	@CrossOrigin()
-	@ApiOperation(value = "Get doctor worklist", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getDocWorklistNew/{providerServiceMapID}/{serviceID}/{vanID}" }, method = {
-			RequestMethod.GET })
+	@Operation(summary = "Get doctor worklist")
+	@GetMapping(value = { "/getDocWorklistNew/{providerServiceMapID}/{serviceID}/{vanID}" })
 	public String getDocWorkListNew(@PathVariable("providerServiceMapID") Integer providerServiceMapID,
 			@PathVariable("serviceID") Integer serviceID, @PathVariable("vanID") Integer vanID) {
 		OutputResponse response = new OutputResponse();
@@ -99,10 +102,8 @@ public class WorklistController {
 	
 	// doc worklist new (TM future scheduled beneficiary)
 	@CrossOrigin()
-	@ApiOperation(value = "Get doctor future worklist scheduled for telemedicine", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = {
-			"/getDocWorkListNewFutureScheduledForTM/{providerServiceMapID}/{serviceID}/{vanID}" }, method = {
-					RequestMethod.GET })
+	@Operation(summary = "Get doctor future worklist scheduled for telemedicine")
+	@GetMapping(value = {"/getDocWorkListNewFutureScheduledForTM/{providerServiceMapID}/{serviceID}/{vanID}" })
 	public String getDocWorkListNewFutureScheduledForTM(
 			@PathVariable("providerServiceMapID") Integer providerServiceMapID,
 			@PathVariable("serviceID") Integer serviceID, @PathVariable("vanID") Integer vanID) {
@@ -128,9 +129,8 @@ public class WorklistController {
 
 	// nurse worklist new
 	@CrossOrigin()
-	@ApiOperation(value = "Get nurse worklist", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getNurseWorklistNew/{providerServiceMapID}/{serviceID}/{vanID}" }, method = {
-			RequestMethod.GET })
+	@Operation(summary = "Get nurse worklist")
+	@GetMapping(value = { "/getNurseWorklistNew/{providerServiceMapID}/{serviceID}/{vanID}" })
 	public String getNurseWorkListNew(@PathVariable("providerServiceMapID") Integer providerServiceMapID,
 			@PathVariable("vanID") Integer vanID) {
 		OutputResponse response = new OutputResponse();
@@ -149,9 +149,8 @@ public class WorklistController {
 
 	// nurse worklist TC schedule (current-date) new
 	@CrossOrigin()
-	@ApiOperation(value = "Get worklist for teleconsultation for the current date", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getNurseWorkListTcCurrentDate/{providerServiceMapID}/{serviceID}/{vanID}" }, method = {
-			RequestMethod.GET })
+	@Operation(summary = "Get worklist for teleconsultation for the current date")
+	@GetMapping(value = { "/getNurseWorkListTcCurrentDate/{providerServiceMapID}/{serviceID}/{vanID}" })
 	public String getNurseWorkListTcCurrentDateNew(@PathVariable("providerServiceMapID") Integer providerServiceMapID,
 			@PathVariable("vanID") Integer vanID) {
 		OutputResponse response = new OutputResponse();
@@ -171,9 +170,8 @@ public class WorklistController {
 
 	// nurse worklist TC schedule (future-date) new
 	@CrossOrigin()
-	@ApiOperation(value = "Get worklist for teleconsultation for the future date", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getNurseWorkListTcFutureDate/{providerServiceMapID}/{serviceID}/{vanID}" }, method = {
-			RequestMethod.GET })
+	@Operation(summary = "Get worklist for teleconsultation for the future date")
+	@GetMapping(value = { "/getNurseWorkListTcFutureDate/{providerServiceMapID}/{serviceID}/{vanID}" })
 	public String getNurseWorkListTcFutureDateNew(@PathVariable("providerServiceMapID") Integer providerServiceMapID,
 			@PathVariable("vanID") Integer vanID) {
 		OutputResponse response = new OutputResponse();
@@ -192,10 +190,10 @@ public class WorklistController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get previous significant findings", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getDoctorPreviousSignificantFindings" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get previous significant findings")
+	@PostMapping(value = { "/getDoctorPreviousSignificantFindings" })
 	public String getDoctorPreviousSignificantFindings(
-			@ApiParam(value = "{\"beneficiaryRegID\": \"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"beneficiaryRegID\": \"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
@@ -219,9 +217,8 @@ public class WorklistController {
 
 	// Get Lab technician worklist new
 	@CrossOrigin()
-	@ApiOperation(value = "Get lab technician worklist", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getLabWorklistNew/{providerServiceMapID}/{serviceID}/{vanID}" }, method = {
-			RequestMethod.GET })
+	@Operation(summary = "Get lab technician worklist")
+	@GetMapping(value = { "/getLabWorklistNew/{providerServiceMapID}/{serviceID}/{vanID}" })
 	public String getLabWorkListNew(@PathVariable("providerServiceMapID") Integer providerServiceMapID,
 			@PathVariable("vanID") Integer vanID) {
 		OutputResponse response = new OutputResponse();
@@ -241,9 +238,8 @@ public class WorklistController {
 
 	// Get radiologist worklist new
 	@CrossOrigin()
-	@ApiOperation(value = "Get radiologist worklist", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getRadiologist-worklist-New/{providerServiceMapID}/{serviceID}/{vanID}" }, method = {
-			RequestMethod.GET })
+	@Operation(summary = "Get radiologist worklist")
+	@GetMapping(value = { "/getRadiologist-worklist-New/{providerServiceMapID}/{serviceID}/{vanID}" })
 	public String getRadiologistWorklistNew(@PathVariable("providerServiceMapID") Integer providerServiceMapID,
 			@PathVariable("vanID") Integer vanID) {
 		OutputResponse response = new OutputResponse();
@@ -263,9 +259,8 @@ public class WorklistController {
 
 	// Get oncologist worklist new
 	@CrossOrigin()
-	@ApiOperation(value = "Get oncologist worklist", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getOncologist-worklist-New/{providerServiceMapID}/{serviceID}/{vanID}" }, method = {
-			RequestMethod.GET })
+	@Operation(summary = "Get oncologist worklist")
+	@GetMapping(value = { "/getOncologist-worklist-New/{providerServiceMapID}/{serviceID}/{vanID}" })
 	public String getOncologistWorklistNew(@PathVariable("providerServiceMapID") Integer providerServiceMapID,
 			@PathVariable("vanID") Integer vanID) {
 		OutputResponse response = new OutputResponse();
@@ -284,9 +279,8 @@ public class WorklistController {
 
 	// Get pharma worklist new
 	@CrossOrigin()
-	@ApiOperation(value = "Get pharmacist worklist", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getPharma-worklist-New/{providerServiceMapID}/{serviceID}/{vanID}" }, method = {
-			RequestMethod.GET })
+	@Operation(summary = "Get pharmacist worklist")
+	@GetMapping(value = { "/getPharma-worklist-New/{providerServiceMapID}/{serviceID}/{vanID}" })
 	public String getPharmaWorklistNew(@PathVariable("providerServiceMapID") Integer providerServiceMapID,
 			@PathVariable("vanID") Integer vanID) {
 		OutputResponse response = new OutputResponse();
@@ -305,8 +299,8 @@ public class WorklistController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Print case sheet of beneficiary", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/get/Case-sheet/printData" }, method = { RequestMethod.POST })
+	@Operation(summary = "Print case sheet of beneficiary")
+	@PostMapping(value = { "/get/Case-sheet/printData" })
 	public String getCasesheetPrintData(@RequestBody String comingReq,
 			@RequestHeader(value = "Authorization") String Authorization) {
 		OutputResponse response = new OutputResponse();
@@ -326,9 +320,9 @@ public class WorklistController {
 
 	// Start of Fetch Previous Medical History...
 	@CrossOrigin()
-	@ApiOperation(value = "Get beneficiary history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenPastHistory" }, method = { RequestMethod.POST })
-	public String getBenPastHistory(@ApiParam(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
+	@Operation(summary = "Get beneficiary history")
+	@PostMapping(value = { "/getBenPastHistory" })
+	public String getBenPastHistory(@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenPastHistory request:" + comingRequest);
@@ -352,9 +346,9 @@ public class WorklistController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get beneficiary tobacco consumption history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenTobaccoHistory" }, method = { RequestMethod.POST })
-	public String getBenTobaccoHistory(@ApiParam(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
+	@Operation(summary = "Get beneficiary tobacco consumption history")
+	@PostMapping(value = { "/getBenTobaccoHistory" })
+	public String getBenTobaccoHistory(@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenTobaccoHistory request:" + comingRequest);
@@ -378,9 +372,9 @@ public class WorklistController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get beneficiary alcohol consumption history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenAlcoholHistory" }, method = { RequestMethod.POST })
-	public String getBenAlcoholHistory(@ApiParam(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
+	@Operation(summary = "Get beneficiary alcohol consumption history")
+	@PostMapping(value = { "/getBenAlcoholHistory" })
+	public String getBenAlcoholHistory(@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenAlcoholHistory request:" + comingRequest);
@@ -404,10 +398,10 @@ public class WorklistController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get beneficiary allergy history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenAllergyHistory" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get beneficiary allergy history")
+	@PostMapping(value = { "/getBenAllergyHistory" })
 	public String getBenANCAllergyHistory(
-			@ApiParam(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenAllergyHistory request:" + comingRequest);
@@ -431,10 +425,10 @@ public class WorklistController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get beneficiary medication history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenMedicationHistory" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get beneficiary medication history")
+	@PostMapping(value = { "/getBenMedicationHistory" })
 	public String getBenMedicationHistory(
-			@ApiParam(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenMedicationHistory request:" + comingRequest);
@@ -458,9 +452,9 @@ public class WorklistController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get beneficiary family history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenFamilyHistory" }, method = { RequestMethod.POST })
-	public String getBenFamilyHistory(@ApiParam(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
+	@Operation(summary = "Get beneficiary family history")
+	@PostMapping(value = { "/getBenFamilyHistory" })
+	public String getBenFamilyHistory(@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenFamilyHistory request:" + comingRequest);
@@ -484,10 +478,10 @@ public class WorklistController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get beneficiary menstrual history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenMenstrualHistory" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get beneficiary menstrual history")
+	@PostMapping(value = { "/getBenMenstrualHistory" })
 	public String getBenMenstrualHistory(
-			@ApiParam(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenMenstrualHistory request:" + comingRequest);
@@ -511,10 +505,10 @@ public class WorklistController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get beneficiary obstetric history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenPastObstetricHistory" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get beneficiary obstetric history")
+	@PostMapping(value = { "/getBenPastObstetricHistory" })
 	public String getBenPastObstetricHistory(
-			@ApiParam(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenPastObstetricHistory request:" + comingRequest);
@@ -538,10 +532,10 @@ public class WorklistController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get beneficiary comorbidity condition details", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenComorbidityConditionHistory" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get beneficiary comorbidity condition details")
+	@PostMapping(value = { "/getBenComorbidityConditionHistory" })
 	public String getBenANCComorbidityConditionHistory(
-			@ApiParam(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenComorbidityConditionHistory request:" + comingRequest);
@@ -565,10 +559,10 @@ public class WorklistController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get beneficiary optional vaccine details", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenOptionalVaccineHistory" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get beneficiary optional vaccine details")
+	@PostMapping(value = { "/getBenOptionalVaccineHistory" })
 	public String getBenOptionalVaccineHistory(
-			@ApiParam(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenOptionalVaccineHistory request:" + comingRequest);
@@ -592,10 +586,10 @@ public class WorklistController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get child beneficiary vaccine details", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenChildVaccineHistory" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get child beneficiary vaccine details")
+	@PostMapping(value = { "/getBenChildVaccineHistory" })
 	public String getBenImmunizationHistory(
-			@ApiParam(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenImmunizationHistory request:" + comingRequest);
@@ -619,10 +613,10 @@ public class WorklistController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get beneficiary perinatal history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenPerinatalHistory" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get beneficiary perinatal history")
+	@PostMapping(value = { "/getBenPerinatalHistory" })
 	public String getBenPerinatalHistory(
-			@ApiParam(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenPerinatalHistory request:" + comingRequest);
@@ -646,9 +640,9 @@ public class WorklistController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get child beneficiary feeding history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenFeedingHistory" }, method = { RequestMethod.POST })
-	public String getBenFeedingHistory(@ApiParam(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
+	@Operation(summary = "Get child beneficiary feeding history")
+	@PostMapping(value = { "/getBenFeedingHistory" })
+	public String getBenFeedingHistory(@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenFeedingHistory request:" + comingRequest);
@@ -672,10 +666,10 @@ public class WorklistController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get child beneficiary development history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenDevelopmentHistory" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get child beneficiary development history")
+	@PostMapping(value = { "/getBenDevelopmentHistory" })
 	public String getBenDevelopmentHistory(
-			@ApiParam(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenDevelopmentHistory request:" + comingRequest);
@@ -705,10 +699,10 @@ public class WorklistController {
 	 * 08-08-2018
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get beneficiary casesheet history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBeneficiaryCaseSheetHistory" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get beneficiary casesheet history")
+	@PostMapping(value = { "/getBeneficiaryCaseSheetHistory" })
 	public String getBeneficiaryCaseSheetHistory(
-			@ApiParam(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 		logger.info("Request object for fetching beneficiary previous visit history :" + comingRequest);
 		try {
@@ -726,9 +720,8 @@ public class WorklistController {
 
 	// TC specialist worklist new
 	@CrossOrigin()
-	@ApiOperation(value = "Get teleconsultation specialist worklist", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getTCSpecialistWorklist/{providerServiceMapID}/{serviceID}/{userID}" }, method = {
-			RequestMethod.GET })
+	@Operation(summary = "Get teleconsultation specialist worklist")
+	@GetMapping(value = { "/getTCSpecialistWorklist/{providerServiceMapID}/{serviceID}/{userID}" })
 	public String getTCSpecialistWorkListNew(@PathVariable("providerServiceMapID") Integer providerServiceMapID,
 			@PathVariable("userID") Integer userID, @PathVariable("serviceID") Integer serviceID) {
 		OutputResponse response = new OutputResponse();
@@ -753,10 +746,9 @@ public class WorklistController {
 
 	// TC specialist worklist new, patient App, 14-08-2020
 	@CrossOrigin()
-	@ApiOperation(value = "Get teleconsultation specialist worklist for patient app", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = {
-			"/getTCSpecialistWorklistPatientApp/{providerServiceMapID}/{serviceID}/{userID}/{vanID}" }, method = {
-					RequestMethod.GET })
+	@Operation(summary = "Get teleconsultation specialist worklist for patient app")
+	@GetMapping(value = {
+			"/getTCSpecialistWorklistPatientApp/{providerServiceMapID}/{serviceID}/{userID}/{vanID}" })
 	public String getTCSpecialistWorkListNewPatientApp(
 			@PathVariable("providerServiceMapID") Integer providerServiceMapID, @PathVariable("userID") Integer userID,
 			@PathVariable("serviceID") Integer serviceID, @PathVariable("vanID") Integer vanID) {
@@ -782,10 +774,9 @@ public class WorklistController {
 
 	// TC specialist worklist new future scheduled
 	@CrossOrigin()
-	@ApiOperation(value = "Get teleconsultation specialist future scheduled", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = {
-			"/getTCSpecialistWorklistFutureScheduled/{providerServiceMapID}/{serviceID}/{userID}" }, method = {
-					RequestMethod.GET })
+	@Operation(summary = "Get teleconsultation specialist future scheduled")
+	@GetMapping(value = {
+			"/getTCSpecialistWorklistFutureScheduled/{providerServiceMapID}/{serviceID}/{userID}" })
 	public String getTCSpecialistWorklistFutureScheduled(
 			@PathVariable("providerServiceMapID") Integer providerServiceMapID, @PathVariable("userID") Integer userID,
 			@PathVariable("serviceID") Integer serviceID) {
@@ -811,9 +802,9 @@ public class WorklistController {
 
 	// openkm file download
 	@CrossOrigin
-	@ApiOperation(value = "Add file as string to openKM")
-	@RequestMapping(value = "/getKMFile", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = "Authorization")
-	public String getKMFile(@ApiParam(value = "{}") @RequestBody String request,
+	@Operation(summary = "Add file as string to openKM")
+	@PostMapping(value = "/getKMFile", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, headers = "Authorization")
+	public String getKMFile(@Param(value = "{}") @RequestBody String request,
 			@RequestHeader(value = "Authorization") String Authorization) {
 		OutputResponse response = new OutputResponse();
 		logger.info("add file request is " + request);
@@ -832,10 +823,10 @@ public class WorklistController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get beneficiary physical history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenPhysicalHistory" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get beneficiary physical history")
+	@PostMapping(value = { "/getBenPhysicalHistory" })
 	public String getBenPhysicalHistory(
-			@ApiParam(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getBenPhysicalHistory request:" + comingRequest);
@@ -859,10 +850,10 @@ public class WorklistController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get beneficiary symptomatic questionnaire answer details", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenSymptomaticQuestionnaireDetails" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get beneficiary symptomatic questionnaire answer details")
+	@PostMapping(value = { "/getBenSymptomaticQuestionnaireDetails" })
 	public String getBenSymptomaticQuestionnaireDetails(
-			@ApiParam(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("Get Beneficiary Symptomatic questionnaire answer details request:" + comingRequest);
@@ -886,10 +877,10 @@ public class WorklistController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get beneficiary previous diabetes history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenPreviousDiabetesHistoryDetails" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get beneficiary previous diabetes history")
+	@PostMapping(value = { "/getBenPreviousDiabetesHistoryDetails" })
 	public String getBenPreviousDiabetesHistoryDetails(
-			@ApiParam(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("Get Beneficiary previous Diabetes history request:" + comingRequest);
@@ -914,9 +905,8 @@ public class WorklistController {
 
 	// nurse worklist coming from MMU application
 	@CrossOrigin()
-	@ApiOperation(value = "Get mmu nurse worklist", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getMmuNurseWorklistNew/{providerServiceMapID}/{serviceID}/{vanID}" }, method = {
-			RequestMethod.GET })
+	@Operation(summary = "Get mmu nurse worklist")
+	@GetMapping(value = { "/getMmuNurseWorklistNew/{providerServiceMapID}/{serviceID}/{vanID}" })
 	public String getMmuNurseWorklistNew(@PathVariable("providerServiceMapID") Integer providerServiceMapID,
 			@PathVariable("vanID") Integer vanID) {
 		OutputResponse response = new OutputResponse();
@@ -934,10 +924,10 @@ public class WorklistController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get beneficiary previous referral history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenPreviousReferralHistoryDetails" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get beneficiary previous referral history")
+	@PostMapping(value = { "/getBenPreviousReferralHistoryDetails" })
 	public String getBenPreviousReferralHistoryDetails(
-			@ApiParam(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("Get Beneficiary previous Referral history request:" + comingRequest);
@@ -965,10 +955,10 @@ public class WorklistController {
 	 * @return ProviderSpecificMasterData
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get provider specific data", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getProviderSpecificData" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get provider specific data")
+	@PostMapping(value = { "/getProviderSpecificData" })
 	public String getProviderSpecificData(
-			@ApiParam(value = "{\"benvisitID\":\"Long\",\"benvisitCode\":\"Long\",\"fetchMMUDataFor\":\"String\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benvisitID\":\"Long\",\"benvisitCode\":\"Long\",\"fetchMMUDataFor\":\"String\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("getProviderSpecificData request:" + comingRequest);
@@ -988,10 +978,10 @@ public class WorklistController {
 	 * @return ProviderSpecificMasterData
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Calculate beneficiary BMI status", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/calculateBMIStatus" }, method = { RequestMethod.POST })
+	@Operation(summary = "Calculate beneficiary BMI status")
+	@PostMapping(value = { "/calculateBMIStatus" })
 	public String calculateBMIStatus(
-			@ApiParam(value = "{\"bmi\":\"double\",\"yearMonth\":\"String\",\"gender\":\"String\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"bmi\":\"double\",\"yearMonth\":\"String\",\"gender\":\"String\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("calculateBMIStatus request:" + comingRequest);
@@ -1007,10 +997,10 @@ public class WorklistController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Update beneficiary status flag", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/update/benDetailsAndSubmitToNurse" }, method = { RequestMethod.POST })
+	@Operation(summary = "Update beneficiary status flag")
+	@PostMapping(value = { "/update/benDetailsAndSubmitToNurse" })
 	public String saveBeneficiaryVisitDetail(
-			@ApiParam(value = "{\"beneficiaryRegID\": \"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"beneficiaryRegID\": \"Long\"}") @RequestBody String comingRequest) {
 
 		OutputResponse response = new OutputResponse();
 		inputMapper = new InputMapper();
@@ -1043,8 +1033,8 @@ public class WorklistController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Extend redis session for 30 mins", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/extend/redisSession" }, method = { RequestMethod.POST })
+	@Operation(summary = "Extend redis session for 30 mins")
+	@PostMapping(value = { "/extend/redisSession" })
 	public String extendRedisSession() {
 		OutputResponse response = new OutputResponse();
 		try {
@@ -1057,8 +1047,8 @@ public class WorklistController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Soft delete prescribed medicine", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/doctor/delete/prescribedMedicine" }, method = { RequestMethod.POST })
+	@Operation(summary = "Soft delete prescribed medicine")
+	@PostMapping(value = { "/doctor/delete/prescribedMedicine" })
 	public String deletePrescribedMedicine(@RequestBody String requestOBJ) {
 		OutputResponse response = new OutputResponse();
 		try {

@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,8 +40,9 @@ import com.google.gson.JsonParser;
 import com.iemr.tm.service.pnc.PNCServiceImpl;
 import com.iemr.tm.utils.response.OutputResponse;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.lettuce.core.dynamic.annotation.Param;
+import io.swagger.v3.oas.annotations.Operation;
+
 
 /**
  * @Objective Saving PNC nurse and doctor data
@@ -48,7 +50,7 @@ import io.swagger.annotations.ApiParam;
  */
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/PNC", headers = "Authorization")
+@RequestMapping(value = "/PNC", headers = "Authorization", consumes = "application/json", produces = "application/json")
 public class PostnatalCareController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 	private PNCServiceImpl pncServiceImpl;
@@ -66,8 +68,8 @@ public class PostnatalCareController {
 	 */
 
 	@CrossOrigin
-	@ApiOperation(value = "Save PNC nurse data", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/save/nurseData" }, method = { RequestMethod.POST })
+	@Operation(summary = "Save PNC nurse data")
+	@PostMapping(value = { "/save/nurseData" })
 	public String saveBenPNCNurseData(@RequestBody String requestObj,
 			@RequestHeader(value = "Authorization") String Authorization) throws Exception {
 		OutputResponse response = new OutputResponse();
@@ -105,8 +107,8 @@ public class PostnatalCareController {
 	 */
 
 	@CrossOrigin
-	@ApiOperation(value = "Save PNC doctor data", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/save/doctorData" }, method = { RequestMethod.POST })
+	@Operation(summary = "Save PNC doctor data")
+	@PostMapping(value = { "/save/doctorData" })
 	public String saveBenPNCDoctorData(@RequestBody String requestObj,
 			@RequestHeader(value = "Authorization") String Authorization) {
 		OutputResponse response = new OutputResponse();
@@ -138,11 +140,11 @@ public class PostnatalCareController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get PNC beneficiary visit details from nurse", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenVisitDetailsFrmNursePNC" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get PNC beneficiary visit details from nurse")
+	@PostMapping(value = { "/getBenVisitDetailsFrmNursePNC" })
 	@Transactional(rollbackFor = Exception.class)
 	public String getBenVisitDetailsFrmNursePNC(
-			@ApiParam(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("PNC visit data fetch request:" + comingRequest);
@@ -172,11 +174,11 @@ public class PostnatalCareController {
 	 * @return PNC Care data in JSON format
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get PNC beneficiary details from nurse", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenPNCDetailsFrmNursePNC" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get PNC beneficiary details from nurse")
+	@PostMapping(value = { "/getBenPNCDetailsFrmNursePNC" })
 	@Transactional(rollbackFor = Exception.class)
 	public String getBenPNCDetailsFrmNursePNC(
-			@ApiParam(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("PNC Care data fetch request:" + comingRequest);
@@ -206,11 +208,11 @@ public class PostnatalCareController {
 	 * @return history data in JSON format
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get PNC beneficiary history nurse", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenHistoryDetails" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get PNC beneficiary history nurse")
+	@PostMapping(value = { "/getBenHistoryDetails" })
 
 	public String getBenHistoryDetails(
-			@ApiParam(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("History data fetch request:" + comingRequest);
@@ -239,10 +241,10 @@ public class PostnatalCareController {
 	 * @return vital data in JSON format
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get PNC beneficiary vital details from nurse", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenVitalDetailsFrmNurse" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get PNC beneficiary vital details from nurse")
+	@PostMapping(value = { "/getBenVitalDetailsFrmNurse" })
 	public String getBenVitalDetailsFrmNurse(
-			@ApiParam(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("vital data fetch request:" + comingRequest);
@@ -272,11 +274,11 @@ public class PostnatalCareController {
 	 * @return examination data in JSON format
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get PNC beneficiary examination details from nurse", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenExaminationDetailsPNC" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get PNC beneficiary examination details from nurse")
+	@PostMapping(value = { "/getBenExaminationDetailsPNC" })
 
 	public String getBenExaminationDetailsPNC(
-			@ApiParam(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("PNC examination data fetch request:" + comingRequest);
@@ -305,11 +307,11 @@ public class PostnatalCareController {
 	 * @return doctor data in JSON format
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get PNC beneficiary case record", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenCaseRecordFromDoctorPNC" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get PNC beneficiary case record")
+	@PostMapping(value = { "/getBenCaseRecordFromDoctorPNC" })
 	@Transactional(rollbackFor = Exception.class)
 	public String getBenCaseRecordFromDoctorPNC(
-			@ApiParam(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("PNC doctor data fetch request:" + comingRequest);
@@ -334,8 +336,8 @@ public class PostnatalCareController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Update PNC doctor data", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/update/PNCScreen" }, method = { RequestMethod.POST })
+	@Operation(summary = "Update PNC doctor data")
+	@PostMapping(value = { "/update/PNCScreen" })
 	public String updatePNCCareNurse(@RequestBody String requestObj) {
 
 		OutputResponse response = new OutputResponse();
@@ -371,8 +373,8 @@ public class PostnatalCareController {
 	 */
 
 	@CrossOrigin
-	@ApiOperation(value = "Update PNC beneficiary history", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/update/historyScreen" }, method = { RequestMethod.POST })
+	@Operation(summary = "Update PNC beneficiary history")
+	@PostMapping(value = { "/update/historyScreen" })
 	public String updateHistoryNurse(@RequestBody String requestObj) {
 
 		OutputResponse response = new OutputResponse();
@@ -408,8 +410,8 @@ public class PostnatalCareController {
 	 */
 
 	@CrossOrigin
-	@ApiOperation(value = "Update PNC beneficiary vitals", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/update/vitalScreen" }, method = { RequestMethod.POST })
+	@Operation(summary = "Update PNC beneficiary vitals")
+	@PostMapping(value = { "/update/vitalScreen" })
 	public String updateVitalNurse(@RequestBody String requestObj) {
 
 		OutputResponse response = new OutputResponse();
@@ -445,8 +447,8 @@ public class PostnatalCareController {
 	 */
 
 	@CrossOrigin
-	@ApiOperation(value = "Update PNC examination data", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/update/examinationScreen" }, method = { RequestMethod.POST })
+	@Operation(summary = "Update PNC examination data")
+	@PostMapping(value = { "/update/examinationScreen" })
 	public String updateGeneralOPDExaminationNurse(@RequestBody String requestObj) {
 
 		OutputResponse response = new OutputResponse();
@@ -474,8 +476,8 @@ public class PostnatalCareController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Update PNC doctor data", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/update/doctorData" }, method = { RequestMethod.POST })
+	@Operation(summary = "Update PNC doctor data")
+	@PostMapping(value = { "/update/doctorData" })
 	public String updatePNCDoctorData(@RequestBody String requestObj,
 			@RequestHeader(value = "Authorization") String Authorization) {
 

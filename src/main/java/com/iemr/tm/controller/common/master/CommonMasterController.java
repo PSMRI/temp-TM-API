@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,11 +36,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.iemr.tm.service.common.master.CommonMasterServiceImpl;
 import com.iemr.tm.utils.response.OutputResponse;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+
+
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/master", headers = "Authorization")
+@RequestMapping(value = "/master", headers = "Authorization", consumes = "application/json", produces = "application/json")
 /** Objective: provides master data based on given visitCategory */
 public class CommonMasterController {
 
@@ -56,8 +59,8 @@ public class CommonMasterController {
 	 * @Objective provides list of visit reasons and visit categories
 	 * @return list of visit reasons and visit categories
 	 */
-	@ApiOperation(value = "Get visit reasons and categories", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = "/get/visitReasonAndCategories", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
+	@Operation(summary = "Get visit reasons and categories")
+	@GetMapping(value = "/get/visitReasonAndCategories", produces = MediaType.APPLICATION_JSON)
 	public String getVisitReasonAndCategories() {
 		logger.info("getVisitReasonAndCategories ...");
 		OutputResponse response = new OutputResponse();
@@ -71,8 +74,8 @@ public class CommonMasterController {
 	 * @param visitCategoryID
 	 * @return nurse master data for the provided visitCategoryID
 	 */
-	@ApiOperation(value = "Get master data for selected beneficiary for nurse", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = "/nurse/masterData/{visitCategoryID}/{providerServiceMapID}/{gender}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
+	@Operation(summary = "Get master data for selected beneficiary for nurse")
+	@GetMapping(value = "/nurse/masterData/{visitCategoryID}/{providerServiceMapID}/{gender}", produces = MediaType.APPLICATION_JSON)
 	public String NurseMasterData(@PathVariable("visitCategoryID") Integer visitCategoryID,
 			@PathVariable("providerServiceMapID") Integer providerServiceMapID, @PathVariable("gender") String gender) {
 		logger.info("Nurse master Data for categoryID:" + visitCategoryID + " and providerServiceMapID:"
@@ -90,8 +93,8 @@ public class CommonMasterController {
 	 * @param visitCategoryID
 	 * @return doctor master data for the provided visitCategoryID
 	 */
-	@ApiOperation(value = "Get master data for selected beneficiary for doctor", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = "/doctor/masterData/{visitCategoryID}/{providerServiceMapID}/{gender}/{facilityID}/{vanID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
+	@Operation(summary = "Get master data for selected beneficiary for doctor")
+	@GetMapping(value = "/doctor/masterData/{visitCategoryID}/{providerServiceMapID}/{gender}/{facilityID}/{vanID}", produces = MediaType.APPLICATION_JSON)
 	public String DoctorMasterData(@PathVariable("visitCategoryID") Integer visitCategoryID,
 			@PathVariable("providerServiceMapID") Integer providerServiceMapID, @PathVariable("gender") String gender,
 			@PathVariable("facilityID") Integer facilityID, @PathVariable("vanID") Integer vanID) {

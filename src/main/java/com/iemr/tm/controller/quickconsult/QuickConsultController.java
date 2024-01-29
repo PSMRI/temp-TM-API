@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,8 +43,8 @@ import com.iemr.tm.service.tele_consultation.SMSGatewayServiceImpl;
 import com.iemr.tm.utils.mapper.InputMapper;
 import com.iemr.tm.utils.response.OutputResponse;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.lettuce.core.dynamic.annotation.Param;
+import io.swagger.v3.oas.annotations.Operation;
 
 /**
  * 
@@ -54,7 +55,7 @@ import io.swagger.annotations.ApiParam;
  */
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/genOPD-QC-quickConsult", headers = "Authorization")
+@RequestMapping(value = "/genOPD-QC-quickConsult", headers = "Authorization", consumes = "application/json", produces = "application/json")
 public class QuickConsultController {
 	private Logger logger = LoggerFactory.getLogger(QuickConsultController.class);
 	private QuickConsultationServiceImpl quickConsultationServiceImpl;
@@ -74,8 +75,8 @@ public class QuickConsultController {
 	 *            Database table
 	 */
 	@CrossOrigin
-	@ApiOperation(value = "Save quick consult nurse data", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/save/nurseData" }, method = { RequestMethod.POST })
+	@Operation(summary = "Save quick consult nurse data")
+	@PostMapping(value = { "/save/nurseData" })
 	public String saveBenQuickConsultDataNurse(@RequestBody String requestObj,
 			@RequestHeader(value = "Authorization") String Authorization) throws Exception {
 		OutputResponse response = new OutputResponse();
@@ -112,10 +113,10 @@ public class QuickConsultController {
 	 */
 
 	@CrossOrigin
-	@ApiOperation(value = "Save quick consult doctor data", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/save/doctorData" }, method = { RequestMethod.POST })
+	@Operation(summary = "Save quick consult doctor data")
+	@PostMapping(value = { "/save/doctorData" })
 	public String saveQuickConsultationDetail(
-			@ApiParam(value = "{\"quickConsultation\":{\"beneficiaryRegID\":\"Long\",\"providerServiceMapID\": \"Integer\", \"benVisitID\":\"Long\", \"benChiefComplaint\":[{\"chiefComplaintID\":\"Integer\", "
+			@Param(value = "{\"quickConsultation\":{\"beneficiaryRegID\":\"Long\",\"providerServiceMapID\": \"Integer\", \"benVisitID\":\"Long\", \"benChiefComplaint\":[{\"chiefComplaintID\":\"Integer\", "
 					+ "\"chiefComplaint\":\"String\", \"duration\":\"Integer\", \"unitOfDuration\":\"String\"}], \"description\":\"String\""
 					+ "\"clinicalObservation\":\"String\", \"externalInvestigation\":\"String\", \"diagnosisProvided\":\"String\", \"instruction\":\"String\", \"remarks\":\"String\","
 					+ "\"prescribedDrugs\":[{\"drugForm\":\"String\", \"drugTradeOrBrandName\":\"String\", \"genericDrugName\":\"String\", \"drugStrength\":\"String\", "
@@ -151,10 +152,10 @@ public class QuickConsultController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get quick consult beneficiary visit details", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenDataFrmNurseToDocVisitDetailsScreen" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get quick consult beneficiary visit details")
+	@PostMapping(value = { "/getBenDataFrmNurseToDocVisitDetailsScreen" })
 	public String getBenDataFrmNurseScrnToDocScrnVisitDetails(
-			@ApiParam(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 		logger.info("Quick consult visit data fetch request :" + comingRequest);
 		try {
@@ -184,10 +185,10 @@ public class QuickConsultController {
 	 */
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get quick consult beneficiary vital details", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenVitalDetailsFrmNurse" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get quick consult beneficiary vital details")
+	@PostMapping(value = { "/getBenVitalDetailsFrmNurse" })
 	public String getBenVitalDetailsFrmNurse(
-			@ApiParam(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("Quick consult vital data fetch request :" + comingRequest);
@@ -217,11 +218,11 @@ public class QuickConsultController {
 	 * @return visit details in JSON format
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get quick consult beneficiary case record", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/getBenCaseRecordFromDoctorQuickConsult" }, method = { RequestMethod.POST })
+	@Operation(summary = "Get quick consult beneficiary case record")
+	@PostMapping(value = { "/getBenCaseRecordFromDoctorQuickConsult" })
 	@Transactional(rollbackFor = Exception.class)
 	public String getBenCaseRecordFromDoctorQuickConsult(
-			@ApiParam(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
+			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
 		logger.info("Quick consult doctor data fetch request:" + comingRequest);
@@ -246,8 +247,8 @@ public class QuickConsultController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Update quick consult doctor data", consumes = "application/json", produces = "application/json")
-	@RequestMapping(value = { "/update/doctorData" }, method = { RequestMethod.POST })
+	@Operation(summary = "Update quick consult doctor data")
+	@PostMapping(value = { "/update/doctorData" })
 	public String updateGeneralOPDQCDoctorData(@RequestBody String requestObj,
 			@RequestHeader(value = "Authorization") String Authorization) {
 
