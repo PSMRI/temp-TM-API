@@ -43,13 +43,11 @@ class ANCDoctorServiceImplTest {
 	@Test
     void testSaveBenANCDiagnosis() throws IEMRException {
 
-        // Set up your JSON object as needed
         Long prescriptionID = 111L;
 
-        // Create ANCDiagnosis instance
         ANCDiagnosis ancDiagnosis = new ANCDiagnosis();
 
-        // Mock complicationOfCurrentPregnancyList
+
         List<Map<String, String>> complicationList = new ArrayList<>();
         Map<String, String> complicationMap = new HashMap<>();
 

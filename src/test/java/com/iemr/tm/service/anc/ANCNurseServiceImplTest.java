@@ -41,7 +41,7 @@ import com.iemr.tm.service.anc.ANCNurseServiceImpl;
 import jakarta.mail.internet.ParseException;
 
 @ExtendWith(MockitoExtension.class)
-public class ANCNurseServiceImplTest {
+class ANCNurseServiceImplTest {
 	
 	@InjectMocks
     private ANCNurseServiceImpl ancNurseServiceImpl;
@@ -148,7 +148,7 @@ public class ANCNurseServiceImplTest {
     }
 
 		@Test
-        public void testSaveBenInvestigationFromDoc() {
+        void testSaveBenInvestigationFromDoc() {
         	
         	ArrayList<LabTestOrderDetail> LabTestOrderDetailList = new ArrayList<>();
     		
@@ -183,7 +183,7 @@ public class ANCNurseServiceImplTest {
         
         
         @Test
-        public void testSaveBenAncCareDetails() throws java.text.ParseException{
+        void testSaveBenAncCareDetails() throws java.text.ParseException{
         	
         	ANCCareDetails ancCareDetailsOBJ=new ANCCareDetails();
         	
@@ -262,7 +262,7 @@ public class ANCNurseServiceImplTest {
         }*/
 		
 		@Test
-        public void testSaveSysObstetricExamination() {
+        void testSaveSysObstetricExamination() {
 			
 			Long r = null;
 			
@@ -287,7 +287,7 @@ public class ANCNurseServiceImplTest {
 		
 		
 		@Test
-		public void testGetSysObstetricExamination() {
+		void testGetSysObstetricExamination() {
 			SysObstetricExamination sysObstetricExaminationData = new SysObstetricExamination();
 			
 			sysObstetricExaminationData.setBeneficiaryRegID(1L);

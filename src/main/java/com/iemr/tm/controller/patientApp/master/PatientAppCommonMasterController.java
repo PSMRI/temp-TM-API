@@ -58,7 +58,7 @@ public class PatientAppCommonMasterController {
 	 * @return nurse master data for the provided visitCategoryID
 	 */
 	@Operation(summary= "Chief complaints master data API for patient app")
-	@RequestMapping(value = "/patientApp/chiefComplaintsMaster/{visitCategoryID}/{providerServiceMapID}/{gender}")
+	@PostMapping(value = "/patientApp/chiefComplaintsMaster/{visitCategoryID}/{providerServiceMapID}/{gender}")
 	public String patientAppChiefComplaintsMasterData(@PathVariable("visitCategoryID") Integer visitCategoryID,
 			@PathVariable("providerServiceMapID") Integer providerServiceMapID, @PathVariable("gender") String gender) {
 		logger.info("Nurse master Data for categoryID:" + visitCategoryID + " and providerServiceMapID:"
@@ -72,7 +72,7 @@ public class PatientAppCommonMasterController {
 	}
 
 	@Operation(summary= "COVID master data API for patient app")
-	@RequestMapping(value = "/patientApp/covidMaster/{visitCategoryID}/{providerServiceMapID}/{gender}")
+	@PostMapping(value = "/patientApp/covidMaster/{visitCategoryID}/{providerServiceMapID}/{gender}")
 	public String patientAppCovidMasterData(@PathVariable("visitCategoryID") Integer visitCategoryID,
 			@PathVariable("providerServiceMapID") Integer providerServiceMapID, @PathVariable("gender") String gender) {
 		logger.info("Nurse master Data for categoryID:" + visitCategoryID + " and providerServiceMapID:"
@@ -87,7 +87,7 @@ public class PatientAppCommonMasterController {
 
 	@CrossOrigin
 	@Operation(summary= "Save COVID data in patient app")
-	@RequestMapping(value = { "/save/covidScreeningDataPatientApp" }, method = { RequestMethod.POST })
+	@PostMapping(value = { "/save/covidScreeningDataPatientApp" })
 	public String saveBenCovidDoctorDataPatientApp(@RequestBody String requestObj,
 			@RequestHeader(value = "Authorization") String Authorization) {
 		OutputResponse response = new OutputResponse();
@@ -107,7 +107,7 @@ public class PatientAppCommonMasterController {
 
 	@CrossOrigin
 	@Operation(summary= "Save chief-complaints data in patient app")
-	@RequestMapping(value = { "/save/chiefComplaintsDataPatientApp" }, method = { RequestMethod.POST })
+	@PostMapping(value = { "/save/chiefComplaintsDataPatientApp" })
 	public String saveBenChiefComplaintsDataPatientApp(@RequestBody String requestObj,
 			@RequestHeader(value = "Authorization") String Authorization) {
 		OutputResponse response = new OutputResponse();
@@ -127,7 +127,7 @@ public class PatientAppCommonMasterController {
 
 	@CrossOrigin
 	@Operation(summary= "Save tele-consultation slot in data patient app")
-	@RequestMapping(value = { "/save/tcSlotDetailsDataPatientApp" }, method = { RequestMethod.POST })
+	@PostMapping(value = { "/save/tcSlotDetailsDataPatientApp" })
 	public String saveTCSlotDataPatientApp(@RequestBody String requestObj,
 			@RequestHeader(value = "Authorization") String Authorization) {
 		OutputResponse response = new OutputResponse();

@@ -91,7 +91,6 @@ public class RegistrarController {
 	public String getRegistrarWorkList(@Param(value = "{\"spID\": \"Integer\"}") @RequestBody String comingRequest)
 			throws JSONException {
 		OutputResponse response = new OutputResponse();
-		//logger.info("getRegistrarWorkList request:" + comingRequest);
 		try {
 
 			JSONObject obj = new JSONObject(comingRequest);
@@ -112,7 +111,6 @@ public class RegistrarController {
 	public String quickSearchBeneficiary(
 			@Param(value = "{\"benID\": \"String\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
-		//logger.info("quickSearchBeneficiary request:" + comingRequest);
 		try {
 
 			JSONObject obj = new JSONObject(comingRequest);
@@ -134,7 +132,6 @@ public class RegistrarController {
 					+ "\"beneficiaryID\": \"String\", \"stateID\": \"Integer\", \"districtID\": \"Integer\", \"aadharNo\": \"String\"},"
 					+ " \"govtIdentityNo\": \"String\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
-		//logger.info("advanceSearch request :" + comingRequest);
 		try {
 			// JSONObject obj = new JSONObject(comingRequest);
 			V_BenAdvanceSearch v_BenAdvanceSearch = inputMapper.gson().fromJson(comingRequest,
@@ -156,7 +153,6 @@ public class RegistrarController {
 	public String getBenDetailsByRegID(
 			@Param(value = "{\"beneficiaryRegID\": \"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
-		//logger.info("getBenDetailsByRegID request :" + comingRequest);
 		try {
 
 			JSONObject obj = new JSONObject(comingRequest);
@@ -187,7 +183,6 @@ public class RegistrarController {
 	public String getBeneficiaryDetails(
 			@Param(value = "{\"beneficiaryRegID\": \"Long\"}") @RequestBody String requestObj) {
 		OutputResponse response = new OutputResponse();
-		logger.info("getBeneficiaryDetails request :" + requestObj);
 		try {
 
 			JSONObject obj = new JSONObject(requestObj);
@@ -223,7 +218,6 @@ public class RegistrarController {
 	public String getBeneficiaryImage(
 			@Param(value = "{\"beneficiaryRegID\": \"Long\"}") @RequestBody String requestObj) {
 		OutputResponse response = new OutputResponse();
-		logger.info("getBeneficiaryImage request :" + requestObj);
 		try {
 			JSONObject obj = new JSONObject(requestObj);
 			if (obj.has("beneficiaryRegID")) {
@@ -300,7 +294,6 @@ public class RegistrarController {
 			@Param(value = "{\"beneficiaryRegID\": \"Long\"}") @RequestBody String comingRequest,
 			@RequestHeader(value = "Authorization") String Authorization) {
 		OutputResponse response = new OutputResponse();
-		//logger.info("getBenDetailsByRegID request :" + comingRequest);
 		try {
 
 			JSONObject obj = new JSONObject(comingRequest);
@@ -364,7 +357,6 @@ public class RegistrarController {
 
 			WrapperBeneficiaryRegistration wrapperBeneficiaryRegistrationOBJ = InputMapper.gson()
 					.fromJson(comingRequest, WrapperBeneficiaryRegistration.class);
-			//logger.info("createBeneficiary request:" + comingRequest);
 			JsonObject benD = wrapperBeneficiaryRegistrationOBJ.getBenD();
 
 			if (benD == null || benD.isJsonNull()) {
@@ -540,7 +532,6 @@ public class RegistrarController {
 	public String masterDataForRegistration(
 			@Param(value = "{\"spID\": \"Integer\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
-		//logger.info("masterDataForRegistration request :" + comingRequest);
 		try {
 
 			JSONObject obj = new JSONObject(comingRequest);
