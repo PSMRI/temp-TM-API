@@ -157,7 +157,7 @@ public class QuickConsultController {
 	public String getBenDataFrmNurseScrnToDocScrnVisitDetails(
 			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
-		logger.info("Quick consult visit data fetch request :" + comingRequest);
+		//logger.info("Quick consult visit data fetch request :" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.length() > 1) {
@@ -191,7 +191,7 @@ public class QuickConsultController {
 			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("Quick consult vital data fetch request :" + comingRequest);
+		//logger.info("Quick consult vital data fetch request :" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID") && obj.has("visitCode")) {
@@ -225,7 +225,7 @@ public class QuickConsultController {
 			@Param(value = "{\"benRegID\":\"Long\",\"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("Quick consult doctor data fetch request:" + comingRequest);
+		//logger.info("Quick consult doctor data fetch request:" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (null != obj && obj.length() > 1 && obj.has("benRegID") && obj.has("visitCode")) {

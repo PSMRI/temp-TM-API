@@ -147,7 +147,7 @@ public class CancerScreeningController {
 			@Param(value = "{\"benRegID\":\"Long\", \"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("Request object for CS visit data fetching :" + comingRequest);
+		//logger.info("Request object for CS visit data fetching :" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.length() > 1) {
@@ -178,7 +178,7 @@ public class CancerScreeningController {
 	public String getBenDataFrmNurseScrnToDocScrnHistory(
 			@Param(value = "{\"benRegID\":\"Long\", \"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
-		logger.info("Request object for CS history data fetching :" + comingRequest);
+		//logger.info("Request object for CS history data fetching :" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.length() > 1) {
@@ -210,7 +210,7 @@ public class CancerScreeningController {
 	public String getBenDataFrmNurseScrnToDocScrnVital(
 			@Param(value = "{\"benRegID\":\"Long\", \"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
-		logger.info("Request object for CS vital data fetching :" + comingRequest);
+		//logger.info("Request object for CS vital data fetching :" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.length() > 1) {
@@ -242,7 +242,7 @@ public class CancerScreeningController {
 	public String getBenDataFrmNurseScrnToDocScrnExamination(
 			@Param(value = "{\"benRegID\":\"Long\", \"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
-		logger.info("Request object for CS examination data fetching :" + comingRequest);
+		//logger.info("Request object for CS examination data fetching :" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.length() > 1) {
@@ -275,7 +275,7 @@ public class CancerScreeningController {
 			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("Request object for CS family history data fetching :" + comingRequest);
+		//logger.info("Request object for CS family history data fetching :" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -309,7 +309,7 @@ public class CancerScreeningController {
 			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("Request object for CS personal history data fetching :" + comingRequest);
+		//logger.info("Request object for CS personal history data fetching :" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -343,7 +343,7 @@ public class CancerScreeningController {
 			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("Request object for CS personal diet history data fetching :" + comingRequest);
+		//logger.info("Request object for CS personal diet history data fetching :" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -377,7 +377,7 @@ public class CancerScreeningController {
 			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("Request object for CS obstetric history data fetching :" + comingRequest);
+		//logger.info("Request object for CS obstetric history data fetching :" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -411,7 +411,7 @@ public class CancerScreeningController {
 			@Param(value = "{\"benRegID\":\"Long\", \"visitCode\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("Request object for CS doctor data fetching :" + comingRequest);
+		//logger.info("Request object for CS doctor data fetching :" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (null != obj && obj.length() > 1 && obj.has("benRegID") && obj.has("visitCode")) {

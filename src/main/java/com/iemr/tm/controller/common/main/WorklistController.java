@@ -325,7 +325,7 @@ public class WorklistController {
 	public String getBenPastHistory(@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("getBenPastHistory request:" + comingRequest);
+		//logger.info("getBenPastHistory request:" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -351,7 +351,7 @@ public class WorklistController {
 	public String getBenTobaccoHistory(@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("getBenTobaccoHistory request:" + comingRequest);
+		//logger.info("getBenTobaccoHistory request:" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -377,7 +377,7 @@ public class WorklistController {
 	public String getBenAlcoholHistory(@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("getBenAlcoholHistory request:" + comingRequest);
+		//logger.info("getBenAlcoholHistory request:" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -404,7 +404,7 @@ public class WorklistController {
 			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("getBenAllergyHistory request:" + comingRequest);
+		//logger.info("getBenAllergyHistory request:" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -431,7 +431,7 @@ public class WorklistController {
 			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("getBenMedicationHistory request:" + comingRequest);
+		//logger.info("getBenMedicationHistory request:" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -457,7 +457,7 @@ public class WorklistController {
 	public String getBenFamilyHistory(@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("getBenFamilyHistory request:" + comingRequest);
+		//logger.info("getBenFamilyHistory request:" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -484,7 +484,7 @@ public class WorklistController {
 			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("getBenMenstrualHistory request:" + comingRequest);
+		//logger.info("getBenMenstrualHistory request:" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -511,7 +511,7 @@ public class WorklistController {
 			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("getBenPastObstetricHistory request:" + comingRequest);
+		//logger.info("getBenPastObstetricHistory request:" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -538,7 +538,7 @@ public class WorklistController {
 			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("getBenComorbidityConditionHistory request:" + comingRequest);
+		//logger.info("getBenComorbidityConditionHistory request:" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -565,7 +565,7 @@ public class WorklistController {
 			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("getBenOptionalVaccineHistory request:" + comingRequest);
+		//logger.info("getBenOptionalVaccineHistory request:" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -592,7 +592,7 @@ public class WorklistController {
 			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("getBenImmunizationHistory request:" + comingRequest);
+		//logger.info("getBenImmunizationHistory request:" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -619,7 +619,7 @@ public class WorklistController {
 			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("getBenPerinatalHistory request:" + comingRequest);
+		//logger.info("getBenPerinatalHistory request:" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -645,7 +645,7 @@ public class WorklistController {
 	public String getBenFeedingHistory(@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("getBenFeedingHistory request:" + comingRequest);
+		//logger.info("getBenFeedingHistory request:" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -672,7 +672,7 @@ public class WorklistController {
 			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("getBenDevelopmentHistory request:" + comingRequest);
+		//logger.info("getBenDevelopmentHistory request:" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -704,7 +704,7 @@ public class WorklistController {
 	public String getBeneficiaryCaseSheetHistory(
 			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
-		logger.info("Request object for fetching beneficiary previous visit history :" + comingRequest);
+		//logger.info("Request object for fetching beneficiary previous visit history :" + comingRequest);
 		try {
 			String responseData = commonServiceImpl.getBenPreviousVisitDataForCaseRecord(comingRequest);
 			if (responseData != null)
@@ -829,7 +829,7 @@ public class WorklistController {
 			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("getBenPhysicalHistory request:" + comingRequest);
+		//logger.info("getBenPhysicalHistory request:" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -856,7 +856,7 @@ public class WorklistController {
 			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("Get Beneficiary Symptomatic questionnaire answer details request:" + comingRequest);
+		//logger.info("Get Beneficiary Symptomatic questionnaire answer details request:" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -883,7 +883,7 @@ public class WorklistController {
 			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("Get Beneficiary previous Diabetes history request:" + comingRequest);
+		//logger.info("Get Beneficiary previous Diabetes history request:" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -930,7 +930,7 @@ public class WorklistController {
 			@Param(value = "{\"benRegID\":\"Long\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("Get Beneficiary previous Referral history request:" + comingRequest);
+		//logger.info("Get Beneficiary previous Referral history request:" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("benRegID")) {
@@ -961,7 +961,7 @@ public class WorklistController {
 			@Param(value = "{\"benvisitID\":\"Long\",\"benvisitCode\":\"Long\",\"fetchMMUDataFor\":\"String\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("getProviderSpecificData request:" + comingRequest);
+		//logger.info("getProviderSpecificData request:" + comingRequest);
 		try {
 			String s = commonServiceImpl.getProviderSpecificData(comingRequest);
 			response.setResponse(s);
@@ -984,7 +984,7 @@ public class WorklistController {
 			@Param(value = "{\"bmi\":\"double\",\"yearMonth\":\"String\",\"gender\":\"String\"}") @RequestBody String comingRequest) {
 		OutputResponse response = new OutputResponse();
 
-		logger.info("calculateBMIStatus request:" + comingRequest);
+		//logger.info("calculateBMIStatus request:" + comingRequest);
 		try {
 			String s = commonNurseServiceImpl.calculateBMIStatus(comingRequest);
 			response.setResponse(s);
@@ -1004,7 +1004,7 @@ public class WorklistController {
 
 		OutputResponse response = new OutputResponse();
 		inputMapper = new InputMapper();
-		logger.info("benDetailsAndSubmitToNurse request:" + comingRequest);
+		//logger.info("benDetailsAndSubmitToNurse request:" + comingRequest);
 		try {
 			JSONObject obj = new JSONObject(comingRequest);
 			if (obj.has("beneficiaryRegID")) {
