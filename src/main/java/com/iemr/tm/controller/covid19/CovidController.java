@@ -63,34 +63,37 @@ public class CovidController {
 	@ApiOperation(value = "Save COVID nurse data", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/save/nurseData" }, method = { RequestMethod.POST })
 	public String saveBenNCDCareNurseData(@RequestBody String requestObj,
-			@RequestHeader(value = "Authorization") String Authorization) {
+			@RequestHeader(value = "Authorization") String Authorization) throws Exception {
 		OutputResponse response = new OutputResponse();
-		try {
-			logger.info("Request object for covid 19 nurse data saving :" + requestObj);
 
+		if (null != requestObj) {
 			JsonObject jsnOBJ = new JsonObject();
 			JsonParser jsnParser = new JsonParser();
 			JsonElement jsnElmnt = jsnParser.parse(requestObj);
 			jsnOBJ = jsnElmnt.getAsJsonObject();
 
-			if (jsnOBJ != null) {
-				String ncdCareRes = covid19ServiceImpl.saveCovid19NurseData(jsnOBJ, Authorization);
-				response.setResponse(ncdCareRes);
-			} else {
-				response.setError(5000, "Invalid Request !!!");
-			}
+			try {
+				logger.info("Request object for covid 19 nurse data saving :" + requestObj);
 
-		} catch (Exception e) {
-			logger.error("Error while saving Pandemic nurse data :" + e);
-			response.setError(5000, "Unable to save data");
+				if (jsnOBJ != null) {
+					String ncdCareRes = covid19ServiceImpl.saveCovid19NurseData(jsnOBJ, Authorization);
+					response.setResponse(ncdCareRes);
+				} else {
+					response.setError(5000, "Invalid Request !!!");
+				}
+
+			} catch (Exception e) {
+				logger.error("Error while saving Pandemic nurse data :" + e.getMessage());
+				covid19ServiceImpl.deleteVisitDetails(jsnOBJ);
+				response.setError(5000, e.getMessage());
+			}
 		}
 		return response.toString();
 	}
-	
+
 	/**
 	 * @Objective Save Covid data for doctor.
-	 * @param JSON
-	 *            requestObj
+	 * @param JSON requestObj
 	 * @return success or failure response
 	 */
 	@CrossOrigin
@@ -119,12 +122,12 @@ public class CovidController {
 				response.setResponse("Invalid request");
 			}
 		} catch (Exception e) {
-			logger.error("Error while saving Covid doctor data :" + e);
-			response.setError(5000, "Unable to save data. " + e.getMessage());
+			logger.error("Error while saving Covid doctor data :" + e.getMessage());
+			response.setError(5000, e.getMessage());
 		}
 		return response.toString();
 	}
-	
+
 	@CrossOrigin()
 	@ApiOperation(value = "Get COVID beneficiary visit details", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/getBenVisitDetailsFrmNurseCovid" }, method = { RequestMethod.POST })
@@ -254,7 +257,7 @@ public class CovidController {
 		}
 		return response.toString();
 	}
-	
+
 	@CrossOrigin
 	@ApiOperation(value = "Update COVID beneficiary history", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/update/historyScreen" }, method = { RequestMethod.POST })
@@ -352,11 +355,11 @@ public class CovidController {
 			}
 			logger.info("Doctor data update Response:" + response);
 		} catch (Exception e) {
-			response.setError(500, "Unable to modify data. " + e.getMessage());
-			logger.error("Error while updating doctor data :" + e);
+			logger.error("Unable to modify data. " + e.getMessage());
+			response.setError(5000, e.getMessage());
 		}
 
 		return response.toString();
 	}
-	
+
 }

@@ -67,6 +67,9 @@ import com.iemr.tm.data.quickConsultation.BenChiefComplaint;
 import com.iemr.tm.data.quickConsultation.PrescribedDrugDetail;
 import com.iemr.tm.data.quickConsultation.PrescriptionDetail;
 import com.iemr.tm.data.tele_consultation.TeleconsultationRequestOBJ;
+import com.iemr.tm.repo.nurse.BenVisitDetailRepo;
+import com.iemr.tm.repo.nurse.anc.BenAdherenceRepo;
+import com.iemr.tm.repo.quickConsultation.BenChiefComplaintRepo;
 import com.iemr.tm.service.benFlowStatus.CommonBenStatusFlowServiceImpl;
 import com.iemr.tm.service.common.transaction.CommonDoctorServiceImpl;
 import com.iemr.tm.service.common.transaction.CommonNurseServiceImpl;
@@ -90,6 +93,12 @@ public class PNCServiceImpl implements PNCService {
 
 	@Autowired
 	private CommonServiceImpl commonServiceImpl;
+	@Autowired
+	private BenVisitDetailRepo benVisitDetailRepo;
+	@Autowired
+	private BenChiefComplaintRepo benChiefComplaintRepo;
+	@Autowired
+	private BenAdherenceRepo benAdherenceRepo;
 
 	@Autowired
 	public void setLabTechnicianServiceImpl(LabTechnicianServiceImpl labTechnicianServiceImpl) {
@@ -125,7 +134,6 @@ public class PNCServiceImpl implements PNCService {
 	private SMSGatewayServiceImpl sMSGatewayServiceImpl;
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	public String savePNCNurseData(JsonObject requestOBJ, String Authorization) throws Exception {
 		Long saveSuccessFlag = null;
 		TeleconsultationRequestOBJ tcRequestOBJ = null;
@@ -234,6 +242,25 @@ public class PNCServiceImpl implements PNCService {
 			responseMap.put("response", "Unable to save data");
 		}
 		return new  Gson().toJson(responseMap);			
+	}
+	
+	@Override
+	public void deleteVisitDetails(JsonObject requestOBJ) throws Exception {
+		if (requestOBJ != null && requestOBJ.has("visitDetails") && !requestOBJ.get("visitDetails").isJsonNull()) {
+
+			CommonUtilityClass nurseUtilityClass = InputMapper.gson().fromJson(requestOBJ, CommonUtilityClass.class);
+
+			Long visitCode = benVisitDetailRepo.getVisitCode(nurseUtilityClass.getBeneficiaryRegID(),
+					nurseUtilityClass.getProviderServiceMapID());
+
+			if (visitCode != null) {
+				benChiefComplaintRepo.deleteVisitDetails(visitCode);
+				benAdherenceRepo.deleteVisitDetails(visitCode);
+				benVisitDetailRepo.deleteVisitDetails(visitCode);
+			}
+
+		}
+
 	}
 
 	// method for updating ben flow status flag for nurse

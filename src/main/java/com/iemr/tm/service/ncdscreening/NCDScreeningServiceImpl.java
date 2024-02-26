@@ -63,7 +63,9 @@ import com.iemr.tm.data.quickConsultation.PrescriptionDetail;
 import com.iemr.tm.data.tele_consultation.TeleconsultationRequestOBJ;
 import com.iemr.tm.repo.benFlowStatus.BeneficiaryFlowStatusRepo;
 import com.iemr.tm.repo.nurse.BenVisitDetailRepo;
+import com.iemr.tm.repo.nurse.anc.BenAdherenceRepo;
 import com.iemr.tm.repo.nurse.ncdscreening.IDRSDataRepo;
+import com.iemr.tm.repo.quickConsultation.BenChiefComplaintRepo;
 import com.iemr.tm.repo.quickConsultation.PrescriptionDetailRepo;
 import com.iemr.tm.service.benFlowStatus.CommonBenStatusFlowServiceImpl;
 import com.iemr.tm.service.common.transaction.CommonDoctorServiceImpl;
@@ -103,6 +105,11 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 	private NCDSCreeningDoctorServiceImpl ncdSCreeningDoctorServiceImpl;
 	@Autowired
 	private IDRSDataRepo iDrsDataRepo;
+	
+	@Autowired
+	private BenChiefComplaintRepo benChiefComplaintRepo;
+	@Autowired
+	private BenAdherenceRepo benAdherenceRepo;
 
 	@Autowired
 	public void setLabTechnicianServiceImpl(LabTechnicianServiceImpl labTechnicianServiceImpl) {
@@ -135,7 +142,6 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	public String saveNCDScreeningNurseData(JsonObject requestOBJ, String Authorization) throws Exception {
 
 		Long saveSuccessFlag = null;
@@ -235,6 +241,25 @@ public class NCDScreeningServiceImpl implements NCDScreeningService {
 			responseMap.put("response", "Unable to save data");
 		}
 		return new Gson().toJson(responseMap);
+
+	}
+	
+	@Override
+	public void deleteVisitDetails(JsonObject requestOBJ) throws Exception {
+		if (requestOBJ != null && requestOBJ.has("visitDetails") && !requestOBJ.get("visitDetails").isJsonNull()) {
+
+			CommonUtilityClass nurseUtilityClass = InputMapper.gson().fromJson(requestOBJ, CommonUtilityClass.class);
+
+			Long visitCode = benVisitDetailRepo.getVisitCode(nurseUtilityClass.getBeneficiaryRegID(),
+					nurseUtilityClass.getProviderServiceMapID());
+
+			if (visitCode != null) {
+				benChiefComplaintRepo.deleteVisitDetails(visitCode);
+				benAdherenceRepo.deleteVisitDetails(visitCode);
+				benVisitDetailRepo.deleteVisitDetails(visitCode);
+			}
+
+		}
 
 	}
 

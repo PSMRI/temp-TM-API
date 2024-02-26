@@ -64,43 +64,46 @@ public class CancerScreeningController {
 
 	/**
 	 * @Objective Save Cancer Screening data for nurse.
-	 * @param JSON
-	 *            requestObj
+	 * @param JSON requestObj
 	 * @return success or failure response
+	 * @throws Exception
 	 */
 
 	@CrossOrigin
 	@ApiOperation(value = "Save cancer screening data collected by nurse", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/save/nurseData" }, method = { RequestMethod.POST })
 	public String saveBenCancerScreeningNurseData(@RequestBody String requestObj,
-			@RequestHeader(value = "Authorization") String Authorization) {
+			@RequestHeader(value = "Authorization") String Authorization) throws Exception {
 		OutputResponse response = new OutputResponse();
-		try {
-			logger.info("Request object for CS nurse data saving :" + requestObj);
 
+		if (null != requestObj) {
 			JsonObject jsnOBJ = new JsonObject();
 			JsonParser jsnParser = new JsonParser();
 			JsonElement jsnElmnt = jsnParser.parse(requestObj);
 			jsnOBJ = jsnElmnt.getAsJsonObject();
 
-			if (jsnOBJ != null) {
-				String nurseDataSaveSuccessFlag = cSServiceImpl.saveCancerScreeningNurseData(jsnOBJ, Authorization);
-				response.setResponse(nurseDataSaveSuccessFlag);
-			} else {
-				response.setError(5000, "Invalid request");
-			}
+			try {
+				logger.info("Request object for CS nurse data saving :" + requestObj);
 
-		} catch (Exception e) {
-			logger.error("Error while saving beneficiary nurse data :" + e);
-			response.setError(5000, "Unable to save data");
+				if (jsnOBJ != null) {
+					String nurseDataSaveSuccessFlag = cSServiceImpl.saveCancerScreeningNurseData(jsnOBJ, Authorization);
+					response.setResponse(nurseDataSaveSuccessFlag);
+				} else {
+					response.setError(5000, "Invalid request");
+				}
+
+			} catch (Exception e) {
+				logger.error("Error while saving beneficiary nurse data :" + e.getMessage());
+				cSServiceImpl.deleteVisitDetails(jsnOBJ);
+				response.setError(5000, e.getMessage());
+			}
 		}
 		return response.toString();
 	}
 
 	/**
 	 * @Objective Save Cancer Screening data for doctor.
-	 * @param JSON
-	 *            requestObj
+	 * @param JSON requestObj
 	 * @return success or failure response
 	 */
 
@@ -130,12 +133,12 @@ public class CancerScreeningController {
 			}
 
 		} catch (Exception e) {
-			logger.error("Error while saving beneficiary doctor data :" + e);
-			response.setError(5000, "Unable to save data");
+			logger.error("Error while saving beneficiary doctor data :" + e.getMessage());
+			response.setError(5000, e.getMessage());
 		}
 		return response.toString();
 	}
-	
+
 	@CrossOrigin()
 	@ApiOperation(value = "Get beneficiary visit details", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/getBenDataFrmNurseToDocVisitDetailsScreen" }, method = { RequestMethod.POST })
@@ -164,8 +167,7 @@ public class CancerScreeningController {
 
 	/**
 	 * @Objective Fetching beneficiary history details enterted by nurse.
-	 * @param benRegID
-	 *            and benVisitID
+	 * @param benRegID and benVisitID
 	 * @return history details in JSON format
 	 */
 
@@ -197,8 +199,7 @@ public class CancerScreeningController {
 
 	/**
 	 * @Objective Fetching beneficiary vital details enterted by nurse.
-	 * @param benRegID
-	 *            and benVisitID
+	 * @param benRegID and benVisitID
 	 * @return vital details in JSON format
 	 */
 
@@ -230,8 +231,7 @@ public class CancerScreeningController {
 
 	/**
 	 * @Objective Fetching beneficiary examination details enterted by nurse.
-	 * @param benRegID
-	 *            and benVisitID
+	 * @param benRegID and benVisitID
 	 * @return examination details in JSON format
 	 */
 
@@ -402,7 +402,6 @@ public class CancerScreeningController {
 	 * @return diagnosis details in JSON format
 	 */
 
-
 	@CrossOrigin()
 	@ApiOperation(value = "Get beneficiary case record and referral details", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/getBenCaseRecordFromDoctorCS" }, method = { RequestMethod.POST })
@@ -430,7 +429,7 @@ public class CancerScreeningController {
 		}
 		return response.toString();
 	}
-	
+
 	@CrossOrigin
 	@ApiOperation(value = "Update cancer screening history", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/update/historyScreen" }, method = { RequestMethod.POST })
@@ -619,12 +618,11 @@ public class CancerScreeningController {
 			}
 			logger.info("CS doctor data update Response:" + response);
 		} catch (Exception e) {
-			response.setError(5000, "Error while updating beneficiary data. " + e);
-			logger.error("Error while updating beneficiary doctor data :" + e);
+			logger.error("Error while updating beneficiary data. " + e.getMessage());
+			response.setError(5000, e.getMessage());
 		}
 
 		return response.toString();
 	}
-	
-	
+
 }

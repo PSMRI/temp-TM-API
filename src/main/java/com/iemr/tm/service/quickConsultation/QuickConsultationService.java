@@ -26,6 +26,8 @@ import com.google.gson.JsonObject;
 public interface QuickConsultationService {
 
 	public Long saveBeneficiaryChiefComplaint(JsonObject benChiefComplaint);
+	
+	public void deleteVisitDetails(JsonObject requestOBJ) throws Exception;
 
 	public Long saveBeneficiaryClinicalObservations(JsonObject benClinicalObservations) throws Exception;
 

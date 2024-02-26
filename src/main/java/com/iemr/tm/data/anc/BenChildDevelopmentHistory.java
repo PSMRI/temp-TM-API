@@ -498,18 +498,23 @@ public class BenChildDevelopmentHistory {
 						(String)obj[5], (Boolean)obj[6], (String)obj[7], (Boolean)obj[8], (String)obj[9], (Boolean)obj[10], (String)obj[11], (Long)obj[12]);
 				
 				String grossMotorMilestones = developmentDetails.getGrossMotorMilestone();
+				if(null != grossMotorMilestones )
 				developmentDetails.setGrossMotorMilestones(Arrays.asList(grossMotorMilestones.split(",")));
 				
 				String fineMotorMilestones = developmentDetails.getFineMotorMilestone();
+				if(null != fineMotorMilestones )
 				developmentDetails.setFineMotorMilestones(Arrays.asList(fineMotorMilestones.split(",")));
 				
 				String socialMilestones = developmentDetails.getSocialMilestone();
+				if(null != socialMilestones )
 				developmentDetails.setSocialMilestones(Arrays.asList(socialMilestones.split(",")));
 				
 				String languageMilestones = developmentDetails.getLanguageMilestone();
+				if(null != languageMilestones )
 				developmentDetails.setLanguageMilestones(Arrays.asList(languageMilestones.split(",")));
 				
 				String developmentProblems = developmentDetails.getDevelopmentProblem();
+				if(null != developmentProblems )
 				developmentDetails.setDevelopmentProblems(Arrays.asList(developmentProblems.split(",")));
 			}
 		}

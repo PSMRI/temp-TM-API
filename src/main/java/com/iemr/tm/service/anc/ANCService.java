@@ -26,6 +26,8 @@ import com.google.gson.JsonObject;
 public interface ANCService {
 
 	public String saveANCNurseData(JsonObject requestOBJ, String Authorization) throws Exception;
+	
+	public void deleteVisitDetails(JsonObject requestOBJ) throws Exception;
 
 	String getBenVisitDetailsFrmNurseANC(Long benRegID, Long visitCode);
 

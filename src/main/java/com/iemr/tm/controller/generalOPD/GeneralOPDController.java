@@ -53,42 +53,48 @@ import io.swagger.annotations.ApiParam;
 public class GeneralOPDController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
+	@Autowired
 	private GeneralOPDService generalOPDService;
 
-	@Autowired
-	public void setGeneralOPDServiceImpl(GeneralOPDServiceImpl generalOPDServiceImpl) {
-		this.generalOPDService = generalOPDService;
-	}
+//	@Autowired
+//	public void setGeneralOPDServiceImpl(GeneralOPDServiceImpl generalOPDServiceImpl) {
+//		this.generalOPDService = generalOPDService;
+//	}
 
 	/**
 	 * @Objective Save General OPD data for nurse.
 	 * @param requestObj
 	 * @return success or failure response
+	 * @throws Exception
 	 */
 	@CrossOrigin
 	@ApiOperation(value = "Save general OPD data collected by nurse", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/save/nurseData" }, method = { RequestMethod.POST })
 	public String saveBenGenOPDNurseData(@RequestBody String requestObj,
-			@RequestHeader(value = "Authorization") String Authorization) {
+			@RequestHeader(value = "Authorization") String Authorization) throws Exception {
 		OutputResponse response = new OutputResponse();
-		try {
-			logger.info("Request object for GeneralOPD nurse data saving :" + requestObj);
 
+		if (null != requestObj) {
 			JsonObject jsnOBJ = new JsonObject();
 			JsonParser jsnParser = new JsonParser();
 			JsonElement jsnElmnt = jsnParser.parse(requestObj);
 			jsnOBJ = jsnElmnt.getAsJsonObject();
 
-			if (jsnOBJ != null) {
-				String genOPDRes = generalOPDService.saveNurseData(jsnOBJ, Authorization);
-				response.setResponse(genOPDRes);
+			try {
+				logger.info("Request object for GeneralOPD nurse data saving :" + requestObj);
 
-			} else {
-				response.setResponse("Invalid request");
+				if (jsnOBJ != null) {
+					String genOPDRes = generalOPDService.saveNurseData(jsnOBJ, Authorization);
+					response.setResponse(genOPDRes);
+
+				} else {
+					response.setResponse("Invalid request");
+				}
+			} catch (Exception e) {
+				logger.error("Error in nurse data saving :" + e.getMessage());
+				generalOPDService.deleteVisitDetails(jsnOBJ);
+				response.setError(5000, e.getMessage());
 			}
-		} catch (Exception e) {
-			logger.error("Error in nurse data saving :" + e);
-			response.setError(5000, "Unable to save data");
 		}
 		return response.toString();
 	}
@@ -124,12 +130,12 @@ public class GeneralOPDController {
 				response.setResponse("Invalid request");
 			}
 		} catch (Exception e) {
-			logger.error("Error in doctor data saving :" + e);
-			response.setError(5000, "Unable to save data. " + e.getMessage());
+			logger.error("Error in doctor data saving :" + e.getMessage());
+			response.setError(5000, e.getMessage());
 		}
 		return response.toString();
 	}
-	
+
 	@CrossOrigin()
 	@ApiOperation(value = "Get general OPD beneficiary visit details", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/getBenVisitDetailsFrmNurseGOPD" }, method = { RequestMethod.POST })
@@ -191,7 +197,7 @@ public class GeneralOPDController {
 		}
 		return response.toString();
 	}
-	
+
 	/**
 	 * @Objective Fetching beneficiary vital details enterted by nurse.
 	 * @param comingRequest
@@ -257,7 +263,7 @@ public class GeneralOPDController {
 		}
 		return response.toString();
 	}
-	
+
 	/**
 	 * @Objective Fetching beneficiary doctor details.
 	 * @param comingRequest
@@ -291,7 +297,7 @@ public class GeneralOPDController {
 		}
 		return response.toString();
 	}
-	
+
 	@CrossOrigin
 	@ApiOperation(value = "Update beneficiary's general OPD visit details", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/update/visitDetailsScreen" }, method = { RequestMethod.POST })
@@ -360,7 +366,8 @@ public class GeneralOPDController {
 	/**
 	 * @param requestObj
 	 * @return success or failure response
-	 * @objective Replace General OPD Vital Data entered by Nurse with the details  entered by Doctor       
+	 * @objective Replace General OPD Vital Data entered by Nurse with the details
+	 *            entered by Doctor
 	 */
 
 	@CrossOrigin
@@ -395,7 +402,8 @@ public class GeneralOPDController {
 	/**
 	 * @param requestObj
 	 * @return success or failure response
-	 * @objective Replace General OPD Examination Data entered by Nurse with the details entered by Doctor           
+	 * @objective Replace General OPD Examination Data entered by Nurse with the
+	 *            details entered by Doctor
 	 */
 
 	@CrossOrigin
@@ -455,12 +463,11 @@ public class GeneralOPDController {
 			}
 			logger.info("Doctor data update response:" + response);
 		} catch (Exception e) {
-			response.setError(5000, "Unable to modify data. " + e.getMessage());
-			logger.error("Error while updating General OPD doctor data:" + e);
+			logger.error("Unable to modify data. " + e.getMessage());
+			response.setError(5000, e.getMessage());
 		}
 
 		return response.toString();
 	}
-	
-	
+
 }
