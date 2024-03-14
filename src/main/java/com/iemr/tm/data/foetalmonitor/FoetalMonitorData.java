@@ -23,18 +23,18 @@ package com.iemr.tm.data.foetalmonitor;
 
 public class FoetalMonitorData {
 
-	private Long partnerFoetalMonitorId;
+	private Long partnerFetosenseId;
 	private Long beneficiaryRegID;
 	private String motherLMPDate;
 	private String motherName;
 	private String testName;
 	private String deviceId;
 	
-	public Long getPartnerFoetalMonitorID() {
-		return partnerFoetalMonitorId;
+	public Long getPartnerFetosenseID() {
+		return partnerFetosenseId;
 	}
-	public void setPartnerFoetalMonitorID(Long partnerFoetalMonitorID) {
-		this.partnerFoetalMonitorId = partnerFoetalMonitorID;
+	public void setPartnerFetosenseID(Long partnerFetosenseID) {
+		this.partnerFetosenseId = partnerFetosenseID;
 	}
 	public String getMotherLMPDate() {
 		return motherLMPDate;
