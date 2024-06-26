@@ -67,15 +67,14 @@ public interface BenAnthropometryRepo extends CrudRepository<BenAnthropometryDet
 			+ " WHERE beneficiaryRegID=:benRegID ORDER By ID DESC LIMIT 1 ")
 	public Double getBenLatestHeight(@Param("benRegID") Long benRegID);
 	
-	@Query(" SELECT VisitCode FROM t_benvisitdetail "
+	@Query(nativeQuery = true, value = " SELECT visitCode FROM t_benvisitdetail "
 			+ " WHERE beneficiaryRegID=:benRegID ORDER By benvisitid desc limit 1 ")
 	public Long getBenLatestVisitCode(@Param("benRegID") Long benRegID);
 	
-	@Query(" SELECT Height_cm from ( "
-			+ " select Height_cm from t_phy_anthropometry where visitCode=:VisitCode"
+	@Query(nativeQuery = true, value = " SELECT Height_cm from ( "
+			+ " (select Height_cm from t_phy_anthropometry where visitCode=:visitCode)"
 			+ " union "
-			+"select Height_cm from t_cancervitals where visitCode=:VisitCode)a")
-	public Double getBenLatestHeightDetails(@Param("VisitCode") Long visitCode);
-
+			+"(select Height_cm from t_cancervitals where visitCode=:visitCode))a")
+	public Double getBenLatestHeightDetails(@Param("visitCode") Long visitCode);
 
 }
