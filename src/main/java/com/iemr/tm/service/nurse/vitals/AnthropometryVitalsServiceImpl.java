@@ -19,6 +19,7 @@ public class AnthropometryVitalsServiceImpl implements AnthropometryVitalsServic
 		{
 			return "Visit code is not found";
 		}
+
 		Double benHeight = benAnthropometryRepo.getBenLatestHeightDetails(visitCode);
         if(benHeight == null)
         	return "No data found";
