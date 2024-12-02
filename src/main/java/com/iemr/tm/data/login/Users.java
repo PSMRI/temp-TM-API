@@ -29,10 +29,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 import com.google.gson.annotations.Expose;
 
 @Entity
+@Data
 @Table(name = "m_user")
 public class Users {
 	@Id
