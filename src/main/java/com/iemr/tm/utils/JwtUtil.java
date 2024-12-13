@@ -18,7 +18,7 @@ public class JwtUtil {
 	@Value("${jwt.secret}")
 	private String SECRET_KEY;
 
-	private static final long EXPIRATION_TIME = 24 * 60 * 60 * 1000; // 1 day in milliseconds
+	private static final long EXPIRATION_TIME = 24L * 60 * 60 * 1000; // 1 day in milliseconds
 
 	// Generate a key using the secret
 	private Key getSigningKey() {
@@ -26,17 +26,6 @@ public class JwtUtil {
 			throw new IllegalStateException("JWT secret key is not set in application.properties");
 		}
 		return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
-	}
-
-	// Generate JWT Token
-	public String generateToken(String username, String userId) {
-		Date now = new Date();
-		Date expiryDate = new Date(now.getTime() + EXPIRATION_TIME);
-
-		// Include the userId in the JWT claims
-		return Jwts.builder().setSubject(username).claim("userId", userId) // Add userId as a claim
-				.setIssuedAt(now).setExpiration(expiryDate).signWith(getSigningKey(), SignatureAlgorithm.HS256)
-				.compact();
 	}
 
 	// Validate and parse JWT Token
