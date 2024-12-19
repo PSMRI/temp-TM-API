@@ -1,16 +1,17 @@
 package com.iemr.tm.utils;
 
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import com.iemr.tm.data.login.Users;
-import com.iemr.tm.repo.user.UserLoginRepo;
 import com.iemr.tm.utils.exception.IEMRException;
 
 import io.jsonwebtoken.Claims;
@@ -24,7 +25,7 @@ public class JwtAuthenticationUtil {
 	@Autowired
 	private JwtUtil jwtUtil;
 	@Autowired
-	private UserLoginRepo userLoginRepo;
+	private RedisTemplate<String, Object> redisTemplate;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
 	public JwtAuthenticationUtil(CookieUtil cookieUtil, JwtUtil jwtUtil) {
@@ -70,8 +71,8 @@ public class JwtAuthenticationUtil {
 
 			String userId = claims.get("userId", String.class);
 
-			// Fetch user based on userId from the database or cache
-			Users user = userLoginRepo.findByUserID(Long.parseLong(userId));
+			// Check if user data is present in Redis
+			Users user = getUserFromCache(userId);
 			if (user == null) {
 				throw new IEMRException("Invalid User ID.");
 			}
@@ -82,4 +83,18 @@ public class JwtAuthenticationUtil {
 			throw new IEMRException("Validation error: " + e.getMessage(), e);
 		}
 	}
+
+	private Users getUserFromCache(String userId) {
+		String redisKey = "user_" + userId; // The Redis key format
+		Users user = (Users) redisTemplate.opsForValue().get(redisKey);
+
+		if (user == null) {
+			logger.warn("User not found in Redis.");
+		} else {
+			logger.info("User fetched successfully from Redis.");
+		}
+
+		return user; // Returns null if not found
+	}
+
 }

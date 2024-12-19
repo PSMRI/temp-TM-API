@@ -21,6 +21,10 @@
 */
 package com.iemr.tm.data.login;
 
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,7 +36,8 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "m_user")
-public class Users {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Users implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "UserID")
