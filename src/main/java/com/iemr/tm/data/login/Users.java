@@ -44,5 +44,7 @@ public class Users implements Serializable {
 	private Long userID;
 	@Column(name = "UserName")
 	private String userName;
+	@Column(name = "Deleted", insertable = false, updatable = false)
+	private Boolean Deleted;
 
 }
